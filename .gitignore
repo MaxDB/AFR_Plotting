@@ -1,0 +1,11 @@
+# ignore all files in directories named
+temp/
+
+# ignore all files with extension
+*.asv
+*.fig
+*.svg
+*.png
+*.pdf
+*.jpg
+*.eps
