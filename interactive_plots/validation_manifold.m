@@ -12,7 +12,7 @@ solution_num = 1;
 
 %------------------------------------------------------------------------
 curret_directory = pwd;
-data_directory = "C:\Users\gg19546\Documents\PhD\Year 2\Software\Applied Force Reduction\examples\3_dof_mass_spring";
+data_directory = get_project_path + "\examples\3_dof_mass_spring";
 
 cd(data_directory)
 compare_solutions("amplitude",Manifold_One.system,solution_num,Manifold_Two.system,solution_num,"validation",[1,0])
