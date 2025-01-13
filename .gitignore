@@ -1,5 +1,6 @@
 # ignore all files in directories named
 temp/
+figures/
 
 # ignore all files with extension
 *.asv
