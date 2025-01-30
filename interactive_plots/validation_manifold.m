@@ -5,6 +5,7 @@ close(all_fig)
 
 Plot_Settings.plot_type = "physical";
 Plot_Settings.coords = [3,2,1];
+Plot_Settings.energy_limit = false;
 Manifold_One.system = "mass_spring_roller_1";
 Manifold_Two.system = "mass_spring_roller_12";
 Manifold_Two.plot_validation_orbit = false;
