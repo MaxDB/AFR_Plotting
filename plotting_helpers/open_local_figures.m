@@ -6,7 +6,7 @@ num_figs = size(fig_names,1);
 figs = cell(num_figs,1);
 
 for iFig = 1:num_figs
-    figs{iFig} = openfig(FIGURE_DIRECTORY + fig_names(1,:));
+    figs{iFig} = openfig(FIGURE_DIRECTORY + fig_names(iFig,:));
 end
 
 
