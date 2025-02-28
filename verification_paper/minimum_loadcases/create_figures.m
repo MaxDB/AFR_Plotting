@@ -46,8 +46,10 @@ for iDim = 1:num_dims
     ax = nexttile;
     box on
     hold on
-    bar(degree_range,disp_degree_loadcases(iDim,:),"FaceColor",plot_colours(1,:),"BarWidth",1)
-    bar(degree_range,force_degree_loadcases(iDim,:),"FaceColor",plot_colours(2,:),"BarWidth",0.7)
+    % bar(degree_range,disp_degree_loadcases(iDim,:),"FaceColor",plot_colours(1,:),"BarWidth",1)
+    % bar(degree_range,force_degree_loadcases(iDim,:),"FaceColor",plot_colours(2,:),"BarWidth",0.7)
+    plot(degree_range,disp_degree_loadcases(iDim,:),":x","Color",plot_colours(1,:),"LineWidth",2)
+    plot(degree_range,force_degree_loadcases(iDim,:),":x","Color",plot_colours(2,:),"LineWidth",2)
     xticks(degree_range)
     xtickangle(0)
     hold off
