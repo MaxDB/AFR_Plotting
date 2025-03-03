@@ -4,12 +4,15 @@ points_per_orbit = 500;
 plotting_coords = [1,3,2];
 
 
-orbit_spacing = 0.002;
+orbit_spacing = 0.005;
 
+line_width = 1;
 mesh_alpha = 1;
 mesh_settings = {"EdgeColor","none","LineWidth",0.01,"FaceColor",get_plot_colours(5),"FaceLighting","gouraud","FaceAlpha",mesh_alpha,"Tag","invariant_manifold"};
 grid_line_style = {"Color",[0.25,0.25,0.25,0.2],"LineWidth",0.2,"Tag","grid_line"};
-outline_style = {"Color",[0,0,0],"LineWidth",1,"Tag","outline"};
+outline_style = {"LineWidth",1,"Tag","outline"};
+outline_colours = [[0,0,0];get_plot_colours([1,4]);[0,0,0]];
+marker_style = {"Marker","o","LineWidth",line_width,"MarkerEdgeColor","k","MarkerSize",5};
 
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
@@ -95,6 +98,8 @@ ax_2d = axes(fig_2d);
 box(ax_2d,"on")
 
 
+outline_counter_3d = 0;
+outline_counter_2d = 0;
 hold(ax_2d,"on")
 hold(ax_3d,"on")
 for iSol = 1:num_sols
@@ -104,7 +109,8 @@ for iSol = 1:num_sols
         continue
     end
     mesh(ax_3d,sol_points(:,:,1),sol_points(:,:,2),sol_points(:,:,3),mesh_settings{:})
-    plot3(ax_3d,sol_points(1,:,1),sol_points(1,:,2),sol_points(1,:,3),outline_style{:})
+    outline_counter_3d = outline_counter_3d + 1;
+    plot3(ax_3d,sol_points(1,:,1),sol_points(1,:,2),sol_points(1,:,3),outline_style{:},"Color",outline_colours(outline_counter_3d,:))
     last_orbit = zeros(3,points_per_orbit+1);
     for iOrbit = 1:(num_orbits-1)
         orbit = squeeze(sol_points(iOrbit,:,:))';
@@ -115,13 +121,24 @@ for iSol = 1:num_sols
         plot3(ax_3d,sol_points(iOrbit,:,1),sol_points(iOrbit,:,2),sol_points(iOrbit,:,3),grid_line_style{:})
         last_orbit = orbit;
     end
-    plot3(ax_3d,sol_points(end,:,1),sol_points(end,:,2),sol_points(end,:,3),outline_style{:})
+    outline_counter_3d = outline_counter_3d + 1;
+    plot3(ax_3d,sol_points(end,:,1),sol_points(end,:,2),sol_points(end,:,3),outline_style{:},"Color",outline_colours(outline_counter_3d,:))
 
     %----------------
     sol_zero_points_one = zero_point_array{1,iSol};
     sol_zero_points_two = zero_point_array{2,iSol};
-    plot(ax_2d, sol_zero_points_one(1,:), sol_zero_points_one(2,:),"k-","LineWidth",2)
-    plot(ax_2d, sol_zero_points_two(1,:), sol_zero_points_two(2,:),"k-","LineWidth",2)
+    plot(ax_2d, sol_zero_points_one(1,:), sol_zero_points_one(2,:),"k-","LineWidth",line_width)
+    plot(ax_2d, sol_zero_points_two(1,:), sol_zero_points_two(2,:),"k-","LineWidth",line_width)
+    
+    outline_counter_2d = outline_counter_2d + 1;
+    if outline_counter_2d > 1
+        plot(ax_2d,sol_zero_points_one(1,1),sol_zero_points_one(2,1),marker_style{:},"MarkerFaceColor",outline_colours(outline_counter_2d,:))
+        plot(ax_2d,sol_zero_points_two(1,1),sol_zero_points_two(2,1),marker_style{:},"MarkerFaceColor",outline_colours(outline_counter_2d,:))
+    end
+    
+    outline_counter_2d = outline_counter_2d + 1;
+    plot(ax_2d,sol_zero_points_one(1,end),sol_zero_points_one(2,end),marker_style{:},"MarkerFaceColor",outline_colours(outline_counter_2d,:))
+    plot(ax_2d,sol_zero_points_two(1,end),sol_zero_points_two(2,end),marker_style{:},"MarkerFaceColor",outline_colours(outline_counter_2d,:))
 end
 hold(ax_3d,"off")
 hold(ax_2d,"off")

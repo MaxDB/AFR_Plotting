@@ -8,11 +8,18 @@ sol_num = [2,3,4];
 num_modes = 2;
 
 max_x1 = 0.65;
-freq_range = [0.65,1];
+freq_range = [0.78,1];
+
+end_orbits = [0.799,0.644;
+              0.786,0.645;
+              0.783,0.492];
 
 %---------------------------------------
 
 line_width = 1;
+marker_style = {"Marker","o","LineWidth",line_width,"MarkerEdgeColor","k","MarkerSize",5};
+marker_colours = get_plot_colours([1,4]);
+marker_colours(3,:) = [0,0,0];
 %--------------------------------------
 
 
@@ -37,22 +44,37 @@ for iLine = 1:num_lines
     lines(iLine).LineWidth = line_width;
 end
 
+ice_ic_line = lines(end-1);
+uistack(ice_ic_line,"bottom")
+ice_ic_line.Color = get_plot_colours(3);
+ice_ic_line.LineStyle = "-";
+ice_ic_line.DisplayName = "$\{1\}$-ICE-IC";
 
-uistack(lines(end-1),"bottom")
-lines(end-1).Color = get_plot_colours(3);
-lines(end-1).LineStyle = "-";
-lines(end-1).DisplayName = "$\{1\}$-ICE-IC";
+ice_line = lines(end);
+uistack(ice_line,"bottom")
+ice_line.Color = get_plot_colours(2);
+ice_line.LineStyle = "-";
+ice_line.DisplayName = "$\{1\}$-ICE";
 
-uistack(lines(end),"bottom")
-lines(end).Color = get_plot_colours(2);
-lines(end).LineStyle = "-";
-lines(end).DisplayName = "$\{1\}$-ICE";
+fom_line = lines(2);
+fom_line.DisplayName = "FOM";
 
-lines(2).DisplayName = "FOM";
-
-legend(ax,[lines(end),lines(end-1),lines(2)],"interpreter","latex")
-
-ylabel("max($x_1$)","Interpreter","latex")
+legend(ax,[ice_line,ice_ic_line,fom_line],"interpreter","latex","AutoUpdate","off")
+ylabel("max($x_1$) (m)","Interpreter","latex")
+%------------------------------------------
+%plot orbit markers
+num_markers = size(end_orbits,1);
+hold(ax,"on")
+for iMarker = 1:num_markers
+    orbit_xy = end_orbits(iMarker,:);
+    plot(ax,orbit_xy(1),orbit_xy(2),marker_style{:},"MarkerFaceColor",marker_colours(iMarker,:))
+end
+hold(ax,"off")
+%------------------------------------------
+hold(ax,"on")
+plot(ax,[0.85,0.85],ax.YLim,"k--")
+hold(ax,"off")
+text(0.85,0.575," \leftarrow L_2")
 %------------------------------------------
 save_fig(fig,fig_name)
 
