@@ -3,7 +3,8 @@ close all
 
 fig_names = ["restoring_force","stress_manifold"];
 
-Export_Settings.height = 7;
+% Export_Settings.height = 7;
+Export_Settings.height = 4;
 Export_Settings.width = 8.4;
 
 Export_Settings.file_type = "pdf";
