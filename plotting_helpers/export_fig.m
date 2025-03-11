@@ -2,9 +2,11 @@ function export_fig(figs,fig_names,Export_Settings)
 DELIMINATOR = "\";
 
 % default settings
-settings_path = get_plotting_path();
-Default_Settings = read_default_options("plotting",settings_path);
-Export_Settings = update_options(Default_Settings,[],Export_Settings);
+if ~isstring(Export_Settings)
+    settings_path = get_plotting_path();
+    Default_Settings = read_default_options("plotting",settings_path);
+    Export_Settings = update_options(Default_Settings,[],Export_Settings);
+end
 %----------------------------------------------------------------------
 
 
@@ -22,8 +24,17 @@ mkdir(export_path)
 
 num_figs = size(figs,1);
 for iFig = 1:num_figs
-    fig = figs{iFig};
+    if iscell(figs)
+        fig = figs{iFig};
+    else
+        fig = figs;
+    end
     fig_name = fig_names(iFig);
+
+    if isstring(Export_Settings) && Export_Settings == "inherit"
+        Export_Settings = fig.UserData;
+    end
+    fig.UserData = Export_Settings;
 
     fig = set_fig_style(fig,Export_Settings);
     
@@ -34,8 +45,7 @@ for iFig = 1:num_figs
     end
     fig.Renderer = Export_Settings.renderer;
     %save .fig
-    fig_path = working_dir + DELIMINATOR + fig_name;
-    saveas(fig,fig_path)
+    save_fig(fig,fig_name+"_export")
 
     % save image
     image_path = export_path + DELIMINATOR + fig_name;

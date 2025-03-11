@@ -1,17 +1,17 @@
 clear 
 close all
 
-fig_name = "energy_backbone";
+fig_name = "stress_manifold_comp";
 
-labels = ["$\mathcal R_{1}$-ROM";
-          "$\mathcal R_{2}$-ROM";
-          "$\mathbf r_1^*$"];
+
+labels = ["$\mathcal W_{\mathcal R_1}$";
+          "$\mathcal W_{\mathcal R_2}$";
+          "$\tilde{\mathbf x}^*(t)$"];
 
 %-----------------------------
 
 figs = open_local_figures(fig_name+"_export");
 fig = figs{1};
-
 %-----------------------------
 num_labels = size(labels,1);
 for iLabel = 1:num_labels

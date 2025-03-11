@@ -7,7 +7,7 @@ Plot_Settings.plot_type = "physical";
 Plot_Settings.coords = [3,2,1];
 
 line_width = 2;
-z_limit = [-2,2]*1e-3;
+z_limit = [-2,2.5]*1e-3;
 camera_position = [  -0.1877   -1.4918    0.0280];
 
 orbit_sol_num = 1;
@@ -15,28 +15,25 @@ orbit_id = 134;
 
 
 % mesh style
-manifold_colour = get_plot_colours(2);
+manifold1_colour = get_plot_colours(1);
+manifold2_colour = get_plot_colours(2);
 %--------------------------------------------------
-fig_3d = figure;
-ax_3d = axes(fig_3d);
-Plot_Settings.energy_limit = false;
+data_directory = get_project_path + "\examples\3_dof_mass_spring";
+data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
+
+fig = figure;
+ax = axes(fig);
+
+Plot_Settings.legend = false;
 Manifold_One.system = "mass_spring_roller_1";
 Manifold_One.orbit = [orbit_sol_num,orbit_id];
 Manifold_One.plot_validation_orbit = 0;
 Manifold_Two.system = "mass_spring_roller_12";
 
-curret_directory = pwd;
-data_directory = get_project_path+"\examples\3_dof_mass_spring";
-
-cd(data_directory)
-ax_3d = compare_stress_manifold({Manifold_One,Manifold_Two},"opts",Plot_Settings,"axes",ax_3d);
-cd(curret_directory)
-
-
-
+ax = data_dir_execute(@compare_stress_manifold,{Manifold_One,Manifold_Two},"opts",Plot_Settings,"axes",ax);
 
 % contour
-lines = ax_3d.Children;
+lines = ax.Children;
 num_lines = size(lines,1);
 for iLine = 1:num_lines
     line = lines(iLine);
@@ -46,13 +43,13 @@ for iLine = 1:num_lines
             line_y = line.YData;
             line_z = line.ZData;
             line.LineStyle = "-";
+            line.Color = manifold1_colour;
         case "m-1,2"
             line.DisplayName = "$\mathcal W_2$";
             manifold_x = line.XData;
             manifold_y = line.YData;
             manifold_z = line.ZData;
-            line.FaceColor = manifold_colour;
-            line.EdgeColor = manifold_colour;
+            line.FaceColor = manifold2_colour;
         case "o-1-" + orbit_sol_num + "," + orbit_id
             line.DisplayName = "$\tilde{\mathbf x}^*(t)$";
             uistack(line,"top")
@@ -62,16 +59,16 @@ for iLine = 1:num_lines
 end
 
 
-y_limit = ax_3d.YLim;
-x_limit = ax_3d.XLim;
+y_limit = ax.YLim;
+x_limit = ax.XLim;
 
-xlim(ax_3d,x_limit)
-ylim(ax_3d,y_limit)
-zlim(ax_3d,z_limit)
+xlim(ax,x_limit)
+ylim(ax,y_limit)
+zlim(ax,z_limit)
 
-xlabel(ax_3d.XLabel.String + " (m)")
-ylabel(ax_3d.YLabel.String + " (m)")
-zlabel(ax_3d.ZLabel.String + " (m)")
+xlabel(ax.XLabel.String + " (m)")
+ylabel(ax.YLabel.String + " (m)")
+zlabel(ax.ZLabel.String + " (m)")
 
 % plane_data = ones(size(line_z));
 % line_style = {"--k","DisplayName",""};
@@ -84,7 +81,7 @@ zlabel(ax_3d.ZLabel.String + " (m)")
 %------------------------------------------
 
 % line style
-lines = ax_3d.Children;
+lines = ax.Children;
 num_lines = size(lines,1);
 for iLine = 1:num_lines
     line = lines(iLine);
@@ -98,9 +95,9 @@ for iLine = 1:num_lines
 end
 
 % plot style
-zlim(ax_3d,z_limit)
-ax_3d.CameraPosition = camera_position;
+zlim(ax,z_limit)
+ax.CameraPosition = camera_position;
 
 %------------------------------------------
 
-save_fig(fig_3d,fig_name)
+save_fig(fig,fig_name)

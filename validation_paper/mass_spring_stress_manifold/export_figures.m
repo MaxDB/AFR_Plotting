@@ -2,40 +2,42 @@ clear
 close all
 
 fig_name = "stress_manifold_comp";
-height = 8;
-width = 8.4;
 
-Export_Settings.file_type = "pdf";
+
+
+Export_Settings.height = 6;
+Export_Settings.width = 8.4;
+
+
+Export_Settings.file_type = "png";
+Export_Settings.resolution = 500;
 Export_Settings.projection = "3D";
 %--------------------------
 figs = open_local_figures;
-stress_manifold_fig = figs{:};
-
-fig = stress_manifold_fig;
+fig = figs{1};
 %--------------------------
-
-fig.Units = 'centimeters';
-fig.Position(3) = width;
-fig.Position(4) = height; 
-fig.PaperSize = fig.InnerPosition([3,4]);
-% paperFigExport(figName,fig)
-%--------------------------
-
-lines = fig.Children(2).Children;
+ax = fig.Children;
+lines = findall(ax,"Type","Line");
 num_lines = size(lines,1);
 for iLine = 1:num_lines
     line = lines(iLine);
     if isempty(line.Tag)
         continue
     end
-    if line.Tag == "m-1"
-        line.ZData = line.ZData + 5e-5;
-    elseif line.Tag(1) == "o"
-        uistack(line,"top")
-        line.ZData = line.ZData + 7e-5;
+    switch line.Tag
+        case "m-1,2"
+            % line.ZData = line.ZData - 1e-5;
+        case "m-1"
+            line.ZData = line.ZData + 1e-5;
+        case "grid_line"
+            %copied_line = copyobj(line,ax);
+            %copied_line.ZData = copied_line.ZData - 0e-5;
+            % line.ZData = line.ZData + 0e-5;
     end
-
+    if line.Tag(1) == "o"
+        uistack(line,"top")
+        line.ZData = line.ZData + 2e-5;
+    end
 end
-
 %--------------------------
 export_fig(fig,fig_name,Export_Settings)
