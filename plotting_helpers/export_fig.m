@@ -2,23 +2,9 @@ function export_fig(figs,fig_names,Export_Settings)
 DELIMINATOR = "\";
 
 % default settings
-Default_Settings.projection = "2D";
-Default_Settings.file_type = "pdf";
-Default_Settings.renderer = "painters";
-Default_Settings.resolution = 300;
-Default_Settings.font_size = 12;
-Default_Settings.font_name = [];
-Default_Settings.width = 8.4;
-Default_Settings.height = 8.4;
-
-settings = fieldnames(Default_Settings);
-num_settings = size(settings,1);
-for iSetting = 1:num_settings
-    setting = settings{iSetting};
-    if ~isfield(Export_Settings,setting)
-        Export_Settings.(setting) = Default_Settings.(setting);
-    end
-end
+settings_path = get_plotting_path();
+Default_Settings = read_default_options("plotting",settings_path);
+Export_Settings = update_options(Default_Settings,[],Export_Settings);
 %----------------------------------------------------------------------
 
 
@@ -39,25 +25,14 @@ for iFig = 1:num_figs
     fig = figs{iFig};
     fig_name = fig_names(iFig);
 
-    fig.Units = 'centimeters';
-    fig.Position(3) = Export_Settings.width;
-    fig.Position(4) = Export_Settings.height;
-    fig.PaperSize = fig.InnerPosition([3,4]);
-
-    fig.Renderer = Export_Settings.renderer;
-    fontsize(fig,Export_Settings.font_size,"points");
-    if ~isempty(Export_Settings.font_name)
-        fontname(fig,Export_Settings.font_name);
-    end
-
+    fig = set_fig_style(fig,Export_Settings);
+    
     % fixes display problems when projecting 3D plots to 2D
     if Export_Settings.projection == "2D"
         line_data = findall(fig,'type','line');
         set(line_data, 'ZData', [])
     end
-
-
-
+    fig.Renderer = Export_Settings.renderer;
     %save .fig
     fig_path = working_dir + DELIMINATOR + fig_name;
     saveas(fig,fig_path)

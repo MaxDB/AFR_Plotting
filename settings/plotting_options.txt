@@ -1,0 +1,13 @@
+# AFR plotting settings
+
+## Export
+renderer, "painters",			MATLAB print renderer
+projection,"2D",			plot projection type
+file_type, "pdf",			exported file type
+
+## Style
+width, [],				figure width
+height, [],				figure height
+font_name, "Times New Roman",		font type for non-latex interpreted text
+font_size, 8,				font size
+resolution, 300,			raster resolution
