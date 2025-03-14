@@ -2,23 +2,17 @@ clear
 close all
 
 fig_name = "validation_manifold";
-height = 8;
-width = 8.4;
 
+Export_Settings.height = 8;
+Export_Settings.width = 8.4;
 Export_Settings.file_type = "pdf";
 Export_Settings.projection = "3D";
 %--------------------------
-figs = open_local_figures;
-stress_manifold_fig = figs{:};
+figs = open_local_figures(fig_name);
+fig = figs{1};
 
-fig = stress_manifold_fig;
 %--------------------------
 
-fig.Units = 'centimeters';
-fig.Position(3) = width;
-fig.Position(4) = height; 
-fig.PaperSize = fig.InnerPosition([3,4]);
-% paperFigExport(figName,fig)
 %--------------------------
 
 lines = fig.Children(2).Children;
@@ -30,9 +24,8 @@ for iLine = 1:num_lines
     end
     if line.Tag(1) == "o"
         uistack(line,"top")
-        % line.ZData = line.ZData + 1e-5;
+        line.ZData = line.ZData + 1e-5;
     end
-
 end
 
 %--------------------------

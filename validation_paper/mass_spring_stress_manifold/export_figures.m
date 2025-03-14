@@ -13,7 +13,7 @@ Export_Settings.file_type = "png";
 Export_Settings.resolution = 500;
 Export_Settings.projection = "3D";
 %--------------------------
-figs = open_local_figures;
+figs = open_local_figures(fig_name);
 fig = figs{1};
 %--------------------------
 ax = fig.Children;

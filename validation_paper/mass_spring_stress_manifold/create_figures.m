@@ -3,12 +3,13 @@ close all
 
 fig_name = "stress_manifold_comp";
 
+Plot_Settings.energy_limit = 0.05;
 Plot_Settings.plot_type = "physical";
 Plot_Settings.coords = [3,2,1];
 
 line_width = 2;
-z_limit = [-2,2.5]*1e-3;
-camera_position = [  -0.1877   -1.4918    0.0280];
+z_limit = [-1.75,2]*1e-3;
+camera_position = [-0.2404   -1.8429    0.0217];
 
 orbit_sol_num = 1;
 orbit_id = 134;
