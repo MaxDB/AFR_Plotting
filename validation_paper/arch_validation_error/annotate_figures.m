@@ -1,12 +1,11 @@
 clear 
 close all
 
-fig_name = "two_mode_resonance_error";
+fig_name = "validation_error";
 
 
-labels = ["$\{1,3\}$-ROM";
-          "$\{1,3\}:\{1,3,6\}$";
-          "$\{1,3\}:\{1,2,3\}$"];
+labels = ["$\{1\}:\{1,6\}$";
+          "$\{1\}:\{1,5\}$"];
 %-----------------------------
 figs = open_local_figures(fig_name+"_export");
 fig = figs{1};

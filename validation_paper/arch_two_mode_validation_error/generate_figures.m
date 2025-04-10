@@ -1,14 +1,14 @@
 clear
-fig_name = "validation_error_base";
+fig_name = "two_mode_validation_error_base";
 
-sol_num = 1;
-
+sol_num = [1,6];
 %--------
-data_directory = get_project_path + "\examples\EN_examples\clamped_beam";
+data_directory = get_project_path + "\examples\size_test";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
 data_dir_execute(@set_visualisation_level,1)
-ax = data_dir_execute(@compare_validation,"clamped_beam_1","validation error",sol_num,1:10);
+ax = data_dir_execute(@compare_validation,"mems_arch_16","validation error",sol_num(1),1:10);
+ax = data_dir_execute(@compare_validation,"mems_arch_16","validation error",sol_num(2),1:10,"axes",ax);
 fig = gcf;
 
 % Dyn_Data_1 = data_dir_execute(@initalise_dynamic_data,"mass_spring_roller_1");
