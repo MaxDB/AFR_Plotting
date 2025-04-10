@@ -10,14 +10,15 @@ Plot_Settings.mesh_alpha = 0.5;
 
 line_width = 3;
 x_lim = [-0.05,0.05];
-y_lim = [-0.057,0.05];
+y_lim = [-0.06,0.06];
 z_lim = [-1.2,1.5]*1e-3;
 
 camera_position = [-0.0895   -0.5236    0.0172];
 
 
 orbit_sol_num = 1;
-orbit_id = 134;
+% orbit_id = 134;
+orbit_id = 132;
 
 orbit_colour = get_plot_colours(3);
 validation_orbit_colour = get_plot_colours(5);
@@ -51,7 +52,7 @@ Manifold_One.orbit = [orbit_sol_num,orbit_id];
 Manifold_One.plot_validation_orbit = 1;
 Manifold_Two.system = "mass_spring_roller_12";
 
-
+data_dir_execute(@set_visualisation_level,0);
 ax = data_dir_execute(@compare_stress_manifold,{Manifold_One,Manifold_Two},"opts",Plot_Settings,"axes",ax);
 
 

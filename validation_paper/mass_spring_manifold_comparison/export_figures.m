@@ -3,8 +3,13 @@ close all
 
 fig_name = "manifold_comparison";
 
-Export_Settings.height = 8;
-Export_Settings.width = 8.4;
+% Export_Settings.height = 8;
+% Export_Settings.width = 8.4;
+
+Export_Settings.height = 20;
+Export_Settings.width = 21;
+Export_Settings.font_size = 22;
+Export_Settings.axes = "off";
 
 Export_Settings.file_type = "png";
 Export_Settings.resolution = 500;
@@ -13,8 +18,11 @@ Export_Settings.projection = "3D";
 figs = open_local_figures(fig_name);
 fig = figs{1};
 %--------------------------
+ax = fig.Children;
+% ax.CameraPosition = [-0.2404   -1.8429    0.0217];
 
-lines = fig.Children.Children;
+
+lines = ax.Children;
 num_lines = size(lines,1);
 for iLine = 1:num_lines
     line = lines(iLine);

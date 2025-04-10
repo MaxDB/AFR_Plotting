@@ -3,8 +3,14 @@ close all
 
 fig_name = "validation_manifold";
 
-Export_Settings.height = 8;
-Export_Settings.width = 8.4;
+% Export_Settings.height = 8;
+% Export_Settings.width = 8.4;
+
+Export_Settings.height = 20;
+Export_Settings.width = 21;
+Export_Settings.font_size = 22;
+Export_Settings.axes = "off";
+
 Export_Settings.file_type = "pdf";
 Export_Settings.projection = "3D";
 %--------------------------

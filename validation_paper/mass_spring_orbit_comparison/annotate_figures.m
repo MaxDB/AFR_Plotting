@@ -1,20 +1,18 @@
 clear 
 close all
 
-fig_name = "energy_backbone";
+fig_name = "orbit_comp";
 
-% labels = ["$\mathcal R_{1}$-ROM";
-%           "$\mathcal R_{2}$-ROM";
-%           "$\mathbf r_1^*$"];
 
-labels = ["One Mode ROM";
-          "Two Mode ROM"];
+labels = ["$\mathcal W_{\mathcal R_1}$";
+          "$\mathcal R_1:\mathcal R_2$ validation";
+          "$\mathcal R_1$-ROM";
+          "$\mathcal R_2$-ROM"];
 
 %-----------------------------
 
 figs = open_local_figures(fig_name+"_export");
 fig = figs{1};
-
 %-----------------------------
 num_labels = size(labels,1);
 for iLabel = 1:num_labels

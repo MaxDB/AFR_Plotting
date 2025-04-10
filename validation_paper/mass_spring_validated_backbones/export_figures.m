@@ -1,26 +1,19 @@
 clear 
 close all
 
-fig_name = "validation_backbone";
-height = 6;
-width = 17.4; %17.4
+fig_name = "validated_backbone";
 
-Export_Settings.file_type = "pdf";
+% Export_Settings.height = 8;
+% Export_Settings.width = 8.4;
+
+Export_Settings.height = 20;
+Export_Settings.width = 35;
+Export_Settings.font_size = 22;
+
 %--------------------------
-figs = open_local_figures;
+figs = open_local_figures(fig_name);
 fig = figs{:};
 
-%--------------------------
-
-fig.Units = 'centimeters';
-fig.Position(3) = width;
-fig.Position(4) = height; 
-fig.PaperSize = fig.InnerPosition([3,4]);
-% paperFigExport(figName,fig)
-%--------------------------
-leg = fig.Children(2);
-leg.Location = "southeast";
-% leg.Position(1) = leg.Position(1) - 0.05;
 
 %--------------------------
 export_fig(fig,fig_name,Export_Settings)

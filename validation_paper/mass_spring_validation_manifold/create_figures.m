@@ -9,12 +9,12 @@ Plot_Settings.coords = [3,2,1];
 line_width = 3;
 x_lim = [-0.05,0.05];
 y_lim = [-0.06,0.06];
-z_lim = [-1.1,1.3]*1e-3;
+z_lim = [-1.2,1.5]*1e-3;
 camera_position = [-0.0895   -0.5236    0.0172];
 % camera_position = [ -0.1254   -1.2597    0.0301];
 
 orbit_sol_num = 1;
-orbit_id = 134;
+orbit_id = 132;
 
 orbit_colour = get_plot_colours(3);
 validation_orbit_colour = get_plot_colours(5);

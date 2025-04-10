@@ -6,7 +6,7 @@ end
 fig_names = ls(FIGURE_DIRECTORY + "*.fig");
 num_figs = size(fig_names,1);
 for iFig = 1:num_figs
-    if startsWith(fig_names(iFig,:),fig_name)
+    if startsWith(fig_names(iFig,:),fig_name + ".")
         delete(FIGURE_DIRECTORY + strip(string(fig_names(iFig,:))))
     end
 end

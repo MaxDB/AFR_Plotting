@@ -2,11 +2,13 @@ clear
 close all
 fig_name = "validated_backbone";
 
-orbit_frequency = 2.9359;
+PRESENTATION_MODE = 1;
+
+orbit_frequency = 3;
 orbit_id = 134;
-max_energy = 0.05;
-backbone_1_line = 8;
-validation_line = {9,10,11,12,13,14};
+max_energy = 0.07;
+backbone_1_line = 15;
+validation_line = {8,9,10,11,12,13};
 
 backbone_one_colour = get_plot_colours(1);
 backbone_two_colour = get_plot_colours(2);
@@ -16,21 +18,21 @@ validated_orbit_colour = get_plot_colours(5);
 line_width = 1;
 marker_size = 6;
 %--------------------------------------------------
-
-curret_directory = pwd;
 data_directory = get_project_path + "\examples\3_dof_mass_spring";
+data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
-cd(data_directory)
-compare_solutions("energy","mass_spring_roller_1",1,"mass_spring_roller_12",1,"validation",[1,0]);
-cd(curret_directory)
+data_dir_execute(@compare_solutions,"energy","mass_spring_roller_1",1,"mass_spring_roller_12",1,"validation",[1,0]);
 
 fig = gcf();
 ax = gca();
 leg = fig.Children(1);
+delete(leg)
 %------------------------------------------
 ylim(ax,[0,max_energy ])
-
-leg.Interpreter = "latex";
+if PRESENTATION_MODE
+    line_width = line_width + 1;
+end
+% leg.Interpreter = "latex";
 
 lines = ax.Children;
 num_lines = size(lines,1);
@@ -69,7 +71,7 @@ validation_orbit_id = num_validation_orbits(end + 1 - iLine) - validation_orbit_
 x_validation_orbit = validation_orbit_line.XData(validation_orbit_id);
 y_validation_orbit = validation_orbit_line.YData(validation_orbit_id);
 
-
+% 
 bb_line = lines(backbone_1_line);
 x_orbit = bb_line.XData(orbit_id);
 y_orbit = bb_line.YData(orbit_id);
@@ -87,23 +89,35 @@ y_orbit = bb_line.YData(orbit_id);
 % p.Annotation.LegendInformation.IconDisplayStyle = "off";
 % uistack(ax.Children(1),"top")
 %-----------------------------------------
-xlim(ax,ax.XLim)
+xlim(ax,[1.35,3.27])
 ylim(ax,ax.YLim)
+if ~PRESENTATION_MODE
+    hold(ax,"on") %#ok<UNRCH>
+    p= plot(ax,[orbit_frequency,orbit_frequency],ax.YLim,"k--");
+    p.Annotation.LegendInformation.IconDisplayStyle = "off";
+    uistack(ax.Children(1),"bottom")
+    hold(ax,"off")
+    %-----------------------------------------
+    x_range = [2.85,3.05];
+    y_range = [0.033,0.047];
+    % insert_position = [0.35,0.45,0.2,0.4];
+    insert_position = [0.3698    0.44    0.2339    0.4531];
+    ax_insert = create_zoomed_insert(ax,insert_position,x_range,y_range);
+else
+    line_width = 2; %1
+    marker_size = 10; %6
+    orbit_style = {"Marker","*","Color",get_plot_colours(3),"LineWidth",line_width,"MarkerSize",marker_size};
+    hold(ax,"on")
+    plot(ax,1.863,0.00317,orbit_style{:});
+    hold(ax,"off")
+end
+%-----------------------------------------
 
-hold(ax,"on")
-p= plot(ax,[orbit_frequency,orbit_frequency],ax.YLim,"k--");
-p.Annotation.LegendInformation.IconDisplayStyle = "off";
-uistack(ax.Children(1),"bottom")
-hold(ax,"off")
-%-----------------------------------------
-x_range = [2.85,3.05];
-y_range = [0.033,0.047];
-insert_position = [0.4,0.65,0.3,0.225];
-ax_insert = create_zoomed_insert(ax,insert_position,x_range,y_range);
-%-----------------------------------------
 
 hold(ax,"on")
 plot(ax,0,0,"-","LineWidth",line_width,"Color",backbone_validation_colour,"DisplayName","Validation backbone")
 hold(ax,"off")
+
+ylabel(ax,"Energy (J)")
 %-----------------------------------------
 save_fig(fig,fig_name)

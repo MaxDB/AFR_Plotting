@@ -7,8 +7,8 @@ max_energy = 0.05;
 backbone_1_line = 8;
 
 colour = get_plot_colours(3);
-line_width = 1;
-marker_size = 6;
+line_width = 1; %1
+marker_size = 6; %6
 
 orbit_style = {"Marker","*","Color",colour,"LineWidth",line_width,"MarkerSize",marker_size};
 %--------------------------------------------------
@@ -29,15 +29,11 @@ ylabel(ax,"Energy (J)")
 % 
 lines = ax.Children;
 num_lines = size(lines,1);
-% for iLine = 1:num_lines
-%     line = lines(iLine);
-%     switch line.DisplayName
-%         case '\{1\}'
-%             line.DisplayName = "$\mathcal R_1$-ROM";
-%         case '\{1, 2\}'
-%             line.DisplayName = "$\mathcal R_2$-ROM";
-%     end
-% end
+for iLine = 1:num_lines
+    line = lines(iLine);
+    line.LineWidth = line_width;
+    line.MarkerSize = marker_size;
+end
 
 bb_line = lines(backbone_1_line);
 x_orbit = bb_line.XData(orbit_id);

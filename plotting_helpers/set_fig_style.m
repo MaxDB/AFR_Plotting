@@ -18,6 +18,13 @@ if ~isempty(Plot_Settings.font_name)
     fontname(fig,Plot_Settings.font_name);
 end
 
+if Plot_Settings.axes == "off"
+    ax = findall(fig,"Type","axes");
+    if size(ax,1) > 1
+        ax = ax(end);
+    end
+    axis(ax,"off")
+end
 
  
 end

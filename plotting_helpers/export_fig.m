@@ -37,6 +37,7 @@ for iFig = 1:num_figs
     fig.UserData = Export_Settings;
 
     fig = set_fig_style(fig,Export_Settings);
+    fig.Position(1:2) = [1,2];
     
     % fixes display problems when projecting 3D plots to 2D
     if Export_Settings.projection == "2D"

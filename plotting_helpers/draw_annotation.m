@@ -54,7 +54,7 @@ text_span = text_top_right - text_bottom_left;
 % annotation(fig,"rectangle",[text_bottom_left,text_span])
 delete(test_ax)
 
-text_ann = annotation(fig,"textbox",[0.5,0.5,text_span],"String",label_text,text_style{:},"EdgeColor","none","Margin",0);
+text_ann = annotation(fig,"textbox",[0.5,0.5,text_span],"String",label_text,text_style{:},"EdgeColor","none","Margin",0,"FitBoxToText","on");
 set(fig, 'WindowButtonMotionFcn', @(object,event_data) mouse_move_text(object,event_data,text_ann));
 mouse_click = 0;
 while ~mouse_click

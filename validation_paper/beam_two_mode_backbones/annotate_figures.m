@@ -1,14 +1,10 @@
 clear 
 close all
 
-fig_name = "energy_backbone";
+fig_name = "two_mode_backbone";
 
-% labels = ["$\mathcal R_{1}$-ROM";
-%           "$\mathcal R_{2}$-ROM";
-%           "$\mathbf r_1^*$"];
+labels = ["$\mathcal \{1,3\}$-ROM"];
 
-labels = ["One Mode ROM";
-          "Two Mode ROM"];
 
 %-----------------------------
 

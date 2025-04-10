@@ -1,19 +1,12 @@
 clear 
 close all
 
-fig_name = "stress_manifold_comp";
+fig_name = "two_mode_validation_error";
 
 
-% labels = ["$\mathcal W_{\mathcal R_1}$";
-%           "$\mathcal W_{\mathcal R_2}$";
-%           "$\tilde{\mathbf x}^*(t)$"];
-
-labels = ["One mode ROM configurations";
-          "Two mode ROM configurations";
-          "Example orbit"];
-
+labels = ["$\{1,3\}:\{1,3,6\}$";
+          "Every other validation basis"];
 %-----------------------------
-
 figs = open_local_figures(fig_name+"_export");
 fig = figs{1};
 %-----------------------------

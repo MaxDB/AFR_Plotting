@@ -1,14 +1,11 @@
 clear 
 close all
 
-fig_name = "energy_backbone";
+fig_name = "stability";
 
-% labels = ["$\mathcal R_{1}$-ROM";
-%           "$\mathcal R_{2}$-ROM";
-%           "$\mathbf r_1^*$"];
+labels = ["$\mathcal R_{2}$-ROM";
+          "$\mathcal R_{1}:\mathcal R_{2}$ validation";];
 
-labels = ["One Mode ROM";
-          "Two Mode ROM"];
 
 %-----------------------------
 

@@ -5,8 +5,13 @@ fig_name = "stress_manifold_comp";
 
 
 
-Export_Settings.height = 6;
-Export_Settings.width = 8.4;
+% Export_Settings.height = 6;
+% Export_Settings.width = 8.4;
+
+Export_Settings.height = 20;
+Export_Settings.width = 25;
+Export_Settings.font_size = 22;
+Export_Settings.axes = "off";
 
 
 Export_Settings.file_type = "png";
