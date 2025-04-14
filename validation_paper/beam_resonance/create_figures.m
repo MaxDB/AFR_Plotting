@@ -17,7 +17,7 @@ delete(ax);
 ax_height = base_position(4)/3;
 
 base_position(4) = ax_height;
-ax_error = axes(fig,"Position",base_position);
+ax_energy = axes(fig,"Position",base_position);
 
 amp_position = base_position;
 amp_position(2) = amp_position(2) + ax_height;
@@ -25,7 +25,7 @@ ax_amp = axes(fig,"Position",amp_position);
 
 energy_position = base_position;
 energy_position(2) = energy_position(2) + 2*ax_height;
-ax_energy = axes(fig,"Position",energy_position);
+ax_error = axes(fig,"Position",energy_position);
 
 copyobj(fig_amp_bb.Children.Children(1).Children,ax_amp)
 copyobj(fig_energy_bb.Children(2).Children,ax_energy)
@@ -40,14 +40,16 @@ x_ticks(:) = {' '};
 
 ax_error.YScale = "log";
 yticks(ax_error,[1e-5,1e-3,1e-1])
+ax_error.XTickLabel = x_ticks;
+
 ax_amp.XTickLabel = x_ticks;
 ylim(ax_amp,[-0.1e-5,1.4e-5])
-ax_energy.XTickLabel = x_ticks;
 
-xlabel(ax_error,"Frequency (rad/s)")
+
+xlabel(ax_energy,"Frequency (rad/s)")
 ylabel(ax_error,"$\epsilon$","Interpreter","latex")
 ylabel(ax_amp,"$Q_3\ \times\!\! 10^{-5}$","Interpreter","latex")
-ylabel(ax_energy,"Energy (J)")
+ylabel(ax_energy,"Energy (mJ)")
 
 x_lim = [395,425];
 xlim(ax_error,x_lim)

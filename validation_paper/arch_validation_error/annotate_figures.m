@@ -1,11 +1,21 @@
 clear 
 close all
 
-fig_name = "validation_error";
+% fig_name = "validation_error";
+% 
+% 
+% labels = ["$\{1\}:\{1,6\}$";
+%           "$\{1\}:\{1,5\}$";
+%           "$\{1\}$-ROM";
+%           "$\{1\}:\{1,x\}$"];
+
+fig_name = "validation_error_single";
 
 
-labels = ["$\{1\}:\{1,6\}$";
-          "$\{1\}:\{1,5\}$"];
+labels = {"Mode 6";
+          "Mode 5";
+          "Other modes"};
+
 %-----------------------------
 figs = open_local_figures(fig_name+"_export");
 fig = figs{1};

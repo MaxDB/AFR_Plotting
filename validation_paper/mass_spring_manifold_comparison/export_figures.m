@@ -7,7 +7,7 @@ fig_name = "manifold_comparison";
 % Export_Settings.width = 8.4;
 
 Export_Settings.height = 20;
-Export_Settings.width = 21;
+Export_Settings.width = 30;
 Export_Settings.font_size = 22;
 Export_Settings.axes = "off";
 

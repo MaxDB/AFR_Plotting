@@ -15,11 +15,11 @@ delete(ax);
 ax_height = base_position(4)/2;
 
 base_position(4) = ax_height;
-ax_error = axes(fig,"Position",base_position);
+ax_amp = axes(fig,"Position",base_position);
 
 amp_position = base_position;
 amp_position(2) = amp_position(2) + ax_height;
-ax_amp = axes(fig,"Position",amp_position);
+ax_error = axes(fig,"Position",amp_position);
 
 
 copyobj(fig_amp_bb.Children.Children(1).Children,ax_amp)
@@ -33,16 +33,16 @@ x_ticks(:) = {' '};
 
 ax_error.YScale = "log";
 yticks(ax_error,[1e-5,1e-3,1e-1])
-ax_amp.XTickLabel = x_ticks;
-ylim(ax_error,[1e-4,1])
+ax_error.XTickLabel = x_ticks;
+ylim(ax_error,[1e-6,1])
 
-xlabel(ax_error,"Frequency (rad/s)")
+xlabel(ax_amp,"Frequency (rad/s)")
 ylabel(ax_error,"$\epsilon$","Interpreter","latex")
-ylabel(ax_amp,"$Q_5$","Interpreter","latex")
+ylabel(ax_amp,"$Q_5\times \!\! 10^{-10}$","Interpreter","latex")
 
-% x_lim = [395,425];
-% xlim(ax_error,x_lim)
-% xlim(ax_amp,x_lim)
+x_lim = [2.625e6,2.754e6];
+xlim(ax_error,x_lim)
+xlim(ax_amp,x_lim)
 %------------------------------------------
 ax_amp = swap_colours(ax_amp,[0,0,0],5);
 ax_amp = swap_colours(ax_amp,1,4);

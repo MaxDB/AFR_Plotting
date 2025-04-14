@@ -2,6 +2,7 @@ clear
 close all
 fig_name = "physical_backbone";
 
+PRESENTATION_MODE = 1;
 
 % orbit_style = {"Marker","*","Color",colour,"LineWidth",line_width,"MarkerSize",marker_size};
 %--------------------------------------------------
@@ -18,8 +19,20 @@ ax = gca;
 
 bb_line = ax.Children(2);
 bb_line.Color = get_plot_colours(1);
-bb_line.Marker = "o";
+
+if ~PRESENTATION_MODE
+    bb_line.Marker = "o";
+else
+    bb_line.LineWidth = bb_line.LineWidth*2;
+end
+
+lines = ax.Children;
+num_lines = length(lines);
+for iLine = 1:num_lines
+    line = lines(iLine);
+    line.YData = line.YData*1000;
+end
 
 
-ylabel(ax,"Maximum displacement (mm)")
+ylabel(ax,"Maximum displacement (μm)")
 save_fig(fig,fig_name)

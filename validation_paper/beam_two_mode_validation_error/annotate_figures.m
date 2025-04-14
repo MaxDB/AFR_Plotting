@@ -5,7 +5,7 @@ fig_name = "two_mode_validation_error";
 
 
 labels = ["$\{1,3\}:\{1,3,6\}$";
-          "Every other validation basis"];
+          "$\{1,3\}:\{1,3,x\}$"];
 %-----------------------------
 figs = open_local_figures(fig_name+"_export");
 fig = figs{1};

@@ -2,6 +2,7 @@ clear
 close all
 fig_name = "two_mode_physical_backbone";
 
+PRESENTATION_MODE = 1;
 
 % orbit_style = {"Marker","*","Color",colour,"LineWidth",line_width,"MarkerSize",marker_size};
 %--------------------------------------------------
@@ -14,7 +15,20 @@ delete(leg);
 
 ax = gca;
 ax = swap_colours(ax,2,5);
-ylim(ax,[0,2e-3])
 
-ylabel(ax,"Maximum displacement (mm)")
+
+lines = ax.Children;
+num_lines = length(lines);
+xlim(ax.XLim)
+for iLine = 1:num_lines
+    line = lines(iLine);
+    line.YData = line.YData*1000;
+    if PRESENTATION_MODE
+        line.LineWidth = line.LineWidth * 2;
+    end
+end
+
+ylim(ax,[0,2])
+
+ylabel(ax,"Maximum displacement (μm)")
 save_fig(fig,fig_name)

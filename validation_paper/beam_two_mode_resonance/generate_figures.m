@@ -1,6 +1,7 @@
 clear
 error_fig_name = "two_mode_resonance_error_base";
 amp_backbone_fig_name = "two_mode_resonance_amp_backbone_base";
+energy_backbone_fig_name = "two_mode_resonance_energy_backbone_base";
 
 sol_num = 1;
 %--------
@@ -21,7 +22,11 @@ Dyn_Data = data_dir_execute(@initalise_dynamic_data,"clamped_beam_13");
 Dyn_Data = data_dir_execute(@Dyn_Data.validate_solution,sol_num,6);
 amp_backbone_ax = data_dir_execute(@compare_solutions,"amplitude","clamped_beam_13",sol_num,"validation",1);
 amp_backbone_fig = gcf;
+energy_backbone_ax = data_dir_execute(@compare_solutions,"energy","clamped_beam_13",sol_num,"validation",1);
+energy_backbone_fig = gcf;
+
 
 
 save_fig(error_fig,error_fig_name)
 save_fig(amp_backbone_fig,amp_backbone_fig_name)
+save_fig(energy_backbone_fig,energy_backbone_fig_name)

@@ -5,7 +5,8 @@ fig_name = "validation_error";
 
 
 labels = ["$\{1\}:\{1,3\}$";
-          "$\{1\}:\{1,6\}$"];
+          "$\{1\}:\{1,6\}$";
+          "$\{1\}:\{1,x\}$"];
 %-----------------------------
 figs = open_local_figures(fig_name+"_export");
 fig = figs{1};

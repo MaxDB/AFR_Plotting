@@ -8,8 +8,8 @@ data_directory = get_project_path + "\examples\size_test";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
 data_dir_execute(@set_visualisation_level,1)
-error_ax = data_dir_execute(@compare_validation,"mems_arch_16","validation error",sol_num(1),5);
-error_ax = data_dir_execute(@compare_validation,"mems_arch_16","validation error",sol_num(2),5,"axes",error_ax);
+error_ax = data_dir_execute(@compare_validation,"mems_arch_16","validation error",sol_num(1),1:10);
+error_ax = data_dir_execute(@compare_validation,"mems_arch_16","validation error",sol_num(2),1:10,"axes",error_ax);
 error_fig = gcf;
 
 Dyn_Data = data_dir_execute(@initalise_dynamic_data,"mems_arch_16");
@@ -19,7 +19,8 @@ Dyn_Data = data_dir_execute(@initalise_dynamic_data,"mems_arch_16");
 % Dyn_Data_12 = data_dir_execute(@initalise_dynamic_data,"mass_spring_roller_12");
 % Dyn_Data_12 = data_dir_execute(@Dyn_Data_12.validate_solution,1,"all");
 % ax = data_dir_execute(@plot_h_predicition,Dyn_Data_12,"validation error",1);
-% Dyn_Data = data_dir_execute(@Dyn_Data.validate_solution,sol_num(1),4);
+Dyn_Data = data_dir_execute(@Dyn_Data.validate_solution,sol_num(1),5);
+Dyn_Data = data_dir_execute(@Dyn_Data.validate_solution,sol_num(2),5);
 amp_backbone_ax = data_dir_execute(@compare_solutions,"amplitude","mems_arch_16",sol_num,"validation",1);
 amp_backbone_fig = gcf;
 
