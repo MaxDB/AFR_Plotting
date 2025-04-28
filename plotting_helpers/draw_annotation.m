@@ -1,5 +1,6 @@
-function draw_annotation(fig,label)
+function annotation_progress = draw_annotation(fig,label)
 ax = get_main_axes(fig);
+annotation_progress = 0;
 
 font_name = ax.FontName;
 font_size = ax.FontSize;
@@ -55,11 +56,26 @@ text_span = text_top_right - text_bottom_left;
 delete(test_ax)
 
 text_ann = annotation(fig,"textbox",[0.5,0.5,text_span],"String",label_text,text_style{:},"EdgeColor","none","Margin",0,"FitBoxToText","on");
-set(fig, 'WindowButtonMotionFcn', @(object,event_data) mouse_move_text(object,event_data,text_ann));
+
+
+text_dim = text_ann.Position;
+x_line = [text_dim(1),text_dim(1) + text_dim(3)];
+y_line = [text_dim(2),text_dim(2)];
+underline_ann = annotation(fig,"line",x_line,y_line);
+
+
+set(fig, 'WindowButtonMotionFcn', @(object,event_data) mouse_move_text(object,event_data,text_ann,underline_ann));
 mouse_click = 0;
 while ~mouse_click
-    mouse_click = ~waitforbuttonpress;
+    mouse_click = ~waitforbuttonpress;  
 end
+if fig.SelectionType == "alt"
+    set(fig,"WindowButtonMotionFcn",'');
+    set(fig, 'WindowKeyPressFcn','');
+    return
+end
+annotation_progress = annotation_progress + 1;
+annotation_progress = annotation_progress + 1;
 set(fig,"WindowButtonMotionFcn",'');
 
 
@@ -73,9 +89,7 @@ end
 text_dim = text_ann.Position;
 
 
-x_line = [text_dim(1),text_dim(1) + text_dim(3)];
-y_line = [text_dim(2),text_dim(2)];
-underline_ann = annotation(fig,"line",x_line,y_line);
+
 
 head_style = "none";
 if label_mode == "arrow"
@@ -103,18 +117,26 @@ y_arrow = [0.5,0.5];
 
 arrow_ann = annotation(fig,"arrow",x_arrow,y_arrow,arrow_style{:});
 
+
 set(fig, 'WindowButtonMotionFcn', @(object,event_data) mouse_move_arrow(object,event_data,arrow_ann,underline_ann));
 fig.Pointer = "circle";
 mouse_click = 0;
 while ~mouse_click
     mouse_click = ~waitforbuttonpress;
 end
+if fig.SelectionType == "alt"
+    set(fig,"WindowButtonMotionFcn",'');
+    set(fig, 'WindowKeyPressFcn','');
+    return
+end
+annotation_progress = annotation_progress + 1;
 set(fig,"WindowButtonMotionFcn",'');
 fig.Pointer = "arrow";
 
 
 set(fig, 'WindowKeyPressFcn','');
 clear mouse
+
 end
 
 function ax = get_main_axes(fig)
@@ -159,9 +181,17 @@ x_arrow(2) = arrow_line(1);
 y_arrow(2) = arrow_line(2);
 end
 
-function mouse_move_text(object, eventdata, text_label)
+function mouse_move_text(object, eventdata, text_label, text_underline)
     cursor_position = get(object, 'CurrentPoint');
-    text_label.Position(1:2) = cursor_position./object.Position(3:4);
+
+    text_position = cursor_position./object.Position(3:4);
+    text_label.Position(1:2) = text_position;
+
+    x_line = [text_position(1),text_position(1) +  text_label.Position(3)];
+    y_line = [text_position(2),text_position(2)];
+
+    text_underline.X = x_line;
+    text_underline.Y = y_line;
 end
 
 function mouse_move_arrow(object, eventdata, arrow_ann , underline_ann)

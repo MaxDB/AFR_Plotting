@@ -60,7 +60,7 @@ ax_amp = swap_colours(ax_amp,[0,0,0],2);
 ax_amp = swap_colours(ax_amp,1,5);
 
 ax_error = swap_colours(ax_error,2,5);
-ax_error = swap_colours(ax_error,1,8);
+ax_error = swap_colours(ax_error,1,9);
 
 ax_energy = swap_colours(ax_energy,1,5);
 ax_energy = swap_colours(ax_energy,[0,0,0],2);
