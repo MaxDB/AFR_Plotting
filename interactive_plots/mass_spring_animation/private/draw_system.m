@@ -3,7 +3,7 @@ mass_radius = 0.2;
 
 % set up axes
 axes(ax);
-% axis off
+axis off
 box off
 daspect([1 1 1])
 
