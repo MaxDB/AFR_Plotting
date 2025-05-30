@@ -16,6 +16,23 @@ fig.PaperSize = fig.InnerPosition([3,4]);
 fontsize(fig,Plot_Settings.font_size,"points");
 if ~isempty(Plot_Settings.font_name)
     fontname(fig,Plot_Settings.font_name);
+
+    fig_children = findobj(fig,"-property","XLabel");%necessary for \rm to work
+    num_children = size(fig_children,1);
+    tex_font = "\fontname{"+Plot_Settings.font_name+"}";
+    for iChild = 1:num_children
+        fig_child = fig_children(iChild);
+        if isa(fig_child.XLabel,"matlab.graphics.primitive.Text")
+            set_label(fig_child,"x",tex_font + fig_child.XLabel.String);
+        end
+        if isa(fig_child.YLabel,"matlab.graphics.primitive.Text")
+            set_label(fig_child,"y",tex_font + fig_child.YLabel.String);
+        end
+        if isa(fig_child.ZLabel,"matlab.graphics.primitive.Text")
+            set_label(fig_child,"z",tex_font + fig_child.ZLabel.String);
+        end
+
+    end
 end
 
 if Plot_Settings.axes == "off"
@@ -25,6 +42,7 @@ if Plot_Settings.axes == "off"
     end
     axis(ax,"off")
 end
+
 
  
 end

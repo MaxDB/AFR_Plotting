@@ -3,7 +3,7 @@ mass_style = {"LineWidth",2};
 
 hold(ax,"on")
 mass_group = viscircles(ax,centre,radius,"EnhanceVisibility",0,mass_style{:});
-
+set(mass_group.Children,"Tag","mass");
 
 switch boundary
     case "free"

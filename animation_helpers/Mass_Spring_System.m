@@ -157,17 +157,15 @@ classdef Mass_Spring_System
 
 
         %--------------
-        function animation = animate_orbit(obj,sol_num,orbit_id,animation_scale_factor)
-            FRAME_RATE = 30;
+        function animation = animate_orbit(obj,sol_num,orbit_id,animation_scale_factor,frame_rate)
             
 
-            ax = obj.animation_ax;
-            fig = ax.Parent;
+           
 
 
             [t,x] = obj.animation_function(sol_num,orbit_id);
             
-            frame_t = t(1):1/FRAME_RATE:t(end);
+            frame_t = t(1):1/frame_rate:t(end);
 
             num_frames = size(frame_t,2);
             num_dof = size(x,1);
@@ -176,6 +174,22 @@ classdef Mass_Spring_System
                 frame_x(iDof,:) = interp1(t,x(iDof,:),frame_t);
             end
             
+            animation = obj.animate_displacement(frame_t,frame_x,animation_scale_factor,frame_rate);
+            
+        end
+        %--------------
+        function animation = animate_displacement(obj,frame_t,frame_x,animation_scale_factor,frame_rate)
+             num_frames = size(frame_t,2);
+            if nargin == 3
+                animation_scale_factor = 1;
+                period = frame_t(end) - frame_t(1);
+                frame_rate = num_frames/period;
+            end
+            
+            ax = obj.animation_ax;
+            fig = ax.Parent;
+           
+
             fig_dims = fig.Position;
             fig_width = fig_dims(3);
             fig_height = fig_dims(4);
@@ -196,13 +210,31 @@ classdef Mass_Spring_System
 
 
             animation.frames = system_frames;
-            animation.frame_rate = FRAME_RATE;
+            animation.frame_rate = frame_rate;
             animation.num_frames = num_frames;
             animation.size = fig.Position;
 
-             fig.Position = fig_dims;
+            fig.Position = fig_dims;
         end
+
+        %--------------
+        %-- Style
+
+        %--------------
+        function set_mass_colour(obj,colour)
+            masses = obj.animated_masses;
+            num_masses = obj.num_animated_masses;
+
+            for iMass = 1:num_masses
+                Mass = masses{iMass};
+                mass_circle = findobj(Mass.graphical_group,"Tag","mass");
+                mass_circle.Color = colour;
+            end
+
+        end
+
     end
+
     %---------------------------------------------------------------------------
     methods(Static)
         function dof_shapes = parse_dofs(dofs_description,state)

@@ -14,7 +14,8 @@ Rom = Dyn_Data_12.Dynamic_Model;
 Model = Dyn_Data_12.Dynamic_Model.Model;
 
 fig = figure;
-ax = axes(fig);
+% fig.Position = [0,0,1920,1080];
+ax = axes(fig,"Position",[0,0,1,1]);
 
 System = draw_system(Model,ax);
 
@@ -23,13 +24,33 @@ System_1 = System.setup_animation_function(Dyn_Data_1,data_dir_execute);
 System_12 = System.setup_animation_function(Dyn_Data_12,data_dir_execute);
 
 
-sol_id_12 = 1;
-orbit_id_12 = 526;
-System_12.animate_orbit(sol_id_12,orbit_id_12);
+sol_id = 1;
+%--
+orbit_id = 10;
+disp_scale_factor = 10;
 
-sol_id_1 = 1;
-orbit_id_1 = 298;
-System_1.animate_orbit(sol_id_1,orbit_id_1);
+animation = System_12.animate_orbit(sol_id,orbit_id,disp_scale_factor);
+export_animation(animation)
+play_animation(animation,100)
+%--
+
+%--
+orbit_id = 66;
+disp_scale_factor = 2;
+
+animation = System_12.animate_orbit(sol_id,orbit_id,disp_scale_factor);
+export_animation(animation)
+play_animation(animation,100)
+%--
+
+%--
+orbit_id = 90;
+disp_scale_factor = 2;
+
+animation = System_12.animate_orbit(sol_id,orbit_id,disp_scale_factor);
+export_animation(animation)
+%--
+
 
 
 % data_dir_execute(@plot_orbit,Dyn_Data_1,"displacement",sol_id_1,orbit_id_1);

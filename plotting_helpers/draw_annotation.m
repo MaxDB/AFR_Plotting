@@ -39,7 +39,7 @@ set(fig, 'WindowKeyPressFcn', @(object,event_data) move_mouse(object,event_data,
 
 
 %place text
-text_style = [{"FontName",font_name,"FontSize",font_size,"FontUnits",font_units},additional_text_args];
+text_style = [{"FontName",font_name,"FontSize",font_size,"FontUnits",font_units,"BackgroundColor","white"},additional_text_args];
 if contains(label_text,"$")
     text_style((end+1):(end+2)) = {"Interpreter","latex"};
 end
