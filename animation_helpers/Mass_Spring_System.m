@@ -141,29 +141,61 @@ classdef Mass_Spring_System
         %--------------
         function obj = setup_animation_function(obj,Dyn_Data,data_dir_execute)
             Rom = Dyn_Data.Dynamic_Model;
-            obj.animation_function = @(sol_num,orbit_id) get_animation_data(sol_num,orbit_id,Dyn_Data,Rom,data_dir_execute);
+            obj.animation_function = @(sol_num,orbit_id,validation) get_animation_data(sol_num,orbit_id,validation,Dyn_Data,Rom,data_dir_execute);
 
 
-            function [t,x] = get_animation_data(sol_num,orbit_id,Dyn_Data,Rom,data_dir_execute)
-                Orbit = data_dir_execute(@Dyn_Data.get_orbit,sol_num,orbit_id);
+            function [t,x] = get_animation_data(sol_num,orbit_id,validation,Dyn_Data,Rom,data_dir_execute)
+                if nargin == 2
+                    validation = 0;
+                end
+                [Orbit,Validated_Orbit] = data_dir_execute(@Dyn_Data.get_orbit,sol_num,orbit_id,validation);
                 t = Orbit.tbp';
                 state = Orbit.xbp';
                 state_size = size(state,1);
-
                 displacement = state(1:(state_size/2),:);
-                x = Rom.expand(displacement);
+                if validation
+                    Sol = data_dir_execute(@Dyn_Data.load_solution,sol_num,"validation");
+                    Static_Data = data_dir_execute(@load_static_data,Rom);
+                    Static_Data = data_dir_execute(@Static_Data.add_validation_data,Sol.validation_modes);
+                    Rom = data_dir_execute(@Reduced_System,Static_Data);
+
+                    h_displacement = Validated_Orbit.h;
+                    x = Rom.expand(displacement,h_displacement);
+                else
+                    x = Rom.expand(displacement);
+                end
             end
         end
 
 
         %--------------
-        function animation = animate_orbit(obj,sol_num,orbit_id,animation_scale_factor,frame_rate)
-            
+        function animation = animate_orbit(obj,sol_num,orbit_id,frame_rate,varargin)
+            %-------------------------------------------------------------------------%
+            num_args = length(varargin);
+            if mod(num_args,2) == 1
+                error("Invalid keyword/argument pairs")
+            end
+            keyword_args = varargin(1:2:num_args);
+            keyword_values = varargin(2:2:num_args);
 
-           
+            animation_scale_factor = 1;
+            validation = 0;
+            for arg_counter = 1:num_args/2
+                switch keyword_args{arg_counter}
+                    case "scale_factor"
+                        animation_scale_factor = keyword_values{arg_counter};
+                    case "validation"
+                        validation = keyword_values{arg_counter};
+                    otherwise
+                        error("Invalid keyword: " + keyword_args{arg_counter})
+                end
+            end
+            %-------------------------------------------------------------------------%
 
 
-            [t,x] = obj.animation_function(sol_num,orbit_id);
+
+
+            [t,x] = obj.animation_function(sol_num,orbit_id,validation);
             
             frame_t = t(1):1/frame_rate:t(end);
 

@@ -2,7 +2,7 @@ clear
 close all
 
 
-fig_name = "energy_backbone";
+fig_name = "energy_backbone_" + [1,2,3,4];
 
 
 

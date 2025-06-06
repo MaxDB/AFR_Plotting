@@ -1,13 +1,13 @@
 clear 
 close all
 
-fig_name = "applied_force_2";
+fig_name = "applied_force_1";
 
 
 
-Export_Settings.height = 30;
-Export_Settings.width = 40;
-Export_Settings.font_size = 32;
+Export_Settings.width = 30;
+Export_Settings.height = Export_Settings.width*110/180;
+Export_Settings.font_size = 22;
 
 
 Export_Settings.file_type = "png";

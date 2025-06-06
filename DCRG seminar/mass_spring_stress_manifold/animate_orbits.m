@@ -36,7 +36,7 @@ for iOrbit = 1:num_orbits
     open("figures\stress_manifold_comp_export.fig")
     fig = gcf;
 
-    fig.Position(4) = fig.Position(4)*1.09;
+    fig.Position(4) = fig.Position(4)*0.92;
     fig.Color = [0.8,0.8,0.8];
     ax = gca;
     xlim(ax,ax.XLim);

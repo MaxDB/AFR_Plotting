@@ -2,7 +2,7 @@ clear
 close all
 
 period = 30;
-frame_rate = 20;
+frame_rate = 20;%
 start_index = 11;
 
             
@@ -13,7 +13,7 @@ marker_colour = get_plot_colours(3);
 open("figures\applied_force_2_export.fig")
 fig = gcf;
 
-fig.Position(4) = fig.Position(4)*1.09;
+fig.Position(4) = fig.Position(4)*0.92;
 fig.Color = [0.8,0.8,0.8];
 ax = gca;
 xlim(ax,ax.XLim);
@@ -52,7 +52,7 @@ frame_x(3,:) = marker_z;
 
 system_frames(num_frames) = struct('cdata',[],'colormap',[]); 
 hold(ax,"on")
-ani_marker = plot3(ax,0,0,0,"o","MarkerSize",8,"LineWidth",1,"MarkerEdgeColor","w","MarkerFaceColor",marker_colour);
+ani_marker = plot3(ax,0,0,0,"o","MarkerSize",14,"LineWidth",2,"MarkerEdgeColor","w","MarkerFaceColor",marker_colour);
 hold(ax,"off")
 
 
@@ -76,7 +76,7 @@ hold(ax,"off")
 % animation.ax_size = ax.Position;
 % %-----------------
 % export_gif(animation,"manifold_marker")
-close all
+% close all
 
 
 %-------------------------------------------------
@@ -86,7 +86,7 @@ close all
 %--------------------
 
 
-rom = "mass_spring_roller_12";
+rom = "mass_spring_roller_1";
 data_directory = get_project_path + "\examples\3_dof_mass_spring";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
@@ -99,17 +99,106 @@ fig = figure;
 ax = axes(fig,"Position",[0,0,1,1]);
 
 System = draw_system(Model,ax);
-
+ax = System.animation_ax;
 %------------------------------------------
 System_Ani = System.setup_animation_function(Dyn_Data,data_dir_execute);
 
 
 
 %--
-displacement = frame_x([3,2,1],:);
+sf = 2;
+displacement = frame_x([3,2,1],:)*sf;
 
 
 System_Ani.set_mass_colour(marker_colour)
 animation = System_Ani.animate_displacement(time,displacement);
-export_animation(animation,"mass_spring_forced")
+%------------
+% export_animation(animation,"mass_spring_forced")
+%------------
+% create arrow
+r_evec = Rom.Model.reduced_eigenvectors;
+r_disp = r_evec'*displacement/sf;
+f_r = Rom.Force_Polynomial.evaluate_polynomial(r_disp);
+
+fig = figure;
+fig.Position = animation.size;
+fig.Position(4) = fig.Position(4)*0.8; %0.74
+fig.Color = [0.8,0.8,0.8];
+ax_arrow = axes(fig);
+
+ax_arrow.Color = [0.8,0.8,0.8];
+
+
+arm_length = 0.1;
+head_width = 0.05;
+arrow_width = 0.03;
+
+arrow_start = [1.2,1.2];
+arrow_end = [1.2,1.2];
+arrow_left_end = arrow_end - [arm_length,0];
+arrow_right_end = arrow_end + [arm_length,0];
+
+
+zero_angle = 0;
+max_angle = pi/3;
+
+max_height = 1;
+max_force = max(abs(f_r));
+
+hold on
+% arrow = plot(ax_arrow,[arrow_start(1),arrow_end(1)],[arrow_start(2),arrow_end(2)],"-","LineWidth",arrow_width,"Color",get_plot_colours(3));
+arrow = rectangle("Position",[arrow_start(1)-arrow_width/2,arrow_start(2),arrow_width,0],"FaceColor",get_plot_colours(3),"EdgeColor","w","LineWidth",1);
+arrow_head_def = polyshape([0,arm_length,arm_length,0,-arm_length,-arm_length] + arrow_end(1),[head_width/2,head_width/2,-head_width/2,-head_width/2,-head_width/2,head_width/2] + arrow_end(2),"Simplify",false);
+arrow_head = plot(arrow_head_def,"FaceColor",get_plot_colours(3),"EdgeColor","w","LineWidth",1,"FaceAlpha",1);
+hold off
+xlim(ax_arrow,ax.XLim);
+ylim(ax_arrow,ax.YLim);
+axis off
+
+
+length_ratio = 0.01;
+arrow_frames(num_frames) = struct('cdata',[],'colormap',[]);
+for iFrame = 1:num_frames
+    arrow.Position(2) = arrow_start(2)+displacement(2,iFrame);
+    arrow_height = f_r(iFrame)*max_height/max_force;
+    if arrow_height >= 0
+        arrow.Position(4) = arrow_height;
+    else
+        arrow.Position(4) = abs(arrow_height);
+        arrow.Position(2) = arrow.Position(2) + arrow_height;
+    end
+
+    
+
+
+    head_x = arrow_head_def.Vertices(:,1);
+    head_y = arrow_head_def.Vertices(:,2);
+
+    if arrow_height >=0
+        arrow_head.Shape.Vertices(:,2) = arrow.Position(2) + arrow.Position(4) + [head_width/2,head_width/2,-head_width/2,-head_width/2,-head_width/2,head_width/2];
+    else
+        arrow_head.Shape.Vertices(:,2) = arrow.Position(2) + [head_width/2,head_width/2,-head_width/2,-head_width/2,-head_width/2,head_width/2];
+    end
+
+    angle = zero_angle + f_r(iFrame)*max_angle/max_force;
+    y_diff = -arm_length*sin(angle);
+    
+    arrow_head.Shape.Vertices(6,2) = arrow_head.Shape.Vertices(1,2) + y_diff;
+    arrow_head.Shape.Vertices(5,2) = arrow_head.Shape.Vertices(4,2) + y_diff;
+
+    arrow_head.Shape.Vertices(2,2) = arrow_head.Shape.Vertices(1,2) + y_diff;
+    arrow_head.Shape.Vertices(3,2) = arrow_head.Shape.Vertices(4,2) + y_diff;
+
+
+    drawnow
+    arrow_frames(iFrame) = getframe(ax_arrow);
+end
+
+arrow_animation = animation;
+arrow_animation.frames = arrow_frames;
+
+%-----------------
+export_gif(arrow_animation,"arrow")
+
+
 

@@ -1,7 +1,7 @@
 clear 
 close all
 
-fig_name = "stress_manifold_comp";
+fig_name = "stress_manifold_comp_4";
 
 
 

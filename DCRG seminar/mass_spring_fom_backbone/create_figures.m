@@ -2,6 +2,8 @@ clear
 close all
 fig_name = "energy_backbone";
 
+animation_state = 1;
+
 max_energy = 0.05;
 backbone_1_line = 8;
 
@@ -23,7 +25,7 @@ leg = fig.Children(1);
 delete(leg)
 %------------------------------------------
 ylim(ax,[0,max_energy ])
-xlim(ax,[1.4,3.2]);
+xlim(ax,[1.35,3.2]);
 ylabel(ax,"Energy (J)")
 % 
 % leg.Interpreter = "latex";
@@ -51,7 +53,47 @@ end
 hold(ax,"off")
 
 
-% p.Annotation.LegendInformation.IconDisplayStyle = "off";
-% uistack(ax.Children(1),"bottom")
 %-----------------------------------------
-save_fig(fig,"energy_backbone")
+xlim(ax.XLim);
+ylim(ax.YLim);
+zlim(ax.ZLim);
+
+switch animation_state
+    case 1
+        lines = findobj(ax,"-property","XData");
+        set(lines,"Visible","off");
+    case 2
+        lines = findobj(ax,"-property","XData");
+        set(lines,"Visible","off");
+        linear_marker = lines(2);
+        linear_marker.Visible = "on";
+        hold(ax,"on")
+        plot(ax,linear_marker.XData*[1,1],[linear_marker.YData,max_energy],"k-","LineWidth",line_width)
+        hold(ax,"off")
+        uistack(linear_marker,"up",2)
+    case 3
+        lines = findobj(ax,"-property","XData");
+        % set(lines,"Visible","off");
+        hide_lines = [4,9,10];
+        set(lines(hide_lines),"Visible","off");
+
+        res_line_2 = lines(8);
+        res_line_2.XData = res_line_2.XData(8:end);
+        res_line_2.YData = res_line_2.YData(8:end);
+        
+        res_line_1 = lines(3);
+        res_line_1.XData = [res_line_1.XData(1:20), res_line_2.XData(1)];
+        res_line_1.YData = [res_line_1.YData(1:20), res_line_2.YData(1)];
+
+        lines(7).LineStyle = "-";
+
+
+    case 4
+
+end
+
+
+
+
+%-----------------------------------------
+save_fig(fig,fig_name +"_"+animation_state)

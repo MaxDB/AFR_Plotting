@@ -1,7 +1,10 @@
 clear
 close all
 
+animation_state = 4;
+
 fig_name = "stress_manifold_comp";
+
 
 Plot_Settings.energy_limit = 0.05;
 Plot_Settings.plot_type = "physical";
@@ -19,7 +22,17 @@ manifold1_width = 4;
 manifold1_colour = get_plot_colours(3);
 manifold2_colour = get_plot_colours(2);
 
-Manifold_Two.orbit = [[1;1;1],orbit_ids'];
+switch animation_state
+    case 1
+
+    case 2
+        Manifold_Two.orbit = [1,orbit_ids(1)];
+    case 3
+        Manifold_Two.orbit = [[1;1],orbit_ids(1:2)'];
+    case 4
+        Manifold_Two.orbit = [[1;1;1],orbit_ids(1:3)'];
+end
+
 %--------------------------------------------------
 data_directory = get_project_path + "\examples\3_dof_mass_spring";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
@@ -106,4 +119,4 @@ ax.CameraPosition = camera_position;
 
 %------------------------------------------
 
-save_fig(fig,fig_name)
+save_fig(fig,fig_name+"_"+animation_state)

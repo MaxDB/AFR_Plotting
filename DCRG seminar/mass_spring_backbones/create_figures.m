@@ -2,12 +2,14 @@ clear
 close all
 fig_name = "energy_backbone_comp";
 
+state = 2;
+
 max_energy = 0.05;
 backbone_1_line = 8;
 
 colour = get_plot_colours(3);
-line_width = 2; %1
-marker_size = 6; %6
+   line_width = 4; %2
+marker_size = 12; %6
 
 x_point = [1.42562, 1.84174, 1.98323];
 y_point = [4.37274e-5, 0.0413184, 0.0046976];
@@ -42,6 +44,7 @@ end
 num_points = size(x_point,2);
 point_colours = get_plot_colours([4,5,6]);
 
+if state == 1
 hold(ax,"on")
 for iPoint = 1:num_points
     plot(ax,x_point(iPoint),y_point(iPoint),"*","MarkerSize",14,"LineWidth",line_width,"Color",point_colours(iPoint,:));
@@ -51,9 +54,17 @@ for iPoint = 1:num_points
     end
 end
 hold(ax,"off")
-
+end
 
 % p.Annotation.LegendInformation.IconDisplayStyle = "off";
 % uistack(ax.Children(1),"bottom")
+%-----------------------------------------
+if state == 2
+ 
+    swap_colours(ax,3,0)
+    hold(ax,"on")
+    plot(ax,1.8591,0.003121,"*","MarkerSize",22,"LineWidth",line_width,"MarkerFaceColor",get_plot_colours(3),"MarkerEdgeColor",get_plot_colours(3))
+    hold(ax,"off")
+end
 %-----------------------------------------
 save_fig(fig,fig_name)
