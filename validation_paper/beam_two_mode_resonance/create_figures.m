@@ -28,7 +28,7 @@ ax_error = axes(fig,"Position",error_position);
 
 
 copyobj(fig_amp_bb.Children.Children(1).Children,ax_amp)
-copyobj(fig_error.Children.Children,ax_error)
+copyobj(fig_error.Children.Children.Children,ax_error)
 copyobj(fig_energy_bb.Children(2).Children,ax_energy)
 %------------------------------------------
 box(ax_error,"on")
@@ -45,8 +45,8 @@ ax_amp.XTickLabel = x_ticks;
 ylim(ax_energy,[-0.1e-5,1.4e-5])
 
 xlabel(ax_energy,"Frequency (rad/s)")
-ylabel(ax_error,"$\epsilon$","Interpreter","latex")
-ylabel(ax_amp,"$Q_6 \times\!\! 10^{-7}$","Interpreter","latex")
+ylabel(ax_error,"\epsilon","Interpreter","tex")
+ylabel(ax_amp,"Q_6 \times10^{-7}","Interpreter","tex")
 ylabel(ax_energy,"Energy (mJ)")
 
 ylim(ax_energy,[0,5e-3])

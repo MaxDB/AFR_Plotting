@@ -29,7 +29,7 @@ ax_error = axes(fig,"Position",energy_position);
 
 copyobj(fig_amp_bb.Children.Children(1).Children,ax_amp)
 copyobj(fig_energy_bb.Children(2).Children,ax_energy)
-copyobj(fig_error.Children.Children,ax_error)
+copyobj(fig_error.Children.Children.Children,ax_error)
 %------------------------------------------
 box(ax_error,"on")
 box(ax_energy,"on")
@@ -47,8 +47,8 @@ ylim(ax_amp,[-0.1e-5,1.4e-5])
 
 
 xlabel(ax_energy,"Frequency (rad/s)")
-ylabel(ax_error,"$\epsilon$","Interpreter","latex")
-ylabel(ax_amp,"$Q_3\ \times\!\! 10^{-5}$","Interpreter","latex")
+ylabel(ax_error,"\epsilon","Interpreter","tex")
+ylabel(ax_amp,"Q_3 \times10^{-5}","Interpreter","tex")
 ylabel(ax_energy,"Energy (mJ)")
 
 x_lim = [395,425];

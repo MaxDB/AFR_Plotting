@@ -9,6 +9,7 @@ classdef Spring
 
         animation_axis
         graphical_group
+        Plotting_Style
 
         number_of_sections
         segment_angle
@@ -16,12 +17,31 @@ classdef Spring
     end
 
     methods
-        function obj = Spring(id,ax,coords,bcs)
+        function obj = Spring(id,ax,coords,bcs,varargin)
+            num_args = length(varargin);
+            if mod(num_args,2) == 1
+                error("Invalid keyword/argument pairs")
+            end
+            keyword_args = varargin(1:2:num_args);
+            keyword_values = varargin(2:2:num_args);
+
+            Plot_Style.thickness = 2;
+            for arg_counter = 1:num_args/2
+                switch keyword_args{arg_counter}
+                    case "thickness"
+                        Plot_Style.thickness = keyword_values{arg_counter};
+                    otherwise
+                        error("Invalid keyword: " + keyword_args{arg_counter})
+                end
+            end
+            %----
             obj.spring_id = id;
             obj.animation_axis = ax;
             obj.end_coords = coords;
             obj.boundary_conditions = bcs;
-            obj.initial_length = sqrt(sum(diff(coords,1,2).^2));
+            obj.initial_length = sqrt(sum(diff(coords,1,2).^2)); 
+            obj.Plotting_Style = Plot_Style;
+            %----
 
             coords_diff = diff(coords,1,2);
             if coords_diff(1) == 0
@@ -30,7 +50,7 @@ classdef Spring
                  obj.alignment = "horizontal";
             end
 
-            [spring_group,Spring_Data] = draw_spring(ax,coords,bcs);
+            [spring_group,Spring_Data] = draw_spring(ax,coords,bcs,Plot_Style);
             obj.number_of_sections = Spring_Data.num_sections;
             obj.segment_angle = Spring_Data.segment_angle;
             obj.segment_length = Spring_Data.segment_length;

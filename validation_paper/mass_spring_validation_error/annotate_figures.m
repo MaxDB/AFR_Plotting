@@ -7,12 +7,6 @@ fig_name = "validation_error";
 labels = ["$\{1\}:\{1,2\}$";
           "$\{1\}:\{1,3\}$"];
 %-----------------------------
-figs = open_local_figures(fig_name+"_export");
-fig = figs{1};
-%-----------------------------
-num_labels = size(labels,1);
-for iLabel = 1:num_labels
-    draw_annotation(fig,labels(iLabel,:));
-end
+[fig,fig_name] = annotate_fig(fig_name,labels);
 %------------------------------
-export_fig(fig,fig_name + "_annotated","inherit")
+export_fig(fig,fig_name,"inherit")

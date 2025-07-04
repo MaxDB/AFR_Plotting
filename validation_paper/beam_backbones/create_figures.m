@@ -18,7 +18,8 @@ xlim(ax,[360,590])
 
 bb_line = ax.Children(2);
 bb_line.Color = get_plot_colours(1);
-bb_line.Marker = "o";
+bb_line.Marker = ".";
+bb_line.MarkerSize = 12;
 
 
 ylabel(ax,"Energy (J)")

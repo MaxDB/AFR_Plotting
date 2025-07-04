@@ -1,14 +1,11 @@
 clear 
 close all
 
-fig_name = "energy_backbone_5";
+fig_name = "physical_backbone";
 
-% labels = ["$\mathcal R_{1}$-ROM";
-%           "$\mathcal R_{2}$-ROM";
-%           "$\mathbf r_1^*$"];
+% labels = ["$\mathcal \{1\}$-ROM"];
+labels = {"One mode ROM"};
 
-labels = ["One Mode ROM";
-          "Two Mode ROM"];
 
 %-----------------------------
 
@@ -18,7 +15,7 @@ fig = figs{1};
 %-----------------------------
 num_labels = size(labels,1);
 for iLabel = 1:num_labels
-    draw_annotation(fig,labels(iLabel));
+    draw_annotation(fig,labels(iLabel,:));
 end
 %------------------------------
 export_fig(fig,fig_name + "_annotated","inherit")

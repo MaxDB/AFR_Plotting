@@ -16,12 +16,12 @@ Dyn_Data_12 = data_dir_execute(@initalise_dynamic_data,"mass_spring_roller_12");
 
 % Dyn_Data_1 = data_dir_execute(@Dyn_Data_1.validate_solution,1,2);
 
-[freq_1,floquet_1,floquet_v1] =  data_dir_execute(@get_floquet_multipliers,Dyn_Data_1,frequency_range);
-[freq_12,floquet_12] = data_dir_execute(@get_floquet_multipliers,Dyn_Data_12,frequency_range);
+[freq_1,floquet_1,floquet_v1] =  data_dir_execute(@get_floquet_multipliers,Dyn_Data_1,3,frequency_range);
+[freq_12,floquet_12] = data_dir_execute(@get_floquet_multipliers,Dyn_Data_12,1,frequency_range);
 
 
-swap_column = 17;
-floquet_v1(3:4,swap_column) = floquet_v1([4,3],swap_column);
+swap_column = 18;
+floquet_v1([3,4],swap_column) = floquet_v1([4,3],swap_column);
 %---------------------------------------------------------
 fig = figure;
 ax = axes(fig);
@@ -65,7 +65,7 @@ hold(ax,"off")
 
 xlabel(ax,"Frequency (rad/s)")
 ylabel(ax,"Floquet multiplier amplitude")
-xlim(ax,[2.85,3.3])
+xlim(ax,[2.85,3.26])
 ylim(ax,[0.6,1.7])
 
 
@@ -75,13 +75,12 @@ save_fig(fig,fig_name)
 
 
 %----------
-function [frequency,orbit_multipliers,validation_multipliers] = get_floquet_multipliers(Dyn_Data,frequency_range)
-SOL_NUM = 1;
+function [frequency,orbit_multipliers,validation_multipliers] = get_floquet_multipliers(Dyn_Data,sol_num,frequency_range)
 
-Sol = Dyn_Data.load_solution(SOL_NUM);
+Sol = Dyn_Data.load_solution(sol_num);
 orbit_ids = find(Sol.frequency >= frequency_range(1) & Sol.frequency <= frequency_range(2));
 frequency = Sol.frequency(orbit_ids);
-[~,validation_orbits,solution_path] = Dyn_Data.get_orbit(SOL_NUM,orbit_ids,1);
+[~,validation_orbits,solution_path] = Dyn_Data.get_orbit(sol_num,orbit_ids,1);
 
 
 bd = coco_bd_read(solution_path);

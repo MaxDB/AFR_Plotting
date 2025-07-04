@@ -2,7 +2,7 @@ clear
 close all
 
 period = 30;
-frame_rate = 20;%
+frame_rate = 10;%
 start_index = 11;
 
             
@@ -56,27 +56,27 @@ ani_marker = plot3(ax,0,0,0,"o","MarkerSize",14,"LineWidth",2,"MarkerEdgeColor",
 hold(ax,"off")
 
 
-% for iFrame = 1:num_frames
-%     iDisp = frame_x(:,iFrame);
-%     ani_marker.XData = iDisp(1);
-%     ani_marker.YData = iDisp(2);
-%     ani_marker.ZData = iDisp(3);
-% 
-%     drawnow
-%     system_frames(iFrame) = getframe(fig);
-%     if iFrame == num_frames
-%         break
-%     end
-% end
-% 
-% animation.frames = system_frames;
-% animation.frame_rate = frame_rate;
-% animation.num_frames = num_frames;
-% animation.fig_size = fig.Position;
-% animation.ax_size = ax.Position;
-% %-----------------
-% export_gif(animation,"manifold_marker")
-% close all
+for iFrame = 1:num_frames
+    iDisp = frame_x(:,iFrame);
+    ani_marker.XData = iDisp(1);
+    ani_marker.YData = iDisp(2);
+    ani_marker.ZData = iDisp(3);
+
+    drawnow
+    system_frames(iFrame) = getframe(fig);
+    if iFrame == num_frames
+        break
+    end
+end
+
+animation.frames = system_frames;
+animation.frame_rate = frame_rate;
+animation.num_frames = num_frames;
+animation.fig_size = fig.Position;
+animation.ax_size = ax.Position;
+%-----------------
+export_gif(animation,"manifold_marker")
+close all
 
 
 %-------------------------------------------------
@@ -113,7 +113,7 @@ displacement = frame_x([3,2,1],:)*sf;
 System_Ani.set_mass_colour(marker_colour)
 animation = System_Ani.animate_displacement(time,displacement);
 %------------
-% export_animation(animation,"mass_spring_forced")
+export_animation(animation,"mass_spring_forced")
 %------------
 % create arrow
 r_evec = Rom.Model.reduced_eigenvectors;
@@ -129,9 +129,9 @@ ax_arrow = axes(fig);
 ax_arrow.Color = [0.8,0.8,0.8];
 
 
-arm_length = 0.1;
-head_width = 0.05;
-arrow_width = 0.03;
+arm_length = 0.15;
+head_width = 0.075;
+arrow_width = 0.05;
 
 arrow_start = [1.2,1.2];
 arrow_end = [1.2,1.2];
@@ -147,9 +147,9 @@ max_force = max(abs(f_r));
 
 hold on
 % arrow = plot(ax_arrow,[arrow_start(1),arrow_end(1)],[arrow_start(2),arrow_end(2)],"-","LineWidth",arrow_width,"Color",get_plot_colours(3));
-arrow = rectangle("Position",[arrow_start(1)-arrow_width/2,arrow_start(2),arrow_width,0],"FaceColor",get_plot_colours(3),"EdgeColor","w","LineWidth",1);
+arrow = rectangle("Position",[arrow_start(1)-arrow_width/2,arrow_start(2),arrow_width,0],"FaceColor",get_plot_colours(3),"EdgeColor","w","LineWidth",3);
 arrow_head_def = polyshape([0,arm_length,arm_length,0,-arm_length,-arm_length] + arrow_end(1),[head_width/2,head_width/2,-head_width/2,-head_width/2,-head_width/2,head_width/2] + arrow_end(2),"Simplify",false);
-arrow_head = plot(arrow_head_def,"FaceColor",get_plot_colours(3),"EdgeColor","w","LineWidth",1,"FaceAlpha",1);
+arrow_head = plot(arrow_head_def,"FaceColor",get_plot_colours(3),"EdgeColor","w","LineWidth",3,"FaceAlpha",1);
 hold off
 xlim(ax_arrow,ax.XLim);
 ylim(ax_arrow,ax.YLim);

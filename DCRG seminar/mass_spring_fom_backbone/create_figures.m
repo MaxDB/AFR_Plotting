@@ -2,7 +2,7 @@ clear
 close all
 fig_name = "energy_backbone";
 
-animation_state = 1;
+animation_state = 5;
 
 max_energy = 0.05;
 backbone_1_line = 8;
@@ -16,8 +16,11 @@ y_point = [4.37274e-5, 0.0413184, 0.0046976];
 %--------------------------------------------------
 data_directory = get_project_path + "\examples\3_dof_mass_spring";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
+if animation_state == 5
+data_dir_execute(@compare_solutions,"energy","mass_spring_roller_1",1,"mass_spring_roller_1",2);
+else
 data_dir_execute(@compare_solutions,"energy","mass_spring_roller_1",2);
-
+end
 
 fig = gcf();
 ax = gca();
@@ -88,8 +91,8 @@ switch animation_state
         lines(7).LineStyle = "-";
 
 
-    case 4
-
+    case 5
+    swap_colours(ax,1,0);
 end
 
 

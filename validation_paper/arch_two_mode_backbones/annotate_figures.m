@@ -3,11 +3,11 @@ close all
 
 fig_name = "two_mode_physical_backbone";
 
-% labels = ["$\mathcal \{1\}$-ROM";
-%           "$\mathcal \{1,6\}$-ROM"];
+labels = ["$\mathcal \{1\}$-ROM";
+          "$\mathcal \{1,6\}$-ROM"];
 
-labels = {"One mode ROM";
-          "Two mode ROM"};
+% labels = {"One mode ROM";
+%           "Two mode ROM"};
 
 
 %-----------------------------

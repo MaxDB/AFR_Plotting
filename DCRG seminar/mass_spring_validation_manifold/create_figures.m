@@ -2,8 +2,8 @@ clear
 close all
 fig_name = "validation_manifold";
 %---
-Export_Settings.width = 30;
-Export_Settings.height = 20;
+Export_Settings.width = 60;
+Export_Settings.height = 40;
 Export_Settings.font_size = 22;
 frame_rate = 60;
 %------

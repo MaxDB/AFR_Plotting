@@ -59,10 +59,13 @@ text_ann = annotation(fig,"textbox",[0.5,0.5,text_span],"String",label_text,text
 
 
 text_dim = text_ann.Position;
-x_line = [text_dim(1),text_dim(1) + text_dim(3)];
-y_line = [text_dim(2),text_dim(2)];
-underline_ann = annotation(fig,"line",x_line,y_line);
-
+if label_mode ~= "text"
+    x_line = [text_dim(1),text_dim(1) + text_dim(3)];
+    y_line = [text_dim(2),text_dim(2)];
+    underline_ann = annotation(fig,"line",x_line,y_line);
+else
+    underline_ann = [];
+end
 
 set(fig, 'WindowButtonMotionFcn', @(object,event_data) mouse_move_text(object,event_data,text_ann,underline_ann));
 mouse_click = 0;
@@ -186,16 +189,18 @@ function mouse_move_text(object, eventdata, text_label, text_underline)
 
     text_position = cursor_position./object.Position(3:4);
     text_label.Position(1:2) = text_position;
+    
+    if ~isempty(text_underline)
+        x_line = [text_position(1),text_position(1) +  text_label.Position(3)];
+        y_line = [text_position(2),text_position(2)];
 
-    x_line = [text_position(1),text_position(1) +  text_label.Position(3)];
-    y_line = [text_position(2),text_position(2)];
-
-    text_underline.X = x_line;
-    text_underline.Y = y_line;
+        text_underline.X = x_line;
+        text_underline.Y = y_line;
+    end
 end
 
 function mouse_move_arrow(object, eventdata, arrow_ann , underline_ann)
-    cursor_position = get(object, 'CurrentPoint');
+cursor_position = get(object, 'CurrentPoint');
     arrow_ann.X(2) = cursor_position(1)/object.Position(3);
     arrow_ann.Y(2) = cursor_position(2)/object.Position(4);
     

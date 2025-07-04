@@ -9,8 +9,9 @@ fig = figs{1};
 %------------------------------------------
 ax = gca;
 ax.YScale = "log";
+ax.Title = [];
 ylim(ax,[1e-6,1])
-xlim(ax,[1.4,3.2])
+xlim(ax,[1.4,3.35])
 
 lines = ax.Children;
 num_lines = size(lines,1);

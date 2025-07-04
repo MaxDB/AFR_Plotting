@@ -2,7 +2,7 @@ clear
 close all
 fig_name = "validated_backbone";
 
-PRESENTATION_MODE = 1;
+
 
 orbit_frequency = 3;
 orbit_id = 134;
@@ -21,7 +21,7 @@ marker_size = 6;
 data_directory = get_project_path + "\examples\3_dof_mass_spring";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
-data_dir_execute(@compare_solutions,"energy","mass_spring_roller_1",1,"mass_spring_roller_12",1,"validation",[1,0]);
+data_dir_execute(@compare_solutions,"energy","mass_spring_roller_1",3,"mass_spring_roller_12",1,"validation",[1,0]);
 
 fig = gcf();
 ax = gca();
@@ -29,9 +29,7 @@ leg = fig.Children(1);
 delete(leg)
 %------------------------------------------
 ylim(ax,[0,max_energy ])
-if PRESENTATION_MODE
-    line_width = line_width + 1;
-end
+
 % leg.Interpreter = "latex";
 
 lines = ax.Children;
@@ -82,7 +80,7 @@ y_orbit = bb_line.YData(orbit_id);
 % hold off
 % p.Annotation.LegendInformation.IconDisplayStyle = "off";
 % uistack(ax.Children(1),"top")
-% 
+%
 % hold on
 % p = plot(x_validation_orbit,y_validation_orbit,orbit_style{:});
 % hold off
@@ -91,26 +89,19 @@ y_orbit = bb_line.YData(orbit_id);
 %-----------------------------------------
 xlim(ax,[1.35,3.27])
 ylim(ax,ax.YLim)
-if ~PRESENTATION_MODE
-    hold(ax,"on") %#ok<UNRCH>
-    p= plot(ax,[orbit_frequency,orbit_frequency],ax.YLim,"k--");
-    p.Annotation.LegendInformation.IconDisplayStyle = "off";
-    uistack(ax.Children(1),"bottom")
-    hold(ax,"off")
-    %-----------------------------------------
-    x_range = [2.85,3.05];
-    y_range = [0.033,0.047];
-    % insert_position = [0.35,0.45,0.2,0.4];
-    insert_position = [0.3698    0.44    0.2339    0.4531];
-    ax_insert = create_zoomed_insert(ax,insert_position,x_range,y_range);
-else
-    line_width = 2; %1
-    marker_size = 10; %6
-    orbit_style = {"Marker","*","Color",get_plot_colours(3),"LineWidth",line_width,"MarkerSize",marker_size};
-    hold(ax,"on")
-    plot(ax,1.863,0.00317,orbit_style{:});
-    hold(ax,"off")
-end
+
+hold(ax,"on") %#ok<UNRCH>
+p= plot(ax,[orbit_frequency,orbit_frequency],ax.YLim,"k--");
+p.Annotation.LegendInformation.IconDisplayStyle = "off";
+uistack(ax.Children(1),"bottom")
+hold(ax,"off")
+%-----------------------------------------
+x_range = [2.85,3.05];
+y_range = [0.033,0.047];
+% insert_position = [0.35,0.45,0.2,0.4];
+insert_position = [0.3698    0.44    0.2339    0.4531];
+ax_insert = create_zoomed_insert(ax,insert_position,x_range,y_range);
+
 %-----------------------------------------
 
 

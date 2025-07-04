@@ -34,6 +34,6 @@ mass_colours = get_plot_colours([4,5,6]);
 num_sols = length(sol_ids);
 for iSol = 1:num_sols
     System_Ani.set_mass_colour(mass_colours(iSol,:))
-    animation = System_Ani.animate_orbit(sol_ids(iSol),orbit_ids(iSol),disp_scale_factors(iSol),frame_rate);
+    animation = System_Ani.animate_orbit(sol_ids(iSol),orbit_ids(iSol),frame_rate,"scale_factor",disp_scale_factors(iSol));
     export_animation(animation,"mass_spring_fom_" + iSol)
 end

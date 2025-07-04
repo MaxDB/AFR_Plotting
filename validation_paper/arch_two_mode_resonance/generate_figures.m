@@ -3,14 +3,14 @@ error_fig_name = "two_mode_resonance_error_base";
 amp_backbone_fig_name = "two_mode_resonance_amp_backbone_base";
 phy_backbone_fig_name = "two_mode_resonance_phy_backbone_base";
 
-sol_num = [1,6];
+sol_num = [1,2];
 %--------
 data_directory = get_project_path + "\examples\size_test";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
 data_dir_execute(@set_visualisation_level,1)
-error_ax = data_dir_execute(@compare_validation,"mems_arch_16","validation error",sol_num(1),1:14);
-error_ax = data_dir_execute(@compare_validation,"mems_arch_16","validation error",sol_num(2),1:14,"axes",error_ax);
+error_ax = data_dir_execute(@compare_validation,"mems_arch_16","validation error",sol_num,"all");
+% error_ax = data_dir_execute(@compare_validation,"mems_arch_16","validation error",sol_num(2),"all","axes",error_ax);
 error_fig = gcf;
 
 Dyn_Data = data_dir_execute(@initalise_dynamic_data,"mems_arch_16");

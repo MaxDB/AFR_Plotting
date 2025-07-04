@@ -17,7 +17,7 @@ fontsize(fig,Plot_Settings.font_size,"points");
 if ~isempty(Plot_Settings.font_name)
     fontname(fig,Plot_Settings.font_name);
 
-    fig_children = findobj(fig,"-property","XLabel");%necessary for \rm to work
+    fig_children = findobj(fig,"Type","axes");%necessary for \rm to work
     num_children = size(fig_children,1);
     tex_font = "\fontname{"+Plot_Settings.font_name+"}";
     for iChild = 1:num_children

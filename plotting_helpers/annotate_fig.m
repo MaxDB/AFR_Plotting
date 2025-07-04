@@ -19,9 +19,6 @@ num_annotations = zeros(num_labels+1,1);
 annotations = get_annotation_handles(fig);
 num_annotations(1) =  length(annotations.Children);
 while iLabel <= num_labels
-    
-   
-
     annotation_progress = draw_annotation(fig,labels(iLabel,:));
     if fig.SelectionType == "alt"
         annotations = get_annotation_handles(fig);
@@ -44,9 +41,6 @@ while iLabel <= num_labels
     annotations = get_annotation_handles(fig);
     num_annotations(iLabel+1) = length(annotations.Children);
     iLabel = iLabel + 1;    
-    
-    
-
 end
 
 fig_name = fig_name + "_annotated";

@@ -28,7 +28,7 @@ ax_error = axes(fig,"Position",error_position);
 
 
 copyobj(fig_amp_bb.Children.Children(1).Children,ax_amp)
-copyobj(fig_error.Children.Children,ax_error)
+copyobj(fig_error.Children.Children.Children,ax_error)
 copyobj(fig_phy_amp_bb.Children(2).Children,ax_phy)
 %------------------------------------------
 box(ax_error,"on")

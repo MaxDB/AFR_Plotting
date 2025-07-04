@@ -1,5 +1,5 @@
-function mass_group = draw_mass(ax,centre,radius,boundary)
-mass_style = {"LineWidth",2};
+function mass_group = draw_mass(ax,centre,radius,boundary,Plot_Style)
+mass_style = {"LineWidth",Plot_Style.thickness};
 
 hold(ax,"on")
 mass_group = viscircles(ax,centre,radius,"EnhanceVisibility",0,mass_style{:});

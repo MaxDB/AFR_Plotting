@@ -6,7 +6,7 @@ fig_name = "validation_error_base";
 data_directory = get_project_path + "\examples\3_dof_mass_spring";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
-ax = data_dir_execute(@compare_validation,"mass_spring_roller_1","validation error",1,"all");
+ax = data_dir_execute(@compare_validation,"mass_spring_roller_1","validation error",3,"all");
 fig = gcf;
 
 % Dyn_Data_1 = data_dir_execute(@initalise_dynamic_data,"mass_spring_roller_1");

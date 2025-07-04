@@ -1,9 +1,9 @@
-function [spring_group,Spring_Data] = draw_spring(ax,end_coords,boundary)
+function [spring_group,Spring_Data] = draw_spring(ax,end_coords,boundary,Plot_Style)
 
-spring_style = {"Color","k","LineWidth",2};
+spring_style = {"Color","k","LineWidth",Plot_Style.thickness};
 
 segment_angle = 80;
-num_sections = 10; 
+num_sections = 8; 
 % Section:  /\    Segment: / and \     End segments: _ ... _
 %             \/
 

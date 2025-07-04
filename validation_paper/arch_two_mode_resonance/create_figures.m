@@ -23,7 +23,7 @@ ax_error = axes(fig,"Position",amp_position);
 
 
 copyobj(fig_amp_bb.Children.Children(1).Children,ax_amp)
-copyobj(fig_error.Children.Children,ax_error)
+copyobj(fig_error.Children.Children.Children,ax_error)
 %------------------------------------------
 box(ax_error,"on")
 box(ax_amp,"on")
@@ -38,7 +38,7 @@ ylim(ax_error,[1e-6,1])
 
 xlabel(ax_amp,"Frequency (rad/s)")
 ylabel(ax_error,"$\epsilon$","Interpreter","latex")
-ylabel(ax_amp,"$Q_5\times \!\! 10^{-10}$","Interpreter","latex")
+ylabel(ax_amp,"$Q_{11}\times \!\! 10^{-10}$","Interpreter","latex")
 
 x_lim = [2.625e6,2.754e6];
 xlim(ax_error,x_lim)
