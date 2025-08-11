@@ -50,22 +50,33 @@ ax_amp.XTickLabel = x_ticks;
 set_label(ax_phy,"x","Frequency (rad/s)")
 set_label(ax_error,"y","\epsilon")
 set_label(ax_amp,"y","Q_6 \times10^{-7}")
-set_label(ax_phy,"y","max(\sl{x}\rm{) (}\rm{μ}\rm{m)}") %μ
+set_label(ax_phy,"y","Max \bf{x}\rm{_{mid} (}\rm{μ}\rm{m)}") %μ
 
 
-x_lim = [2.64e6,2.74e6];
+x_lim = [2.66e6,2.722e6];
 xlim(ax_error,x_lim)
 xlim(ax_amp,x_lim)
 xlim(ax_phy,x_lim)
 %------------------------------------------
-swap_colours(ax_amp,1,5);
-swap_colours(ax_amp,[0,0,0],1);
+keep_modes = [5,6,11,13];
+mode_colour_map = [4,3,6,2];
+num_modes = size(keep_modes,2);
 
-swap_colours(ax_phy,1,5);
+for iColour = 1:10
+    swap_colours(ax_error,iColour,"gray");
+end
+for iMode = 1:num_modes
+    kept_mode = keep_modes(iMode);
+    lines = ax_error.findobj("Tag",string(kept_mode));
+    set(lines,"Color",get_plot_colours(mode_colour_map(iMode)))
+end
+% 
+swap_colours(ax_amp,1,3);
+swap_colours(ax_amp,[0,0,0],1);
+% 
+swap_colours(ax_phy,1,3);
 swap_colours(ax_phy,[0,0,0],1);
 
-
-swap_colours(ax_error,1,4);
 
 %------------------------------------------
 save_fig(fig,fig_name)

@@ -1,10 +1,10 @@
 clear 
 close all
 
-fig_name = "physical_backbone";
+fig_name = "limit_contour";
 
-labels = ["$\mathcal \{1\}$-ROM"];
-
+labels = ["Actual limit";
+          "Estimated limit"];
 
 
 %-----------------------------

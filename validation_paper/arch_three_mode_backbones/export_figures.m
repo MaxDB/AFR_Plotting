@@ -2,7 +2,7 @@ clear
 close all
 
 
-fig_name = "two_mode_physical_backbone";
+fig_name = "three_mode_physical_backbone";
 
 Export_Settings.height = 4.5; 
 Export_Settings.width = 8.4;

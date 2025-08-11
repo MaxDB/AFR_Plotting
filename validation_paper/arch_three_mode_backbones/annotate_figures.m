@@ -1,10 +1,10 @@
 clear 
 close all
 
-fig_name = "physical_backbone";
+fig_name = "three_mode_physical_backbone";
 
-labels = ["$\mathcal \{1\}$-ROM"];
-
+labels = ["$\mathcal \{1,6,11\}$-ROM";
+          ];
 
 
 %-----------------------------

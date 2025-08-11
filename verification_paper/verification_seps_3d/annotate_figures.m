@@ -1,10 +1,10 @@
 clear 
 close all
 
-fig_name = "physical_backbone";
+fig_name = "verification_seps_3d";
 
-labels = ["$\mathcal \{1\}$-ROM"];
-
+labels = ["1^{st}";
+          "2^{nd}"];
 
 
 %-----------------------------

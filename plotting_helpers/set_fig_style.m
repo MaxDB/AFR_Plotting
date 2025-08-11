@@ -12,8 +12,17 @@ if ~isempty(Plot_Settings.height)
     fig.Position(4) = Plot_Settings.height;
 end
 fig.PaperSize = fig.InnerPosition([3,4]);
+ax = findobj(fig,"Type","axes");
+num_axes = numel(ax);
 
-fontsize(fig,Plot_Settings.font_size,"points");
+if num_axes == 1 || isscalar(Plot_Settings.font_size)
+    fontsize(fig,max(Plot_Settings.font_size),"points");
+else
+    fontsize(fig,max(Plot_Settings.font_size),"points");
+    for iAx = 1:num_axes
+        fontsize(ax(iAx),Plot_Settings.font_size(iAx),"points");
+    end
+end
 if ~isempty(Plot_Settings.font_name)
     fontname(fig,Plot_Settings.font_name);
 
@@ -22,14 +31,23 @@ if ~isempty(Plot_Settings.font_name)
     tex_font = "\fontname{"+Plot_Settings.font_name+"}";
     for iChild = 1:num_children
         fig_child = fig_children(iChild);
-        if isa(fig_child.XLabel,"matlab.graphics.primitive.Text")
-            set_label(fig_child,"x",tex_font + fig_child.XLabel.String);
+        x_label = fig_child.XLabel;
+        if isa(x_label,"matlab.graphics.primitive.Text")
+            if x_label.Interpreter == "tex"
+                set_label(fig_child,"x",tex_font + x_label.String);
+            end
         end
-        if isa(fig_child.YLabel,"matlab.graphics.primitive.Text")
-            set_label(fig_child,"y",tex_font + fig_child.YLabel.String);
+        y_label = fig_child.YLabel;
+        if isa(y_label,"matlab.graphics.primitive.Text")
+            if y_label.Interpreter == "tex"
+                set_label(fig_child,"y",tex_font + y_label.String);
+            end
         end
-        if isa(fig_child.ZLabel,"matlab.graphics.primitive.Text")
-            set_label(fig_child,"z",tex_font + fig_child.ZLabel.String);
+        z_label = fig_child.ZLabel;
+        if isa(z_label,"matlab.graphics.primitive.Text")
+            if z_label.Interpreter == "tex"
+                set_label(fig_child,"z",tex_font + z_label.String);
+            end
         end
 
     end
