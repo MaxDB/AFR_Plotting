@@ -22,8 +22,8 @@ for iBranch = 1:2
     plot(ax,x1{iBranch},x2{iBranch},"LineWidth",line_width,"Color",plot_colours(iBranch,:))
 end
 hold(ax,"off")
-xlabel("$x_1$","Interpreter","latex")
-ylabel("$x_2$","Interpreter","latex")
+xlabel("$x_1$ (m)","Interpreter","latex")
+ylabel("$x_2$ (m)","Interpreter","latex")
 daspect(ax,[1,1,1])
 ylim(ax,x2_lim)
 xlim(ax,x1_lim)
@@ -37,8 +37,8 @@ for iBranch = 1:2
     plot(ax,x1{iBranch},f{iBranch},"LineWidth",line_width,"Color",plot_colours(iBranch,:))
 end
 hold(ax,"off")
-xlabel("$x_1$","Interpreter","latex")
-ylabel("$\tilde{f}_1$","Interpreter","latex")
+xlabel("$x_1$ (m)","Interpreter","latex")
+ylabel("$\tilde{f}_1$ (N)","Interpreter","latex")
 
 ylim(ax,force_lim)
 x_lim = ax.XLim;

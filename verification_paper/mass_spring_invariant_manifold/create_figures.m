@@ -4,8 +4,8 @@ close all
 fig_3d_name = "invariant_manifold_3d";
 fig_2d_name = "invariant_manifold_2d";
 %----
-system_name = "cubic_mass_spring_12";
-sol_num = [2,3];
+system_name = "cubic_mass_spring_1";
+sol_num = [3,4];
 
 max_x1 = 0.65;
 freq_range = [0.78,1];
@@ -82,8 +82,8 @@ right_line = [right_point + line_length/2 * [-sin(right_angle);cos(right_angle)]
 p1 = plot(ax,left_line(1,:),left_line(2,:),"k--");
 p2 = plot(ax,right_line(1,:),right_line(2,:),"k--");
 
-text(left_line(1,2),left_line(2,2)+0.005," \leftarrow L_2")
-text(right_line(1,2)-0.14,right_line(2,2)+0.005,"L_2 \rightarrow")
+% text(left_line(1,2),left_line(2,2)+0.005," \leftarrow L_2")
+% text(right_line(1,2)-0.14,right_line(2,2)+0.005,"L_2 \rightarrow")
 uistack(p1,"bottom")
 uistack(p2,"bottom")
 end

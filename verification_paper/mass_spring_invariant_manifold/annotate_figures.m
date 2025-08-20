@@ -1,11 +1,12 @@
 clear 
 close all
 
-fig_name = "verification_seps_3d";
+fig_name = "invariant_manifold_2d";
 
-labels = ["(\pi/2,\pi/2)"
-          "1^{st}";
-          "2^{nd}"];
+labels = {
+    "$L_2$",{"text","Rotation",35};
+    "$L_2$",{"text","Rotation",-14};
+};
 
 
 %-----------------------------

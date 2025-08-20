@@ -241,6 +241,24 @@ switch event_data.Key
         mouse.mousePress(InputEvent.BUTTON1_MASK);
         mouse.mouseRelease(InputEvent.BUTTON1_MASK);
         return
+    case 'b'
+        annotations = get_annotation_handles(object);
+        num_children = length(annotations.Children);
+        for iChild = 1:num_children
+            child = annotations.Children(iChild);
+            if isa(child,"matlab.graphics.shape.TextBox")
+                if ischar(child.BackgroundColor)
+                    if child.BackgroundColor == "none"
+                        child.BackgroundColor = [1,1,1];
+                    end
+                elseif isequal(child.BackgroundColor,[1,1,1])
+                    child.BackgroundColor = "none";
+
+                end
+                return
+            end
+        end
+        return
     otherwise
         return
 end

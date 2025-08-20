@@ -11,7 +11,7 @@ mesh_alpha = 1;
 mesh_settings = {"EdgeColor","none","LineWidth",0.01,"FaceColor",get_plot_colours(5),"FaceLighting","gouraud","FaceAlpha",mesh_alpha,"Tag","invariant_manifold"};
 grid_line_style = {"Color",[0.25,0.25,0.25,0.2],"LineWidth",0.2,"Tag","grid_line"};
 outline_style = {"LineWidth",1,"Tag","outline"};
-outline_colours = [[0,0,0];get_plot_colours([1,4]);[0,0,0]];
+outline_colours = [[0,0,0];get_plot_colours(1);[0,0,0];get_plot_colours(4)];
 marker_style = {"Marker","o","LineWidth",line_width,"MarkerEdgeColor","k","MarkerSize",5};
 
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
@@ -22,13 +22,21 @@ Dyn_Data = data_dir_execute(@initalise_dynamic_data,system_name);
 Model = Dyn_Data.Dynamic_Model.Model;
 
 evec = Model.reduced_eigenvectors;
-num_modes = size(evec,2);
+% num_modes = size(evec,2);
 
 point_array = cell(1,num_sols);
 zero_point_array = cell(2,num_sols);
 
 for iSol = 1:num_sols
     Sol = data_dir_execute(@Dyn_Data.load_solution,sol_num(iSol));
+    switch Sol.Solution_Type.model_type
+        case "rom"
+            num_modes = size(evec,2);
+        case "fom"
+            num_modes = size(evec,1);
+    end
+
+    
     num_orbits = Sol.num_orbits;
     zero_points_one = zeros(2*num_modes,0);
     zero_points_two = zeros(2*num_modes,0);
@@ -44,8 +52,18 @@ for iSol = 1:num_sols
             continue
         end
         r = orbit.xbp';
-        x = evec*r(1:num_modes,:);
-        x_dot  = evec*r((num_modes+1):(2*num_modes),:);
+        switch Sol.Solution_Type.model_type
+            case "rom"
+                x = evec*r(1:num_modes,:);
+                x_dot  = evec*r((num_modes+1):(2*num_modes),:);
+            case "fom"
+                mass = Model.mass;
+                stiffness = Model.stiffness;
+                [evec,~] = eig(stiffness,mass);
+                x = evec*r(1:num_modes,:);
+                x_dot = evec*r((num_modes+1):(2*num_modes),:);
+        end
+
 
         % E = 0.5*sum(x_dot.^2,1);
         if max(abs(x(1,:))) > max_x1

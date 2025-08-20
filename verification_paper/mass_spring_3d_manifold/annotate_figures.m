@@ -1,11 +1,11 @@
 clear 
 close all
 
-fig_name = "verification_seps_3d";
+fig_name = "force2";
 
-labels = ["(\pi/2,\pi/2)"
-          "1^{st}";
-          "2^{nd}"];
+labels = {
+    "$f_2 = 0$",{"text","Rotation",34}
+};
 
 
 %-----------------------------

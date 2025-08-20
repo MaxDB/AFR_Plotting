@@ -15,8 +15,6 @@ switch fig_names
     case "invariant_manifold_2d"
 
 end
-Export_Settings.font_name = "Times New Roman";
-Export_Settings.font_size = 8;
 %--------------------------
 figs = open_local_figures(fig_names);
 

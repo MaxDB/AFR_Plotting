@@ -40,9 +40,9 @@ for iBranch = 1:2
     plot3(ax,r{iBranch},x2_tilde{iBranch},f2_branch,"LineWidth",line_width,"Color",plot_colours(iBranch,:))
 end
 hold(ax,"off")
-xlabel("$x_1$","Interpreter","latex")
-ylabel("$x_2$","Interpreter","latex")
-zlabel("$f_2$","Interpreter","latex")
+xlabel("$x_1$ (m)","Interpreter","latex")
+ylabel("$x_2$ (m)","Interpreter","latex")
+zlabel("$f_2$ (N)","Interpreter","latex")
 
 ax.CameraPosition = camera_position;
 %------------------------------------------
@@ -70,9 +70,9 @@ for iBranch = 1:2
     plot3(ax,r{iBranch},x2_left,f1_tilde{iBranch},"LineWidth",line_width/4,"Color",plot_colours(iBranch,:))
 end
 hold(ax,"off")
-xlabel("$x_1$","Interpreter","latex")
-ylabel("$x_2$","Interpreter","latex")
-zlabel("$f_1$","Interpreter","latex")
+xlabel("$x_1$ (m)","Interpreter","latex")
+ylabel("$x_2$ (m)","Interpreter","latex")
+zlabel("$f_1$ (m)","Interpreter","latex")
 
 ax.CameraPosition = camera_position;
 

@@ -1,11 +1,12 @@
 clear 
 close all
 
-fig_name = "verification_seps_3d";
+fig_name = "model_limit_contour";
 
-labels = ["(\pi/2,\pi/2)"
-          "1^{st}";
-          "2^{nd}"];
+labels = ["Tested SEPs";
+          "Known loadcases";
+          "Model limit";
+          "Estimated limit"];
 
 
 %-----------------------------

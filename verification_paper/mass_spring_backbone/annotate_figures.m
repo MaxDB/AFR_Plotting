@@ -1,11 +1,14 @@
 clear 
 close all
 
-fig_name = "verification_seps_3d";
+fig_name = "mass_spring_bb";
 
-labels = ["(\pi/2,\pi/2)"
-          "1^{st}";
-          "2^{nd}"];
+labels = {
+    "$L_2$","text";
+    "$\{1\}$-ICE","label";
+    "$\{1\}$-ICE-IC","label";
+    "FOM","label"
+};
 
 
 %-----------------------------

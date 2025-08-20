@@ -10,10 +10,8 @@ Export_Settings.file_type = "png";
 Export_Settings.projection = "3D";
 Export_Settings.renderer = "opengl";
 Export_Settings.resolution = 500;
-Export_Settings.font_name = "Times New Roman";
-Export_Settings.font_size = 8;
 %--------------------------
-figs = open_local_figures;
+figs = open_local_figures(fig_names);
 
 %--------------------------
 export_fig(figs,fig_names,Export_Settings)

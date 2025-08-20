@@ -4,8 +4,6 @@ close all
 fig_name = "mass_spring_bb";
 %----
 system_name = "cubic_mass_spring_12";
-sol_num = [2,3,4];
-num_modes = 2;
 
 max_x1 = 0.65;
 freq_range = [0.78,1];
@@ -30,7 +28,7 @@ fig = figure;
 ax = axes(fig);
 
 
-ax = data_dir_execute(@compare_solutions,"physical amplitude","cubic_mass_spring_12",2:4,"axes",ax,"legend",0);
+ax = data_dir_execute(@compare_solutions,"physical amplitude","cubic_mass_spring_1",[3,4],"axes",ax,"legend",0);
 ax = data_dir_execute(@compare_solutions,"physical amplitude","cubic_mass_spring_1",1,"axes",ax,"legend",0);
 ax = data_dir_execute(@compare_solutions,"physical amplitude","cubic_mass_spring_1",2,"axes",ax,"legend",0);
 
@@ -59,7 +57,7 @@ ice_line.DisplayName = "$\{1\}$-ICE";
 fom_line = lines(2);
 fom_line.DisplayName = "FOM";
 
-legend(ax,[ice_line,ice_ic_line,fom_line],"interpreter","latex","AutoUpdate","off")
+% legend(ax,[ice_line,ice_ic_line,fom_line],"interpreter","latex","AutoUpdate","off")
 ylabel("max($x_1$) (m)","Interpreter","latex")
 %------------------------------------------
 %plot orbit markers
@@ -74,7 +72,7 @@ hold(ax,"off")
 hold(ax,"on")
 plot(ax,[0.85,0.85],ax.YLim,"k--")
 hold(ax,"off")
-text(0.85,0.575," \leftarrow L_2")
+% text(0.85,0.575," \leftarrow L_2")
 %------------------------------------------
 save_fig(fig,fig_name)
 
