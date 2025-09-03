@@ -4,9 +4,9 @@ close all
 fig_name = "overall_error";
 
 labels = {
-    "$\epsilon_{(3,3)}$","label";
-    "$\epsilon_{f:3}/\bar{\epsilon}_f$","label";
-    "$\epsilon_{d:3}/\bar{\epsilon}_d$","label";
+    "$\bar{\epsilon}_{(3,3)}$","label";
+    "$\bar{\epsilon}_{f:3}$","label";
+    "$\bar{\epsilon}_{d:3}$","label";
     "Limit",{"text","Rotation",90};
     "Maximum allowable error","text"
     };

@@ -84,7 +84,7 @@ xlabel("$f_1$","Interpreter","latex")
 ylabel("$f_2$","Interpreter","latex")
 %-------------------------------------------------
 % calibration figs
-degree = 9;
+degree = 7;
 energy_limit = Static_Data.Model.energy_limit;
 Force_Energy_Poly = Polynomial(Static_Data.restoring_force,Static_Data.potential_energy,degree,"constraint",{"linear",0},"shift",1,"scale",1);
 
@@ -146,9 +146,9 @@ calibration_ax1.TickLabelInterpreter = "latex";
 calibration_ax2.TickLabelInterpreter = "latex";
 
 calibration_ax1.YTick = [0,energy_limit];
-calibration_ax1.YTickLabel = {"0","$V$"};
+calibration_ax1.YTickLabel = {"0","$V_L$"};
 calibration_ax2.YTick = [0,energy_limit];
-calibration_ax2.YTickLabel = {"0","$V$"};
+calibration_ax2.YTickLabel = {"0","$V_L$"};
 
 xlabel(calibration_ax1,"$f_1$","Interpreter","latex")
 xlabel(calibration_ax2,"$f_2$","Interpreter","latex")

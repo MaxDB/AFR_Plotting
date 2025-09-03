@@ -58,7 +58,7 @@ xlabel("\lambda")
 yyaxis left
 ylabel("Energy")
 ax.YTick = [0,1.8];
-ax.YTickLabel = {"0","$V$"};
+ax.YTickLabel = {"0","$V_L$"};
 ax.TickLabelInterpreter = "latex";
 
 yyaxis right
