@@ -12,6 +12,7 @@ ax = gca();
 %-----
 sep_colours = get_plot_colours([3,2,1]);
 point_style = {"Marker","o","LineStyle","none","LineWidth",0.5,"MarkerSize",4,"MarkerEdgeColor","k"};
+legend_style = {"LineWidth",0.5,"MarkerSize",4,"MarkerEdgeColor","k","Marker","o","LineStyle","-"};
 camera_position = [5488.83608035488	-6722.55663357721	12233.1849434598];
 %--------------------------------------------------
 data_directory = get_project_path + "\examples\JH_beam";
@@ -63,7 +64,7 @@ for iSep = 1:num_verified_seps
 
 
  
-    plot3(force_sep(1,:),force_sep(2,:),force_sep(3,:),"Color",sep_colours(sep_order,:))
+    plot3(force_sep(1,[1,end]),force_sep(2,[1,end]),force_sep(3,[1,end]),"Color",sep_colours(sep_order,:))
 end
 hold(ax,"off")
 
@@ -88,6 +89,21 @@ xlabel("$\tilde{\mathbf f}_1$","Interpreter","latex")
 ylabel("$\tilde{\mathbf f}_2$","Interpreter","latex")
 
 
+legend_lines = [];
+hold(ax,"on")
+for iLine = 1:3
+    line_colour = sep_colours(iLine,:);
+
+legend_lines(iLine) = plot3(0,0,0,"MarkerFaceColor",line_colour,"Color",line_colour,legend_style{:}); %#ok<SAGROW>
+end
+hold(ax,"off")
+
+leg = legend(legend_lines,["1st","2nd","3rd"]);
+leg.IconColumnWidth = 15;
+
+
+
+%---
 save_fig(fig,fig_name)
 %------------------
 

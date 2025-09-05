@@ -14,6 +14,7 @@ sep_colours = get_plot_colours([3,2,1,4]);
 error_style = {"LineStyle","-","LineWidth",1.5};
 point_style = {"Marker","o","LineStyle","none","LineWidth",0.5,"MarkerSize",4,"MarkerEdgeColor","k"};
 mesh_style = {"LineWidth",1.5,"EdgeColor","k","FaceAlpha",0.5};
+legend_style = {"LineWidth",0.5,"MarkerSize",4,"MarkerEdgeColor","k","Marker","o","LineStyle","-"};
 camera_position = [1931.02972491687	-13139.3003608784	10.2283243764673];
 %--------------------------------------------------
 data_directory = get_project_path + "\examples\JH_beam";
@@ -21,8 +22,8 @@ data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
 Static_Data = data_dir_execute(@load_static_data,"JH_beam_2d_13");
 
-Rom_One = data_dir_execute(@Reduced_System,Static_Data,[5,3]);
-Rom_Two = data_dir_execute(@Reduced_System,Static_Data,[7,5]);
+Rom_One = data_dir_execute(@Reduced_System,Static_Data,[5,5]);
+Rom_Two = data_dir_execute(@Reduced_System,Static_Data,[7,7]);
 
 
 %-----
@@ -86,7 +87,7 @@ hold(ax,"off")
 
 %----
 zscale(ax,"log")
-zlim(ax,[1e-2,2])
+zlim(ax,[1e-3,2])
 box(ax,"on")
 
 %---
@@ -95,17 +96,30 @@ num_sep_order = length(order_index);
 hold(ax,"on")
 for iOrder = 1:num_sep_order
     sep_index = order_index{iOrder};
-    plot3(Static_Data.restoring_force(1,sep_index),Static_Data.restoring_force(2,sep_index),1e-2*ones(1,length(sep_index)),"MarkerFaceColor",sep_colours(iOrder,:),point_style{:})
+    plot3(Static_Data.restoring_force(1,sep_index),Static_Data.restoring_force(2,sep_index),1e-3*ones(1,length(sep_index)),"MarkerFaceColor",sep_colours(iOrder,:),point_style{:})
         
 end
 hold(ax,"off")
 %--
 ax.CameraPosition = camera_position;
 
-zlabel("$\bar{\epsilon}_{(5,3)}$","Interpreter","latex")
+zlabel("$\bar{\epsilon}_{(5,5)}$","Interpreter","latex")
 xlabel("$\tilde{\mathbf f}_1$","Interpreter","latex")
 ylabel("$\tilde{\mathbf f}_2$","Interpreter","latex")
+%-----
 
+
+legend_lines = [];
+hold(ax,"on")
+for iLine = 1:4
+    line_colour = sep_colours(iLine,:);
+
+legend_lines(iLine) = plot3(0,0,0,"MarkerFaceColor",line_colour,"Color",line_colour,legend_style{:}); %#ok<SAGROW>
+end
+hold(ax,"off")
+
+leg = legend(legend_lines,["1st","2nd","3rd","4th"]);
+leg.IconColumnWidth = 15;
 
 save_fig(fig,fig_name)
 %------------------

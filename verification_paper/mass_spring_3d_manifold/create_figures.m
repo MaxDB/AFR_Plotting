@@ -72,7 +72,7 @@ end
 hold(ax,"off")
 xlabel("$x_1$ (m)","Interpreter","latex")
 ylabel("$x_2$ (m)","Interpreter","latex")
-zlabel("$f_1$ (m)","Interpreter","latex")
+zlabel("$f_1$ (N)","Interpreter","latex")
 
 ax.CameraPosition = camera_position;
 

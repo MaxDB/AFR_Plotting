@@ -1,11 +1,12 @@
 clear 
 close all
 
-fig_name = "beam_two_mode";
+fig_name = "beam_three_mode";
 
 labels = {
-          "Maximum allowable error",{"text","Rotation",-6.5};
-          "Static loadcases","label"};
+          "Tested SEPs";
+          "Static loadcases"
+          };
 
 
 %-----------------------------
