@@ -3,8 +3,13 @@ close all
 
 fig_name = "limit_contour";
 
-labels = ["Actual limit";
-          "Estimated limit"];
+% labels = ["Actual limit";
+%           "Estimated limit"];
+
+labels = [
+          "Estimated limit"
+          ];
+
 
 
 %-----------------------------

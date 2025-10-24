@@ -1,12 +1,12 @@
 clear 
 close all
 
-fig_name = "model_limit_contour";
+fig_name = "arch_time_complexity_4";
 
-labels = ["Tested SEPs";
-          "Known loadcases";
-          "Model limit";
-          "Estimated limit"];
+labels = {
+    "","arrow";
+    "","arrow"
+};
 
 
 %-----------------------------

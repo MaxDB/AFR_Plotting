@@ -6,12 +6,12 @@ load("Fom_Data.mat","Fom_Data")
 
 %layout
 fig = figure;
-tiles = tiledlayout(2,2);
+tiles = tiledlayout(3,1);
 tiles.TileSpacing = "tight";
 tiles.Padding = "tight";
 ax_force_one = nexttile;
 ax_force_two = nexttile;
-ax_disp = nexttile([1,2]);
+ax_disp = nexttile;
 
 centre_node = 20; %accounting for removed BCs
 
@@ -21,7 +21,7 @@ force_two_camera_position = [-0.00236216677149508	-0.000620476105996786	5232.866
 %-----
 % fom_style = {"EdgeColor","none","FaceColor",get_plot_colours(2),"FaceAlpha",0.8};
 fom_style = {"k.","MarkerSize",3};
-outline_style = {"Color",get_plot_colours(0),"LineWidth",0.5};
+outline_style = {"Color",get_plot_colours(0),"LineWidth",0.5,"Visible","off"};
 border_style = {"Color",get_plot_colours(0),"LineWidth",0.5};
 rom_style = {"EdgeColor","none","FaceColor",get_plot_colours(3),"FaceAlpha",0.8,"LineWidth",0.01};
 %--------------------------------------------------
@@ -94,6 +94,17 @@ ax_disp.CameraPosition = disp_camera_position;
 ax_force_one.CameraPosition = force_one_camera_position;
 ax_force_two.CameraPosition = force_two_camera_position;
 %-----
+hold(ax_force_one,"on")
+leg_mesh = mesh(ax_force_one,zeros(2),zeros(2),zeros(2),rom_style{:},"EdgeColor","k");
+leg_point = plot3(ax_force_one,0,0,0,fom_style{:});
+hold(ax_force_one,"off")
+leg = legend(ax_force_one,[leg_mesh,leg_point],["$\{1,3\}$-ROM","Loadcase"],"AutoUpdate","off","Interpreter","latex");
+% leg_mesh.Visible = "off";
+% leg_point.Visible = "off";
+leg.IconColumnWidth = 10;
+
+
+
 save_fig(fig,fig_name)
 %------------------
 

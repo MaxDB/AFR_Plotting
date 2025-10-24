@@ -1,7 +1,7 @@
 clear
 close all
 fig_name = "model_limit_contour";
-
+mode = 2;
 
 line_width = 2;
 energy_colour = get_plot_colours(3);
@@ -121,7 +121,7 @@ end
 force_end = sort_contour_points(force_end);
 force_end = [force_end,force_end(:,1)];
 hold(ax,"on")
-plot(force_end(1,:),force_end(2,:),limit_style{:})
+limit_line = plot(force_end(1,:),force_end(2,:),limit_style{:});
 hold(ax,"off")
 
 %-----
@@ -137,7 +137,7 @@ for iSep = 1:num_seps
     [disp_sep,lambda_sep] = find_sep_rom(Rom,force_ratio,3*max_sep_points);
 
     sep_points = force_ratio.*lambda_sep;
-    plot(sep_points(1,:),sep_points(2,:),sep_2_style{:})
+    sep_plot_lines(iSep) = plot(sep_points(1,:),sep_points(2,:),sep_2_style{:}); %#ok<SAGROW>
 end
 hold(ax,"off")
 
@@ -151,7 +151,16 @@ uistack(origin,"top")
 
 
 
+if mode == 2
+    delete(sep_plot_lines)
+    delete(limit_line)
 
+    new_lim_1 = [force_limits(1,2)*1.1,force_limits(1,1)*1.1];
+    xlim(ax,new_lim_1)
+
+    new_lim_2 = [force_limits(2,2)*1.1,force_limits(2,1)*1.1];
+    ylim(ax,new_lim_2)
+end
 
 
 

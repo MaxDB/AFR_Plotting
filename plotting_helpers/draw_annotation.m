@@ -12,10 +12,6 @@ if size(label,2) == 1
     label = [label,"label"];
 end
 
-
-
-
-
 label_text = label{1};
 label_mode = label{2};
 
@@ -35,93 +31,119 @@ mouse = Robot;
 
 set(fig, 'WindowKeyPressFcn', @(object,event_data) move_mouse(object,event_data,mouse));
 
+switch label_mode
+    case "insert"
+        fig_name = label_text+"_export";
+        fig_insert = open_local_figures(fig_name);
+        fig_insert = fig_insert{1};
+        ax_insert_old = findobj(fig_insert,"Type","Axes");
+        ax_insert_new = copyobj(ax_insert_old,fig);
+
+        insert_size = fig_insert.Position;
+        insert_ax_size = ax_insert_old.Position;
+        ax_insert_size = insert_size(3:4) .* insert_ax_size(3:4);
+        
+        ax_insert_new.Units = "centimeters";
+        ax_insert_new.Position(3:4) = ax_insert_size;
+
+        close(fig_insert)
+
+        set(fig, 'WindowButtonMotionFcn', @(object,event_data) mouse_move_insert(object,event_data,ax_insert_new));
+        fig.Pointer = "circle";
+    case "legend"
+        leg = findobj(fig,"Type","Legend");
+        leg.Units = "centimeters";
+
+        set(fig, 'WindowButtonMotionFcn', @(object,event_data) mouse_move_insert(object,event_data,legend));
+        fig.Pointer = "circle";
+        
+    otherwise
+
+        %place text
+        text_style = [{"FontName",font_name,"FontSize",font_size,"FontUnits",font_units,"BackgroundColor","white"},additional_text_args];
+        if contains(label_text,"$")
+            text_style((end+1):(end+2)) = {"Interpreter","latex"};
+        end
+
+        test_ax = axes("Visible","off");
+        test_text = text(test_ax,0.5,0.5,label_text,text_style{:});
+        text_size = test_text.Extent;
+        coord_conversion = @(ax_coord) axes_to_fig_coord(fig,ax_coord);
+        text_bottom_left = coord_conversion(text_size(1:2));
+        text_top_right = coord_conversion([text_size(1)+text_size(3),text_size(2)+text_size(4)]);
+        text_span = text_top_right - text_bottom_left;
+
+        % annotation(fig,"rectangle",[text_bottom_left,text_span])
+        delete(test_ax)
+
+        text_ann = annotation(fig,"textbox",[0.5,0.5,text_span],"String",label_text,text_style{:},"EdgeColor","none","Margin",0,"FitBoxToText","on");
+
+
+        text_dim = text_ann.Position;
+        if label_mode ~= "text"
+            x_line = [text_dim(1),text_dim(1) + text_dim(3)];
+            y_line = [text_dim(2),text_dim(2)];
+            underline_ann = annotation(fig,"line",x_line,y_line);
+        else
+            underline_ann = [];
+        end
+
+        set(fig, 'WindowButtonMotionFcn', @(object,event_data) mouse_move_text(object,event_data,text_ann,underline_ann));
+        mouse_click = 0;
+        while ~mouse_click
+            mouse_click = ~waitforbuttonpress;
+        end
+        if fig.SelectionType == "alt"
+            set(fig,"WindowButtonMotionFcn",'');
+            set(fig, 'WindowKeyPressFcn','');
+            return
+        end
+        annotation_progress = annotation_progress + 1;
+        annotation_progress = annotation_progress + 1;
+        set(fig,"WindowButtonMotionFcn",'');
+
+
+        if label_mode == "text"
+            set(fig, 'WindowKeyPressFcn','');
+            clear mouse
+            return
+        end
+
+        %convert between coordiantes
+        text_dim = text_ann.Position;
 
 
 
-%place text
-text_style = [{"FontName",font_name,"FontSize",font_size,"FontUnits",font_units,"BackgroundColor","white"},additional_text_args];
-if contains(label_text,"$")
-    text_style((end+1):(end+2)) = {"Interpreter","latex"};
+
+        head_style = "none";
+        if label_mode == "arrow"
+            delete(text_ann)
+            delete(underline_ann)
+            clear("underline_ann")
+            underline_ann.X = [text_dim(1),text_dim(1)];
+            underline_ann.Y = [text_dim(2),text_dim(2)];
+            head_style = "vback2";
+        end
+
+        %draw arraw
+        arrow_style = {"LineWidth",0.5,"HeadStyle",head_style,"HeadLength",10,"HeadWidth",10};
+
+
+        x_arrow = [0.5,0.5];
+        y_arrow = [0.5,0.5];
+
+        % [x_arrow,y_arrow] = apply_arrow_offset(x_arrow,y_arrow,0.05);
+
+        % zoom_fig = copyobj(fig,groot);
+        % zoom_ax = zoom_fig.Children(1);
+        % zoom_ax = project_to_2d(zoom_ax);
+        % ax_lims = [ax.XLim;ax.YLim;ax.ZLim];
+
+        arrow_ann = annotation(fig,"arrow",x_arrow,y_arrow,arrow_style{:});
+
+        set(fig, 'WindowButtonMotionFcn', @(object,event_data) mouse_move_arrow(object,event_data,arrow_ann,underline_ann));
 end
 
-test_ax = axes("Visible","off");
-test_text = text(test_ax,0.5,0.5,label_text,text_style{:});
-text_size = test_text.Extent;
-coord_conversion = @(ax_coord) axes_to_fig_coord(fig,ax_coord);
-text_bottom_left = coord_conversion(text_size(1:2));
-text_top_right = coord_conversion([text_size(1)+text_size(3),text_size(2)+text_size(4)]);
-text_span = text_top_right - text_bottom_left;
-
-% annotation(fig,"rectangle",[text_bottom_left,text_span])
-delete(test_ax)
-
-text_ann = annotation(fig,"textbox",[0.5,0.5,text_span],"String",label_text,text_style{:},"EdgeColor","none","Margin",0,"FitBoxToText","on");
-
-
-text_dim = text_ann.Position;
-if label_mode ~= "text"
-    x_line = [text_dim(1),text_dim(1) + text_dim(3)];
-    y_line = [text_dim(2),text_dim(2)];
-    underline_ann = annotation(fig,"line",x_line,y_line);
-else
-    underline_ann = [];
-end
-
-set(fig, 'WindowButtonMotionFcn', @(object,event_data) mouse_move_text(object,event_data,text_ann,underline_ann));
-mouse_click = 0;
-while ~mouse_click
-    mouse_click = ~waitforbuttonpress;  
-end
-if fig.SelectionType == "alt"
-    set(fig,"WindowButtonMotionFcn",'');
-    set(fig, 'WindowKeyPressFcn','');
-    return
-end
-annotation_progress = annotation_progress + 1;
-annotation_progress = annotation_progress + 1;
-set(fig,"WindowButtonMotionFcn",'');
-
-
-if label_mode == "text"
-    set(fig, 'WindowKeyPressFcn','');
-    clear mouse
-    return
-end
-
-%convert between coordiantes
-text_dim = text_ann.Position;
-
-
-
-
-head_style = "none";
-if label_mode == "arrow"
-    delete(text_ann)
-    delete(underline_ann)
-    clear("underline_ann")
-    underline_ann.X = [text_dim(1),text_dim(1)];
-    underline_ann.Y = [text_dim(2),text_dim(2)];
-    head_style = "vback2";
-end
-
-%draw arraw
-arrow_style = {"LineWidth",0.5,"HeadStyle",head_style,"HeadLength",10,"HeadWidth",10};
-
-
-x_arrow = [0.5,0.5];
-y_arrow = [0.5,0.5];
-
-% [x_arrow,y_arrow] = apply_arrow_offset(x_arrow,y_arrow,0.05);
-
-% zoom_fig = copyobj(fig,groot);
-% zoom_ax = zoom_fig.Children(1);
-% zoom_ax = project_to_2d(zoom_ax);
-% ax_lims = [ax.XLim;ax.YLim;ax.ZLim];
-
-arrow_ann = annotation(fig,"arrow",x_arrow,y_arrow,arrow_style{:});
-
-
-set(fig, 'WindowButtonMotionFcn', @(object,event_data) mouse_move_arrow(object,event_data,arrow_ann,underline_ann));
 fig.Pointer = "circle";
 mouse_click = 0;
 while ~mouse_click
@@ -132,6 +154,7 @@ if fig.SelectionType == "alt"
     set(fig, 'WindowKeyPressFcn','');
     return
 end
+
 annotation_progress = annotation_progress + 1;
 set(fig,"WindowButtonMotionFcn",'');
 fig.Pointer = "arrow";
@@ -185,43 +208,43 @@ y_arrow(2) = arrow_line(2);
 end
 
 function mouse_move_text(object, eventdata, text_label, text_underline)
-    cursor_position = get(object, 'CurrentPoint');
+cursor_position = get(object, 'CurrentPoint');
 
-    text_position = cursor_position./object.Position(3:4);
-    text_label.Position(1:2) = text_position;
-    
-    if ~isempty(text_underline)
-        x_line = [text_position(1),text_position(1) +  text_label.Position(3)];
-        y_line = [text_position(2),text_position(2)];
+text_position = cursor_position./object.Position(3:4);
+text_label.Position(1:2) = text_position;
 
-        text_underline.X = x_line;
-        text_underline.Y = y_line;
-    end
+if ~isempty(text_underline)
+    x_line = [text_position(1),text_position(1) +  text_label.Position(3)];
+    y_line = [text_position(2),text_position(2)];
+
+    text_underline.X = x_line;
+    text_underline.Y = y_line;
+end
 end
 
 function mouse_move_arrow(object, eventdata, arrow_ann , underline_ann)
 cursor_position = get(object, 'CurrentPoint');
-    arrow_ann.X(2) = cursor_position(1)/object.Position(3);
-    arrow_ann.Y(2) = cursor_position(2)/object.Position(4);
-    
-    if arrow_ann.X(2) < underline_ann.X(1)
-        arrow_ann.X(1) = underline_ann.X(1);
-        arrow_ann.Y(1) = underline_ann.Y(1);
-    else
-        arrow_ann.X(1) = underline_ann.X(2);
-        arrow_ann.Y(1) = underline_ann.Y(2);
-    end
-    %---
-    % cursor_position = get(gca, 'CurrentPoint');
-    % zoom_factor = 10;
-    % cursor_x = cursor_position(1,1);
-    % cursor_y = cursor_position(1,2);
-    % cursor_z = cursor_position(1,3);
-    % 
-    % zoom_lims = [-0.5,0.5].*diff(ax_lims,1,2)/zoom_factor;
-    % xlim(zoom_ax,cursor_x + zoom_lims(1,:))
-    % ylim(zoom_ax,cursor_y + zoom_lims(2,:))
-    % zlim(zoom_ax,cursor_z + zoom_lims(3,:))
+arrow_ann.X(2) = cursor_position(1)/object.Position(3);
+arrow_ann.Y(2) = cursor_position(2)/object.Position(4);
+
+if arrow_ann.X(2) < underline_ann.X(1)
+    arrow_ann.X(1) = underline_ann.X(1);
+    arrow_ann.Y(1) = underline_ann.Y(1);
+else
+    arrow_ann.X(1) = underline_ann.X(2);
+    arrow_ann.Y(1) = underline_ann.Y(2);
+end
+%---
+% cursor_position = get(gca, 'CurrentPoint');
+% zoom_factor = 10;
+% cursor_x = cursor_position(1,1);
+% cursor_y = cursor_position(1,2);
+% cursor_z = cursor_position(1,3);
+%
+% zoom_lims = [-0.5,0.5].*diff(ax_lims,1,2)/zoom_factor;
+% xlim(zoom_ax,cursor_x + zoom_lims(1,:))
+% ylim(zoom_ax,cursor_y + zoom_lims(2,:))
+% zlim(zoom_ax,cursor_z + zoom_lims(3,:))
 end
 
 function move_mouse(object,event_data,mouse)
@@ -264,4 +287,9 @@ switch event_data.Key
 end
 mouse_position = MouseInfo.getPointerInfo().getLocation();
 mouse.mouseMove(mouse_position.x + direction(1),mouse_position.y + direction(2));
+end
+
+function mouse_move_insert(object, eventdata, ax_insert)
+cursor_position = get(object, 'CurrentPoint');
+ax_insert.Position(1:2) = cursor_position();
 end

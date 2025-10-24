@@ -2,6 +2,7 @@ clear
 close all
 fig_name = "limit_contour";
 
+mode = 2;
 
 line_width = 2;
 energy_colour = get_plot_colours(1:4);
@@ -9,13 +10,32 @@ origin_style = {".k","MarkerSize",10};
 
 %layout
 fig = figure;
-tiles = tiledlayout(5,2);
+switch mode
+    case 1
+        layout = {5,2};
+        cal_span_1 = [2,1];
+        cal_span_2 = [2,1];
+        limit_span = [3,2];
+    case 2
+        layout = {4,4};
+        cal_span_1 = [1,3];
+        limit_span = [3,3];
+        cal_span_2 = [3,1];
+end
+tiles = tiledlayout(layout{:});
 tiles.TileSpacing = "tight";
 tiles.Padding = "tight";
-calibration_ax1 = nexttile([2,1]);
-calibration_ax2 = nexttile([2,1]);
-limit_ax = nexttile([3,2]);
+calibration_ax1 = nexttile(cal_span_1);
 
+limit_ax = nexttile(limit_span);
+if mode == 2
+    gap_ax = nexttile;
+end
+calibration_ax2 = nexttile(cal_span_2);
+
+if mode == 2
+    delete(gap_ax)
+end
 
 %--------------------------------------------------
 data_directory = get_project_path + "\examples\rom_challenge";
@@ -57,16 +77,16 @@ scaled_force_ratios = [scaled_force_ratios,scaled_force_ratios(:,1)];
 % limit_ax = gca();
 
 hold(limit_ax,"on")
-plot(limit_force(1,:),limit_force(2,:),"k:")
+true_limit = plot(limit_ax,limit_force(1,:),limit_force(2,:),"k:");
 
-plot([force_limits(1,1),0],[0,0],"Color",energy_colour(1,:))
-plot([force_limits(1,2),0],[0,0],"Color",energy_colour(2,:))
-plot([0,0],[force_limits(2,1),0],"Color",energy_colour(3,:))
-plot([0,0],[force_limits(2,2),0],"Color",energy_colour(4,:))
+plot(limit_ax,[force_limits(1,1),0],[0,0],"Color",energy_colour(1,:))
+plot(limit_ax,[force_limits(1,2),0],[0,0],"Color",energy_colour(2,:))
+plot(limit_ax,[0,0],[force_limits(2,1),0],"Color",energy_colour(3,:))
+plot(limit_ax,[0,0],[force_limits(2,2),0],"Color",energy_colour(4,:))
 
-plot(scaled_force_ratios(1,:),scaled_force_ratios(2,:),"k-")
+plot(limit_ax,scaled_force_ratios(1,:),scaled_force_ratios(2,:),"k-")
 
-plot(0,0,origin_style{:})
+plot(limit_ax,0,0,origin_style{:})
 hold(limit_ax,"off")
 
 
@@ -80,8 +100,8 @@ limit_ax.YTickLabel = {"$F^-_2$","0","$F^+_2$"};
 
 limit_ax.TickLabelInterpreter = "latex";
 
-xlabel("$f_1$","Interpreter","latex")
-ylabel("$f_2$","Interpreter","latex")
+xlabel(limit_ax,"$f_1$","Interpreter","latex")
+ylabel(limit_ax,"$f_2$","Interpreter","latex")
 %-------------------------------------------------
 % calibration figs
 degree = 7;
@@ -159,11 +179,27 @@ ylabel(calibration_ax2,"Energy")
 lines = findobj("-property","XData");
 set(lines,"LineWidth",line_width)
 %------------------
+if mode == 2
+    xlabel(calibration_ax1,"");
+    xlabel(calibration_ax2,"");
+
+    calibration_ax2.CameraUpVector = [1,0,0];
+    calibration_ax2.XDir = "reverse";
+    delete(true_limit)
+
+    new_lim_1 = [force_limits(1,2)*1.1,force_limits(1,1)*1.1];
+    xlim(calibration_ax1,new_lim_1)
+    xlim(limit_ax,new_lim_1)
+
+    new_lim_2 = [force_limits(2,2)*1.1,force_limits(2,1)*1.1];
+    xlim(calibration_ax2,new_lim_2)
+    ylim(limit_ax,new_lim_2)
+
+    % ylabel(calibration_ax2,"")
+end
 
 
-
-
-
+%------------------
 
 
 
