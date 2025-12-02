@@ -57,7 +57,7 @@ xlabel(ax_force,"$r_1$","Interpreter","latex")
 ylabel(ax_force,"$\tilde{f}_1$","Interpreter","latex")
 
 xlabel(ax_disp,"$r_1$","Interpreter","latex")
-ylabel(ax_disp,"$\tilde{x}_{62}$","Interpreter","latex")
+ylabel(ax_disp,"$\tilde{x}_{62}$ (m)","Interpreter","latex")
 
 %-----
 save_fig(fig,fig_name)

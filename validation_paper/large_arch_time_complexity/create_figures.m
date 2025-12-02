@@ -1,7 +1,6 @@
 clear
 % close all
 num_workers = 6;
-parts = 3;
 fig_name = "arch_time_complexity_" + num_workers;
 
 
@@ -15,103 +14,105 @@ tiles.Padding ="tight";
 ax = nexttile([2,2]);
 
 %--------------------------------------------------
-data_directory = get_project_path + "\examples\size_test";
+data_directory = get_project_path + "\examples\validation\mems_arch";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
-for iPart = 1:parts
-    data_path = "data\size_data\workers_" + num_workers;
-    if iPart > 1
-        data_path = data_path + "_" + iPart;
-    end
-    Size_Data = data_dir_execute(@load,data_path+"\size_data.mat","Size_Data");
-    Size_Data = Size_Data.Size_Data;
-    Size_Data = time_transform(Size_Data,1/60);
+verification_directory =  get_project_path + "\examples\verification\mems_arch";
+verification_dir_execute = @(fun,varargin) dir_execute(verification_directory,fun,varargin{:});
 
-    [Size_Data_Mean,Size_Data_Range] = get_mean_data(Size_Data);
+data_path = "data\size_data\workers_" + num_workers;
 
-    num_dofs = Size_Data(1).num_dofs;
-    num_dofs = num_dofs(1:size(Size_Data_Mean.total_time,2));
-    num_seeds = size(num_dofs,2);
+Size_Data = data_dir_execute(@load,data_path+"\size_data.mat","Size_Data");
+Size_Data = Size_Data.Size_Data;
+Size_Data = time_transform(Size_Data,1/60);
+[Size_Data_Mean,Size_Data_Range] = get_mean_data(Size_Data);
 
-    cumulative_time = zeros(4,num_seeds);
-    cumulative_time(:,:) = cumulative_time(:,:)+ Size_Data_Mean.matrix_time;
-    cumulative_time(2:end,:) = cumulative_time(2:end,:)+ Size_Data_Mean.initialisation_time;
-    cumulative_time(3:end,:) = cumulative_time(3:end,:)+ Size_Data_Mean.scaffold_time;
-    cumulative_time(4:end,:) = Size_Data_Mean.total_time;
-
-    % cumulative_time = cumulative_time/60;
+Verification_Data =  verification_dir_execute(@load,data_path+"\size_data.mat","Size_Data");
+Verification_Data = Verification_Data.Size_Data;
+Verification_Data = time_transform(Verification_Data,1/60);
+Verification_Data_Mean = get_mean_data(Verification_Data);
+verification_dofs = Verification_Data(1).num_dofs;
 
 
-    hold(ax,"on")
-    plot_polyshape(ax,num_dofs,cumulative_time(4,:),1)
-    plot_polyshape(ax,num_dofs,cumulative_time(3,:),2)
-    plot_polyshape(ax,num_dofs,cumulative_time(2,:),3)
-    plot_polyshape(ax,num_dofs,cumulative_time(1,:),4)
-    hold(ax,"off")
 
-    box(ax,"on")
-    xlabel(ax,"DoFs")
-    ylabel(ax,"Time (mins)")
+num_dofs = Size_Data(1).num_dofs;
+num_dofs = num_dofs(1:size(Size_Data_Mean.total_time,2));
+num_seeds = size(num_dofs,2);
 
-    ylim(ax,[0,ax.YLim(2)])
-    title(ax,get_title(num_workers))
+cumulative_time = zeros(5,num_seeds);
+cumulative_time(:,:) = cumulative_time(:,:)+ Size_Data_Mean.matrix_time;
+cumulative_time(2:end,:) = cumulative_time(2:end,:)+ Size_Data_Mean.initialisation_time;
+cumulative_time(3:end,:) = cumulative_time(3:end,:)+ Size_Data_Mean.scaffold_time;
+cumulative_time(4:end,:) = cumulative_time(4:end,:)+ Size_Data_Mean.verification_time;
+cumulative_time(5:end,:) = Size_Data_Mean.total_time;
 
 
-    hold(ax,"on")
-    plot_error_bars(ax,num_dofs,cumulative_time(4,:),Size_Data_Range.total_time,1)
-    plot_error_bars(ax,num_dofs,cumulative_time(3,:),Size_Data_Range.scaffold_time,2)
-    plot_error_bars(ax,num_dofs,cumulative_time(2,:),Size_Data_Range.initialisation_time,3)
-    plot_error_bars(ax,num_dofs,cumulative_time(1,:),Size_Data_Range.matrix_time,4)
-    hold(ax,"off")
-
-    legend(ax,"Verification","Scaffold","Calibration","Matrices","Location","northwest")
-    ax = set_x_labels(ax);
-    %-------------------
 
 
-    %create inserts
-    sim_id = 1;
-    if parts > 1
-        if iPart == 1
-            insert_indicies = 1;
-        elseif iPart == parts
-            insert_indicies = length(Size_Data(1).num_dofs);
-        else
-            continue
-        end
-    else
-        insert_indicies = [1,length(Size_Data(1).num_dofs)];
-    end
-    num_inserts = length(insert_indicies);
-    memory_data = Size_Data(sim_id).free_memory;
-    Memory_Time = time_transform(Size_Data(sim_id),1);
-    % ax_insert = nexttile([1,2]);
-    for iInsert = 1:num_inserts
-        ax_insert = nexttile;
-        insert_index = insert_indicies(iInsert);
+hold(ax,"on")
+plot_polyshape(ax,num_dofs,cumulative_time(5,:),5)
+plot_polyshape(ax,num_dofs,cumulative_time(4,:),1)
+plot_polyshape(ax,num_dofs,cumulative_time(3,:),2)
+plot_polyshape(ax,num_dofs,cumulative_time(2,:),3)
+plot_polyshape(ax,num_dofs,cumulative_time(1,:),4)
+plot(ax,verification_dofs,Verification_Data_Mean.total_time,"-","Color",get_plot_colours("grey"),"LineWidth",2);
+hold(ax,"off")
 
-        cumulative_memory_time = zeros(4,1);
-        cumulative_memory_time(:) = cumulative_memory_time(:)+ Memory_Time.matrix_time(insert_index);
-        cumulative_memory_time(2:end) = cumulative_memory_time(2:end)+ Memory_Time.initialisation_time(insert_index);
-        cumulative_memory_time(3:end) = cumulative_memory_time(3:end)+ Memory_Time.scaffold_time(insert_index);
-        cumulative_memory_time(4:end) = Memory_Time.total_time(insert_index);
+box(ax,"on")
+xlabel(ax,"DoFs")
+ylabel(ax,"Time (mins)")
 
-        ax_insert = create_insert(ax_insert,memory_data{insert_index},cumulative_memory_time);
+ylim(ax,[0,ax.YLim(2)])
+title(ax,get_title(num_workers))
 
-        box(ax_insert,"on")
-        dofs = add_comma(Memory_Time.num_dofs(insert_index));
-        title(ax_insert,dofs + " DoFs")
-        ax_insert.XTickLabelRotation = 0;
 
-        ylabel({"Memory","(GB)"})
-        ax_insert.YLabel.VerticalAlignment = "baseline";
+hold(ax,"on")
+plot_error_bars(ax,num_dofs,cumulative_time(5,:),Size_Data_Range.total_time,5)
+plot_error_bars(ax,num_dofs,cumulative_time(4,:),Size_Data_Range.total_time,1)
+plot_error_bars(ax,num_dofs,cumulative_time(3,:),Size_Data_Range.scaffold_time,2)
+plot_error_bars(ax,num_dofs,cumulative_time(2,:),Size_Data_Range.initialisation_time,3)
+plot_error_bars(ax,num_dofs,cumulative_time(1,:),Size_Data_Range.matrix_time,4)
+hold(ax,"off")
 
-        xlabel("Time (mins)")
-        ax_insert.XLabel.VerticalAlignment = "baseline";
+legend(ax,"Perturbation","Verification","Scaffold","Calibration","Matrices","Location","northwest")
+ax = set_x_labels(ax);
+%-------------------
 
-        % save_fig(fig_insert,"insert_" + iInsert);
-    end
 
+%create inserts
+sim_id = 1;
+
+insert_indicies = [1,length(Size_Data(1).num_dofs)];
+
+num_inserts = length(insert_indicies);
+memory_data = Size_Data(sim_id).free_memory;
+Memory_Time = time_transform(Size_Data(sim_id),1);
+% ax_insert = nexttile([1,2]);
+for iInsert = 1:num_inserts
+    ax_insert = nexttile;
+    insert_index = insert_indicies(iInsert);
+
+    cumulative_memory_time = zeros(5,1);
+    cumulative_memory_time(:) = cumulative_memory_time(:)+ Memory_Time.matrix_time(insert_index);
+    cumulative_memory_time(2:end) = cumulative_memory_time(2:end)+ Memory_Time.initialisation_time(insert_index);
+    cumulative_memory_time(3:end) = cumulative_memory_time(3:end)+ Memory_Time.scaffold_time(insert_index);
+    cumulative_memory_time(4:end) = cumulative_memory_time(4:end) + sum(Memory_Time.verification_time(:,insert_index));
+    cumulative_memory_time(5:end) = Memory_Time.total_time(insert_index);
+
+    ax_insert = create_insert(ax_insert,memory_data{insert_index},cumulative_memory_time);
+
+    box(ax_insert,"on")
+    dofs = add_comma(Memory_Time.num_dofs(insert_index));
+    title(ax_insert,dofs + " DoFs")
+    ax_insert.XTickLabelRotation = 0;
+
+    ylabel({"Memory","(GB)"})
+    ax_insert.YLabel.VerticalAlignment = "baseline";
+
+    xlabel("Time (mins)")
+    ax_insert.XLabel.VerticalAlignment = "baseline";
+
+    % save_fig(fig_insert,"insert_" + iInsert);
 end
 
 
@@ -156,11 +157,14 @@ for iField = 1:num_fields
     if any(field == ["seed_sizes","num_dofs","free_memory"])
         continue
     end
-    
+
     field_data = {Data.(field)};
     repeat_length = cellfun(@(x)length(x),field_data);
     seed_index_limit = min(repeat_length);
-    field_data = cellfun(@(x) x(1:seed_index_limit),field_data,"UniformOutput",false);
+    field_data = cellfun(@(x) x(:,1:seed_index_limit),field_data,"UniformOutput",false);
+    if size(field_data{1},1) > 1
+        field_data = cellfun(@(x) sum(x,1),field_data,"UniformOutput",false);
+    end
     field_data = vertcat(field_data{:});
     if any(any(isnan(field_data) | field_data < 0))
 
@@ -205,7 +209,7 @@ function title = get_title(num_workers)
 number_words = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"];
 numer_word = number_words(num_workers);
 
-title = numer_word + " worker";
+title = numer_word + " parallel worker";
 if num_workers > 1
     title = title + "s";
 end
@@ -257,14 +261,14 @@ end
 
 function add_time_markers(ax,cumulative_time)
 span_style = {"LineWidth",3};
-colour_order = [4,3,2,1];
+colour_order = [4,3,2,1,5];
 
 cumulative_time = [0;cumulative_time];
 
 marker_height = ones(1,2)*ax.YLim(1);
 
 hold(ax,"on")
-for iTime = 1:4
+for iTime = 1:5
     time_span = cumulative_time(iTime:(iTime+1));
     plot(time_span,marker_height,"Color",get_plot_colours(colour_order(iTime)),span_style{:})
 end
@@ -287,6 +291,6 @@ xticklabels(ax,x_labels);
 end
 
 function num_out = add_comma(num_in)
-   java_formater=java.text.DecimalFormat;
-   num_out= string(java_formater.format(num_in)); 
+java_formater=java.text.DecimalFormat;
+num_out= string(java_formater.format(num_in));
 end

@@ -2,8 +2,8 @@ clear
 close all
 
 
-fig_name = ["orbit_comp_one_mode","orbit_comp_two_mode"];
-% fig_name = "orbit_comp_two_mode"
+% fig_name = ["orbit_comp_one_mode","orbit_comp_two_mode"];
+fig_name = "orbit_comp_two_mode";
 
 Export_Settings.height = 6; 
 Export_Settings.width = 8.4;

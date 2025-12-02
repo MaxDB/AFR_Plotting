@@ -5,7 +5,7 @@ fig_name = "two_mode_backbone";
 
 % orbit_style = {"Marker","*","Color",colour,"LineWidth",line_width,"MarkerSize",marker_size};
 %--------------------------------------------------
-data_directory = get_project_path + "\examples\EN_examples\clamped_beam";
+data_directory = get_project_path + "\examples\validation\clamped_beam";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 data_dir_execute(@compare_solutions,"energy","clamped_beam_13",1);
 fig = gcf;

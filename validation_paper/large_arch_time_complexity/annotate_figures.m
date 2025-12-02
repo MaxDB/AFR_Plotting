@@ -1,10 +1,10 @@
 clear 
 close all
 
-fig_name = "arch_time_complexity_4";
+fig_name =  "arch_time_complexity";
 
 labels = {
-    "","arrow";
+    "software crashes",{"text","Rotation",30};
     "","arrow"
 };
 

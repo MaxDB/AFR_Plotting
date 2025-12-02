@@ -61,7 +61,23 @@ for iFig = 1:num_figs
     image_path = export_path + DELIMINATOR + fig_name;
     switch Fig_Export_Settings.file_type
         case "pdf"
-            print(fig,image_path,'-dpdf')
+            % print(fig,image_path,'-dpdf')
+            exportgraphics(fig,image_path + ".pdf","ContentType","vector");
+        case "pdf_img"
+            Ann_Pane = get_annotation_handles(fig);
+            set(Ann_Pane.Children,"Visible","off")
+            print(fig,image_path,'-dpng',"-r" + Fig_Export_Settings.resolution)
+            png_image = imread(image_path+".png");
+            fig_out = copyobj(fig,groot());
+            image(png_image);
+
+            set(Ann_Pane.Children,"Visible","on")
+            Ann_Pane = get_annotation_handles(fig_out);
+            set(Ann_Pane.Children,"Visible","on")
+            fig_out.Position = fig.Position;
+            fig_out.Children.Position = [0,0,1,1];
+            exportgraphics(fig_out,image_path + ".pdf","ContentType","image")
+            
         case "svg"
             print(fig,image_path,'-dsvg')
         case "png"

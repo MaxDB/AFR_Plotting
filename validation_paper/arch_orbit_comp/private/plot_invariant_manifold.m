@@ -25,7 +25,7 @@ end
 
 
 
-data_directory = get_project_path+"\examples\size_test";
+data_directory = get_project_path+"\examples\validation\mems_arch";
 points_per_orbit = 500;
 plotting_coords = [1,3,2];
 
@@ -89,8 +89,9 @@ for iSol = 1:num_sols
                 period = orbit.T;
                 
                 zr = orbit.xbp';
-                x = Rom.expand(zr(1,:));
-                x_dot = Rom.expand_velocity(zr(1,:),zr(2,:));
+                num_modes = size(zr,1)/2;
+                x = Rom.expand(zr(1:num_modes,:));
+                x_dot = Rom.expand_velocity(zr(1:num_modes,:),zr((num_modes+1):(2*num_modes),:));
 
                 r = transform*x;
                 r_dot = transform*x_dot;

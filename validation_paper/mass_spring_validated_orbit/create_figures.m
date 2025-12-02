@@ -3,13 +3,14 @@ close all
 fig_name = "validation_orbit";
 
 sol_id = 1;
-orbit_id = 134;
+orbit_id = 141;
 
 line_width = 2;
 orbit_colour = get_plot_colours(3);
 validation_colour = get_plot_colours(5);
 
-validation_time_points = [1,14,39,94,120];
+% validation_time_points = [1,14,39,94,120];
+validation_time_points = [39,69,81,94,120,149,1,14,39];
 
 marker_size = 10;
 marker_type = "o";
@@ -23,7 +24,7 @@ ax = axes(fig);
 box on
 
 %--------------------------------------------------
-data_directory = get_project_path + "\examples\3_dof_mass_spring";
+data_directory = get_project_path + "\examples\validation\mass_spring_system";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
 
@@ -63,15 +64,17 @@ hold off
 %------------------------------------------
 
 orbit_point_style = {"Marker",marker_type,"MarkerSize",marker_size,"MarkerEdgeColor",marker_edge,"LineWidth",marker_line_width};
-num_time_points = size(validation_time_points,2);
+
+time_labels = [1,2,3,4,5];
+num_time_points = length(time_labels);
 for iTime = 1:num_time_points
     time_point = validation_time_points(iTime);
     hold on
     plot(r2_orbit(2,time_point),r2_orbit(1,time_point),"MarkerFaceColor",orbit_colour,orbit_point_style{:});
-    text(r2_orbit(2,time_point),r2_orbit(1,time_point),string(iTime),text_style{:});
+    text(r2_orbit(2,time_point),r2_orbit(1,time_point),string(time_labels(iTime)),text_style{:});
 
     plot(r2_validation_orbit(2,time_point),r2_validation_orbit(1,time_point),"MarkerFaceColor",validation_colour,orbit_point_style{:});
-    text(r2_validation_orbit(2,time_point),r2_validation_orbit(1,time_point),string(iTime),text_style{:});
+    text(r2_validation_orbit(2,time_point),r2_validation_orbit(1,time_point),string(time_labels(iTime)),text_style{:});
     hold off
 end
 %------------------------------------------
@@ -81,6 +84,9 @@ ylabel("$q_1$",Interpreter="latex")
 
 xlim([-0.05,0.05])
 ylim([-0.05,0.05])
+
+leg = legend("Reduced","Validation","Location","northeast");
+leg.IconColumnWidth = leg.IconColumnWidth/3;
 %------------------------------------------
 main_position = ax.Position;
 bottom_left = main_position(1:2).*[1.1,1.3];
@@ -91,6 +97,7 @@ r = orbit.xbp(:,1)';
 r_dot = orbit.xbp(:,2)';
 hold(phase_ax,"on")
 plot(phase_ax,r,r_dot,"Color",orbit_colour)
+num_time_points = size(validation_time_points,2);
 for iTime = 1:num_time_points
     time_point = validation_time_points(iTime);
     plot(phase_ax,r(time_point),r_dot(time_point),"k.")

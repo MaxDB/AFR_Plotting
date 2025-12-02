@@ -9,22 +9,13 @@ fig_amp_bb = figs{2};
 fig_phy_amp_bb = figs{3};
 %------------------------------------------
 fig = figure;
-ax = axes(fig);
-base_position = ax.Position;
-delete(ax);
+tiles = tiledlayout(3,1);
 
-ax_height = base_position(4)/3;
+ax_error = nexttile;
+ax_amp = nexttile;
+ax_phy = nexttile;
 
-base_position(4) = ax_height;
-ax_phy = axes(fig,"Position",base_position);
-
-amp_position = base_position;
-amp_position(2) = amp_position(2) + ax_height;
-ax_amp = axes(fig,"Position",amp_position);
-
-error_position = amp_position;
-error_position(2) = error_position(2) + ax_height;
-ax_error = axes(fig,"Position",error_position);
+tiles.TileSpacing = "none";
 
 
 copyobj(fig_amp_bb.Children.Children(1).Children,ax_amp)
@@ -42,15 +33,15 @@ ax_error.YScale = "log";
 yticks(ax_error,[1e-5,1e-3,1e-1])
 ax_error.XTickLabel = x_ticks;
 ylim(ax_error,[1e-6,2])
-ylim(ax_phy,[0,2.4e-3])
-ylim(ax_amp,[0,1.55e-7])
+ylim(ax_phy,[0,2.4e-3]*1e3)
+ylim(ax_amp,[-0.1,1.55])
 
 ax_amp.XTickLabel = x_ticks;
 
 set_label(ax_phy,"x","Frequency (rad/s)")
 set_label(ax_error,"y","\epsilon")
 set_label(ax_amp,"y","Q_6 \times10^{-7}")
-set_label(ax_phy,"y","Max \bf{x}\rm{_{mid} (}\rm{μ}\rm{m)}") %μ
+set_label(ax_phy,"y","Max(\bf{x}\rm{_{mid}) \fontname{Times New Roman}(μm)}") %μ
 
 
 x_lim = [2.66e6,2.722e6];
@@ -76,6 +67,14 @@ swap_colours(ax_amp,[0,0,0],1);
 % 
 swap_colours(ax_phy,1,3);
 swap_colours(ax_phy,[0,0,0],1);
+
+%---
+
+amp_lines = findobj(ax_amp,"Type","Line");
+arrayfun(@(line) set(line,"YData",line.YData*1e7), amp_lines)
+
+phy_lines = findobj(ax_phy,"Type","Line");
+arrayfun(@(line) set(line,"YData",line.YData*1e3), phy_lines)
 
 
 %------------------------------------------

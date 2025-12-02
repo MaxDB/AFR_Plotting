@@ -18,7 +18,7 @@ fig = figure;
 box on
 
 %--------------------------------------------------
-data_directory = get_project_path + "\examples\3_dof_mass_spring";
+data_directory = get_project_path + "\examples\validation\mass_spring_system";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
 Dyn_Data_1 = data_dir_execute(@initalise_dynamic_data,"mass_spring_roller_1");
@@ -49,6 +49,7 @@ Sol_2 = data_dir_execute(@Dyn_Data_12.load_solution,sol_id_2);
 [~,orbit_ids_1] = min(abs(Sol_1.frequency - orbit_frequency));
 [~,orbit_ids_2] = min(abs(Sol_2.frequency - orbit_frequency));
 
+% Dyn_Data_1 = data_dir_execute(@Dyn_Data_1.validate_solution,1,2);
 [orbit_1,validation_orbit] = data_dir_execute(@Dyn_Data_1.get_orbit,sol_id_1,orbit_ids_1,1);
 orbit_2 = data_dir_execute(@Dyn_Data_12.get_orbit,sol_id_2,orbit_ids_2);
 

@@ -5,7 +5,7 @@ energy_backbone_fig_name = "two_mode_resonance_energy_backbone_base";
 
 sol_num = 1;
 %--------
-data_directory = get_project_path + "\examples\EN_examples\clamped_beam";
+data_directory = get_project_path + "\examples\validation\clamped_beam";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
 data_dir_execute(@set_visualisation_level,1)

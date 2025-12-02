@@ -12,8 +12,9 @@ ylim(ax,[1e-7,1])
 xlim(ax,[365,580])
 
 
-ax = swap_colours(ax,get_plot_colours(4),get_plot_colours(5));
-ax = swap_colours(ax,get_plot_colours(8),get_plot_colours(9));
+lines_6 = findobj(ax,"Color",get_plot_colours(6));
+set(ax.Children,"Color",get_plot_colours("grey"))
+set(lines_6,"Color",get_plot_colours(5))
 
 %------------------------------------------
 save_fig(fig,fig_name)

@@ -3,7 +3,7 @@ error_fig_name = "three_mode_validation_error_base";
 
 sol_num = [1,2,3];
 %--------
-data_directory = get_project_path + "\examples\size_test";
+data_directory = get_project_path + "\examples\validation\mems_arch";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
 data_dir_execute(@set_visualisation_level,1)

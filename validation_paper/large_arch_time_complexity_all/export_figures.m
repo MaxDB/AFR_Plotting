@@ -1,12 +1,8 @@
 clear 
 close all
 
-% fig_names = "arch_time_complexity_6";
-% 
-% Export_Settings.height = 8.4;
-% Export_Settings.width = 8.4;
 
-fig_names = "arch_time_complexity";
+fig_names = "arch_time_complexity_all";
 % 
 Export_Settings.height = 21;
 Export_Settings.width = 16.8;

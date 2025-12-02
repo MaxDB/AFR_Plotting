@@ -6,7 +6,7 @@ fig_name = "validation_manifold";
 Plot_Settings.plot_type = "physical";
 Plot_Settings.coords = [3,2,1];
 
-line_width = 3;
+line_width = 2;
 x_lim = [-0.05,0.05];
 y_lim = [-0.06,0.06];
 z_lim = [-1.2,1.5]*1e-3;
@@ -14,13 +14,13 @@ camera_position = [-0.0895   -0.5236    0.0172];
 % camera_position = [ -0.1254   -1.2597    0.0301];
 
 orbit_sol_num = 1;
-orbit_id = 132;
+orbit_id = 141;
 
 orbit_colour = get_plot_colours(3);
 validation_orbit_colour = get_plot_colours(5);
 
 %manifolds
-validation_time_points = [1,14,39,94,120];
+validation_time_points = [1,14,40,94,120];
 % manifold_offsets = [-2.5,-2.5,-2.5]*1e-5;
 manifold_offsets = -[1,1,1,1,1,1,1]*1e-5;
 validation_colour = get_plot_colours(1);
@@ -35,7 +35,7 @@ marker_line_width = 1;
 
 
 %--------------------------------------------------
-data_directory = get_project_path + "\examples\3_dof_mass_spring";
+data_directory = get_project_path + "\examples\validation\mass_spring_system";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
 fig = figure;
@@ -71,11 +71,13 @@ for iLine = 1:num_lines
             line.LineStyle = "-";
             line.Color = get_plot_colours(3);
             line.LineWidth = line_width;
+            line.Marker = "none";
             % line.Visible = "off";
         case "vo-1-" + orbit_sol_num + "," + orbit_id
             line.Annotation.LegendInformation.IconDisplayStyle = "off";
             line.LineWidth = line_width;
             line.Color = validation_orbit_colour;
+            line.Marker = "none";
             % line.Visible = "off";
             
     end
@@ -147,7 +149,7 @@ end
 ax.CameraPosition = camera_position;
 
 %------------------------------------------
-% delete(fig.Children(1))
+delete(findobj(fig,"Type","legend"))
 save_fig(fig,fig_name)
 
 

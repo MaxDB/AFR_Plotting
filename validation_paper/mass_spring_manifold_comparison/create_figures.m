@@ -14,20 +14,21 @@ y_lim = [-0.06,0.06];
 z_lim = [-1.2,1.5]*1e-3;
 
 camera_position = [-0.0895   -0.5236    0.0172];
+% camera_position = [-0.1177   -0.6994    0.0172];
 
 
 orbit_sol_num = 1;
 % orbit_id = 134;
-orbit_id = 132;
+orbit_id = 141;
 
 orbit_colour = get_plot_colours(3);
 validation_orbit_colour = get_plot_colours(5);
 
 %manifolds
 % validation_time_points = [1,14,39,94,125]; %[1,161]
-validation_time_points = 39;
+validation_time_points = 40;
 % manifold_offsets = [-2.5,-2.5,-2.5]*1e-5;
-manifold_offsets = -3.2*1e-5;
+manifold_offsets = -5*1e-5;
 validation_colour = get_plot_colours(1);
 validation_alpha = 1;
 
@@ -41,7 +42,7 @@ marker_line_width = 1;
 
 text_style = {"FontName","Times New Roman","FontSize",8,"FontUnits","points"};
 %--------------------------------------------------
-data_directory = get_project_path + "\examples\3_dof_mass_spring";
+data_directory = get_project_path + "\examples\validation\mass_spring_system";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
 fig = figure;

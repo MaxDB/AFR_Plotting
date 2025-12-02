@@ -11,7 +11,8 @@ ax = gca;
 ax.YScale = "log";
 ax.Title = [];
 ylim(ax,[1e-6,1])
-xlim(ax,[1.4,3.35])
+xlim(ax,[1.4,3.2])
+fig.Children.Padding = "compact";
 
 lines = ax.Children;
 num_lines = size(lines,1);

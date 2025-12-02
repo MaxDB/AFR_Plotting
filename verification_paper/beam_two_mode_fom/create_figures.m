@@ -88,7 +88,7 @@ zlabel(ax_force_two,"$\tilde{f}_2$","Interpreter","latex")
 
 xlabel(ax_disp,"$r_1$","Interpreter","latex")
 ylabel(ax_disp,"$r_2$","Interpreter","latex")
-zlabel(ax_disp,"$\tilde{x}_{62}$","Interpreter","latex")
+zlabel(ax_disp,"$\tilde{x}_{62}$ (m)","Interpreter","latex")
 
 ax_disp.CameraPosition = disp_camera_position;
 ax_force_one.CameraPosition = force_one_camera_position;

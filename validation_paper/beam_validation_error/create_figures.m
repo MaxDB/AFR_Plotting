@@ -2,7 +2,6 @@ clear
 close all
 fig_name = "validation_error";
 
-plot_colours = dictionary(2,{get_plot_colours(5)},3,{get_plot_colours(4)});
 %------------------------------------------
 figs = open_local_figures("validation_error_base");
 fig = figs{1};
@@ -12,18 +11,13 @@ title(ax,[])
 ylim(ax,[1e-6,1])
 xlim(ax,[365,580])
 
-lines = ax.Children;
-num_lines = size(lines,1);
-% for iLine = 1:num_lines
-%     line = lines(iLine);
-%     validation_modes = line.DataTipTemplate.DataTipRows(4).Value(1);
-%     validation_modes = erase(validation_modes,["[","]"]);
-%     validation_modes = str2double(validation_modes{1});
-%     if validation_modes == 2
-%         uistack(line,"top")
-%     end
-%     line_colour =  plot_colours(validation_modes);
-%     line.Color = line_colour{1};
-% end
+%---
+mode_3_lines = findobj(ax.Children,"Color",get_plot_colours(3));
+mode_6_lines = findobj(ax.Children,"Color",get_plot_colours(6));
+lines = findobj(ax.Children,"Type","Line");
+
+set(lines,"Color",get_plot_colours("grey"))
+set(mode_3_lines,"Color",get_plot_colours(2))
+set(mode_6_lines,"Color",get_plot_colours(5))
 %------------------------------------------
 save_fig(fig,fig_name)

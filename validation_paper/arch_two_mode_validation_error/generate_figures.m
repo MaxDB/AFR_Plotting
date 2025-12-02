@@ -2,10 +2,11 @@ clear
 error_fig_name = "two_mode_validation_error_base";
 amp_backbone_fig_name = "two_mode_validation_amp_backbone_base";
 phy_backbone_fig_name = "two_mode_validation_phy_backbone_base";
+energy_backbone_fig_name = "two_mode_energy_base";
 
 sol_num = [1,2];
 %--------
-data_directory = get_project_path + "\examples\size_test";
+data_directory = get_project_path + "\examples\validation\mems_arch";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
 data_dir_execute(@set_visualisation_level,1)
@@ -28,6 +29,10 @@ amp_backbone_fig = gcf;
 phy_backbone_ax = data_dir_execute(@compare_solutions,"physical amplitude","mems_arch_16",sol_num,"validation",1);
 phy_backbone_fig = gcf;
 
+energy_backbone_ax = data_dir_execute(@compare_solutions,"energy","mems_arch_16",sol_num,"validation",1);
+energy_backbone_fig = gcf;
+
 save_fig(error_fig,error_fig_name)
 save_fig(amp_backbone_fig,amp_backbone_fig_name)
 save_fig(phy_backbone_fig,phy_backbone_fig_name)
+save_fig(energy_backbone_fig,energy_backbone_fig_name)
