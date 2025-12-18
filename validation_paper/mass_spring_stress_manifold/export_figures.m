@@ -13,6 +13,7 @@ Export_Settings.width = 8.4;
 Export_Settings.file_type = "png";
 Export_Settings.resolution = 500;
 Export_Settings.projection = "3D";
+Export_Settings.separate_labels = true;
 %--------------------------
 figs = open_local_figures(fig_name);
 fig = figs{1};

@@ -205,7 +205,7 @@ function title = get_title(num_workers)
 number_words = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"];
 numer_word = number_words(num_workers);
 
-title = numer_word + " worker";
+title = numer_word + " parallel worker";
 if num_workers > 1
     title = title + "s";
 end

@@ -42,6 +42,7 @@ for iFig = 1:num_figs
 
     if isstring(Fig_Export_Settings) && Fig_Export_Settings == "inherit"
         Fig_Export_Settings = fig.UserData;
+        Fig_Export_Settings.padding = [0,0,0,0];
     end
     fig.UserData = Fig_Export_Settings;
 
@@ -62,26 +63,53 @@ for iFig = 1:num_figs
     switch Fig_Export_Settings.file_type
         case "pdf"
             % print(fig,image_path,'-dpdf')
-            exportgraphics(fig,image_path + ".pdf","ContentType","vector");
+            switch fig.Renderer
+                case "painters"
+                    exportgraphics(fig,image_path + ".pdf","ContentType","vector");
+                otherwise
+                    exportgraphics(fig,image_path + ".pdf","ContentType","image","Resolution",Fig_Export_Settings.resolution);
+            end
+            
         case "pdf_img"
             Ann_Pane = get_annotation_handles(fig);
             set(Ann_Pane.Children,"Visible","off")
             print(fig,image_path,'-dpng',"-r" + Fig_Export_Settings.resolution)
             png_image = imread(image_path+".png");
             fig_out = copyobj(fig,groot());
-            image(png_image);
+            imshow(png_image);
 
             set(Ann_Pane.Children,"Visible","on")
             Ann_Pane = get_annotation_handles(fig_out);
             set(Ann_Pane.Children,"Visible","on")
             fig_out.Position = fig.Position;
             fig_out.Children.Position = [0,0,1,1];
-            exportgraphics(fig_out,image_path + ".pdf","ContentType","image")
+            exportgraphics(fig_out,image_path + ".pdf","ContentType","vector","Resolution",Fig_Export_Settings.resolution);
             
         case "svg"
             print(fig,image_path,'-dsvg')
         case "png"
+            if ~Fig_Export_Settings.separate_labels
+                print(fig,image_path,'-dpng',"-r" + Fig_Export_Settings.resolution)
+                return
+            end 
+            
+            Annotation_pane = get_annotation_handles(fig);
+            annotations = Annotation_pane.Children;
+            set(annotations,"Visible","off")
             print(fig,image_path,'-dpng',"-r" + Fig_Export_Settings.resolution)
+            set(annotations,"Visible","on")
+
+            set(0,"ShowHiddenHandles","on")
+            ax = findobj(fig.Children,"type","axes");
+            lines = findobj(ax,"-property","Visible");
+            set(lines,"Visible","off")
+            fig_colour = fig.Color;
+            set(fig,"Color","none")
+            exportgraphics(fig,image_path + "_annotations.pdf","ContentType","vector");
+            set(fig,"Color",fig_colour)
+            set(lines,"Visible","on")
+            set(0,"ShowHiddenHandles","off")
+
         case "eps"
             print(fig,image_path,'-depsc2')
 

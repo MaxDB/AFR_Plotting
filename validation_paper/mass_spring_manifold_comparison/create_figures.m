@@ -18,8 +18,6 @@ camera_position = [-0.0895   -0.5236    0.0172];
 
 
 orbit_sol_num = 1;
-% orbit_id = 134;
-orbit_id = 141;
 
 orbit_colour = get_plot_colours(3);
 validation_orbit_colour = get_plot_colours(5);
@@ -47,6 +45,10 @@ data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
 fig = figure;
 ax = axes(fig);
+
+Dyn_Data = data_dir_execute(@initalise_dynamic_data,"mass_spring_roller_1");
+special_points = data_dir_execute(@Dyn_Data.get_special_point,1,"X");
+orbit_id = special_points(1);
 
 Manifold_One.system = "mass_spring_roller_1";
 Manifold_One.orbit = [orbit_sol_num,orbit_id];

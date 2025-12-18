@@ -4,6 +4,8 @@
 renderer, "painters",			MATLAB print renderer
 projection,"2D",			plot projection type
 file_type, "pdf",			exported file type
+separate_labels, 0,		for non-vector images that require embedded fonts
+
 
 ## Style
 width, [],				figure width
@@ -12,3 +14,6 @@ font_name, "Times New Roman",		font type for non-latex interpreted text
 font_size, 8,				font size
 resolution, 300,			raster resolution
 axes, "on",					turn axes on/off
+
+
+padding, [0,0,0,0], whitespace to add to width and height (top, right, bottom, left)

@@ -12,7 +12,6 @@ z_limit = [-1.75,2]*1e-3;
 camera_position = [-0.2404   -1.8429    0.0217];
 
 orbit_sol_num = 1;
-orbit_id = 141;
 
 
 % mesh style
@@ -22,8 +21,15 @@ manifold2_colour = get_plot_colours(2);
 data_directory = get_project_path + "\examples\validation\mass_spring_system";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
+Dyn_Data = data_dir_execute(@initalise_dynamic_data,"mass_spring_roller_1");
+special_points = data_dir_execute(@Dyn_Data.get_special_point,1,"X");
+orbit_id = special_points(1);
+
+
 fig = figure;
 ax = axes(fig);
+
+
 
 Plot_Settings.legend = false;
 Manifold_One.system = "mass_spring_roller_1";

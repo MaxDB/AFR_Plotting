@@ -2,7 +2,7 @@ clear
 close all
 fig_name = "energy_backbone";
 
-orbit_id = 141;
+
 max_energy = 0.05;
 
 colour = get_plot_colours(3);
@@ -13,7 +13,7 @@ orbit_style = {"Marker","*","Color",colour,"LineWidth",line_width,"MarkerSize",m
 %--------------------------------------------------
 data_directory = get_project_path + "\examples\validation\mass_spring_system";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
-data_dir_execute(@compare_solutions,"energy","mass_spring_roller_1",1,"mass_spring_roller_12",1);
+data_dir_execute(@compare_solutions,"energy","mass_spring_roller_1",1,"mass_spring_roller_12",1,"plot_special_points",0);
 
 
 fig = gcf();
@@ -33,6 +33,12 @@ for iLine = 1:num_lines
 end
 
 bb_line = findobj(ax,"Color",get_plot_colours(1),"DisplayName",'');
+Dyn_Data = data_dir_execute(@initalise_dynamic_data,"mass_spring_roller_1");
+
+special_points = data_dir_execute(@Dyn_Data.get_special_point,1,"X");
+orbit_id = special_points(1);
+
+
 x_orbit = bb_line.XData(orbit_id);
 y_orbit = bb_line.YData(orbit_id);
 

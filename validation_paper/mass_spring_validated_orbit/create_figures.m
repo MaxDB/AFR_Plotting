@@ -3,14 +3,16 @@ close all
 fig_name = "validation_orbit";
 
 sol_id = 1;
-orbit_id = 141;
 
 line_width = 2;
 orbit_colour = get_plot_colours(3);
 validation_colour = get_plot_colours(5);
 
 % validation_time_points = [1,14,39,94,120];
-validation_time_points = [39,69,81,94,120,149,1,14,39];
+% validation_time_points = [41,68,81,94,120,149,1,14,41];
+
+% validation_time_points = [31,71,91,94,110,120,1,11,31];
+validation_time_points = [90,111,1,11,31,51,61,71];
 
 marker_size = 10;
 marker_type = "o";
@@ -46,6 +48,8 @@ x1 = Disp_Poly.evaluate_polynomial(r1);
 %------------------------------------------
 orbit_style = {"LineWidth",line_width};
 
+special_points = data_dir_execute(@Dyn_Data.get_special_point,1,"X");
+orbit_id = special_points(1);
 
 [orbit,validation_orbit] = data_dir_execute(@Dyn_Data.get_orbit,sol_id,orbit_id,1);
 

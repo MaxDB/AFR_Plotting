@@ -11,7 +11,33 @@ end
 if ~isempty(Plot_Settings.height)
     fig.Position(4) = Plot_Settings.height;
 end
-fig.PaperSize = fig.InnerPosition([3,4]);
+
+if any(Plot_Settings.padding ~= 0)
+
+
+    fig_padding = Plot_Settings.padding;
+    vert_padding = sum(fig_padding([1,3]));
+    horz_padding = sum(fig_padding([2,4]));
+
+    fig.Position(3) = fig.Position(3) - horz_padding;
+    fig.Position(4) = fig.Position(4) - vert_padding;
+    
+    fig_children= fig.Children;
+    num_children = length(fig_children);
+    for iChild = 1:num_children
+        fig_child = fig_children(iChild);
+        fig_child_position = fig_child.Position;
+        set(fig_child,"Units","centimeters");
+        fig_child.Position = fig_child_position.*fig.Position([3,4,3,4]);
+    end
+    
+    fig.Position([3,4]) = fig.Position([3,4]) + [horz_padding,vert_padding];
+
+    arrayfun(@(fig_child) set(fig_child,"Position",fig_child.Position + [fig_padding(4),fig_padding(3),0,0]),fig.Children)
+end
+% fig.PaperSize = fig.InnerPosition([3,4]);
+% fig.PaperSize = fig.PaperSize + Plot_Settings.padding;
+
 ax = findobj(fig,"Type","axes");
 num_axes = numel(ax);
 

@@ -1,11 +1,11 @@
 clear 
 close all
 
-fig_name =  "arch_time_complexity";
+fig_name = "beam_bb";
 
 labels = {
-    "software crashes",{"text","Rotation",15};
-    "","arrow"
+    "FOM","label";
+    "$\{1,3,5\}$-ROM","label";
 };
 
 

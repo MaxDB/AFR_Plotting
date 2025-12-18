@@ -27,5 +27,5 @@ for iLine = 1:num_lines
 end
 
 
-ylabel(ax,"Max \bf{x}\rm{_{mid} (μm)}")
+ylabel(ax,"Max(\bf{x}\rm{_{mid}) \fontname{Times New Roman}(μm)}")
 save_fig(fig,fig_name)

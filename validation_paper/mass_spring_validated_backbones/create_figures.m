@@ -5,7 +5,7 @@ fig_name = "validated_backbone";
 
 
 orbit_frequency = 3;
-orbit_id = 141;
+% orbit_id = 141;
 max_energy = 0.07;
 backbone_1_line = 15;
 validation_line = {8,9,10,11,12,13};
@@ -21,7 +21,7 @@ marker_size = 6;
 data_directory = get_project_path + "\examples\validation\mass_spring_system";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
-data_dir_execute(@compare_solutions,"energy","mass_spring_roller_1",1,"mass_spring_roller_12",1,"validation",[1,0]);
+data_dir_execute(@compare_solutions,"energy","mass_spring_roller_1",1,"mass_spring_roller_12",1,"validation",[1,0],"plot_special_points",0);
 
 
 
@@ -68,7 +68,12 @@ ylim(ax,[0,max_energy ])
 xlim(ax,[1.35,3.2])
 ylim(ax,ax.YLim)
 
-hold(ax,"on") %#ok<UNRCH>
+Dyn_Data = data_dir_execute(@initalise_dynamic_data,"mass_spring_roller_1");
+
+special_points = data_dir_execute(@Dyn_Data.get_special_point,1,"X");
+orbit_id = special_points(1);
+
+hold(ax,"on")
 p= plot(ax,[orbit_frequency,orbit_frequency],ax.YLim,"k--");
 p.Annotation.LegendInformation.IconDisplayStyle = "off";
 uistack(ax.Children(1),"bottom")

@@ -14,13 +14,14 @@ camera_position = [-0.0895   -0.5236    0.0172];
 % camera_position = [ -0.1254   -1.2597    0.0301];
 
 orbit_sol_num = 1;
-orbit_id = 141;
 
 orbit_colour = get_plot_colours(3);
 validation_orbit_colour = get_plot_colours(5);
 
 %manifolds
-validation_time_points = [1,14,40,94,120];
+% validation_time_points = [41,68,81,94,120,149,1,14,41];
+% validation_time_points = [1,14,41,94,120];
+validation_time_points = [90,111,1,11,31];
 % manifold_offsets = [-2.5,-2.5,-2.5]*1e-5;
 manifold_offsets = -[1,1,1,1,1,1,1]*1e-5;
 validation_colour = get_plot_colours(1);
@@ -37,6 +38,10 @@ marker_line_width = 1;
 %--------------------------------------------------
 data_directory = get_project_path + "\examples\validation\mass_spring_system";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
+
+Dyn_Data = data_dir_execute(@initalise_dynamic_data,"mass_spring_roller_1");
+special_points = data_dir_execute(@Dyn_Data.get_special_point,1,"X");
+orbit_id = special_points(1);
 
 fig = figure;
 ax = axes(fig);

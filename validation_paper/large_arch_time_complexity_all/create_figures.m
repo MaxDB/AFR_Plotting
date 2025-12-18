@@ -1,6 +1,6 @@
 clear
 % close all
-num_workers = 4;
+num_workers = 1;
 fig_name = "arch_time_complexity_" + num_workers;
 
 
@@ -229,7 +229,12 @@ end
 
 function title = get_title(num_workers)
 number_words = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"];
-numer_word = number_words(num_workers);
+if ~isstring(num_workers)
+    numer_word = number_words(num_workers);
+else
+    numer_word = num_workers;
+    num_workers = inf;
+end
 
 title = numer_word + " parallel worker";
 if num_workers > 1

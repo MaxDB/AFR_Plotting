@@ -4,7 +4,7 @@ fig_name = "stability";
 
 frequency_range = [2.8,3.3];
 
-line_width = 2;
+line_width = 1.5;
 rom_12_colour = get_plot_colours(2);
 validation_colour = get_plot_colours(5);
 
@@ -19,7 +19,7 @@ Dyn_Data_12 = data_dir_execute(@initalise_dynamic_data,"mass_spring_roller_12");
 
 % Dyn_Data_1 = data_dir_execute(@Dyn_Data_1.validate_solution,1,2);
 
-[freq_1,floquet_1,floquet_v1_all] =  data_dir_execute(@get_floquet_multipliers,Dyn_Data_1,1,frequency_range);
+[freq_1,floquet_1,floquet_v1_all] =  data_dir_execute(@get_floquet_multipliers,Dyn_Data_1,2,frequency_range);
 [freq_12,floquet_12_all] = data_dir_execute(@get_floquet_multipliers,Dyn_Data_12,2,frequency_range);
 
 

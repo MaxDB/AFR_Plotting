@@ -4,8 +4,7 @@ close all
 fig_name = "manifold_comparison";
 
 
-labels = ["1","text";
-          "1","text";
+labels = [
           "$\mathcal W_{\mathcal R_2}$","label";
           "$\mathcal V_{\mathbf r_2^*(t_1)}$","label"
           "$\hat{\mathbf x}^*(t)$","label";  

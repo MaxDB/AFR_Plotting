@@ -1,12 +1,11 @@
 clear 
 close all
 
+fig_names = "arch_total_time";
 
-fig_names = "arch_time_complexity_all";
-% 
-Export_Settings.height = 21;
-Export_Settings.width = 16.8;
-Export_Settings.padding = [0,0.1,0.1,0];
+Export_Settings.height = 4;
+Export_Settings.width = 8.4;
+
 
 %--------------------------
 figs = open_local_figures(fig_names);
