@@ -1,11 +1,10 @@
 clear 
 close all
 
-fig_name =  "arch_time_complexity";
+fig_name = "force2";
 
 labels = {
-    "software crashes",{"text","Rotation",30};
-    "","arrow"
+    "$f_2 = 0$",{"text","Rotation",38}
 };
 
 

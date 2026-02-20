@@ -41,7 +41,7 @@ ax_amp.XTickLabel = x_ticks;
 set_label(ax_phy,"x","Frequency (rad/s)")
 set_label(ax_error,"y","\epsilon")
 set_label(ax_amp,"y","Q_6 \times10^{-7}")
-set_label(ax_phy,"y","Max(\bf{x}\rm{_{mid}) \fontname{Times New Roman}(μm)}") %μ
+set_label(ax_phy,"y","Max(|\bf{x}\rm{_{mid}|) \fontname{Times New Roman}(μm)}") %μ
 
 
 x_lim = [2.66e6,2.722e6];

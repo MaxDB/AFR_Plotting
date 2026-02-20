@@ -1,11 +1,11 @@
 clear 
 close all
 
-fig_name =  "arch_time_complexity";
+fig_name = "invariant_manifold_2d";
 
 labels = {
-    "software crashes",{"text","Rotation",30};
-    "","arrow"
+    "$L_2$",{"text","Rotation",33};
+    "$L_2$",{"text","Rotation",-12};
 };
 
 

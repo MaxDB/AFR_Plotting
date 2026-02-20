@@ -9,7 +9,7 @@ fig = figure;
 ax = gca();
 
 %--------------------------------------------------
-data_directory = get_project_path + "\examples\size_test";
+data_directory = get_project_path + "\examples\verification\mems_arch";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
 data_path = "data\size_data\workers_" + num_workers;

@@ -38,5 +38,5 @@ uistack(line,"bottom")
 
 
 
-ylabel(ax,"Max(\bf{x}\rm{_{mid}) \fontname{Times New Roman}(μm)}")
+ylabel(ax,"Max(|\bf{x}\rm{_{mid}|) \fontname{Times New Roman}(μm)}")
 save_fig(fig,fig_name)

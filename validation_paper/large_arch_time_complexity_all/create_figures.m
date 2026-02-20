@@ -1,6 +1,6 @@
 clear
 % close all
-num_workers = 1;
+num_workers = 6;
 fig_name = "arch_time_complexity_" + num_workers;
 
 

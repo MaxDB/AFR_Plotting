@@ -1,11 +1,13 @@
 clear 
 close all
 
-fig_name =  "arch_time_complexity";
+fig_name = "mass_spring_bb";
 
 labels = {
-    "software crashes",{"text","Rotation",30};
-    "","arrow"
+    "$L_2$","text";
+    "$\{1\}$-ICE","label";
+    "$\{1\}$-ICE-IC","label";
+    "FOM","label"
 };
 
 

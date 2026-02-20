@@ -48,7 +48,7 @@ ylim(ax_energy,[0,0.9])
 xlabel(ax_energy,"Frequency (rad/s)")
 ylabel(ax_error,"\epsilon")
 ylabel(ax_amp,"Q_{11}\times10^{-10}")
-ylabel(ax_physical,"Max(\bf{x}\rm{_{mid}) \fontname{Times New Roman}(μm)}")
+ylabel(ax_physical,"Max(|\bf{x}\rm{_{mid}|) \fontname{Times New Roman}(μm)}")
 ylabel(ax_energy,"Energy (nJ)")
 
 x_lim = [2.625e6,2.754e6];

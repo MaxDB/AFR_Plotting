@@ -9,7 +9,7 @@ fig = figure;
 ax = gca();
 
 %--------------------------------------------------
-data_directory = get_project_path + "\examples\size_test";
+data_directory = get_project_path + "\examples\validation\mems_arch";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
 plot_style = {"LineWidth",2};
