@@ -5,9 +5,10 @@ fig_name = "beam_one_mode_comp";
 
 labels = {
     "FOM","label";
-    "ROM","label";
-    "$R^2 = 1.000$","text";
-    "$R^2 = 1.000$","text"
+    "n_f = 7","label";
+    "n_f = 3","label";
+    "n_d = 5","label";
+    "","label"
     };
 
 

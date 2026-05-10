@@ -90,7 +90,7 @@ for iFig = 1:num_figs
         case "png"
             if ~Fig_Export_Settings.separate_labels
                 print(fig,image_path,'-dpng',"-r" + Fig_Export_Settings.resolution)
-                return
+                continue
             end 
             
             Annotation_pane = get_annotation_handles(fig);

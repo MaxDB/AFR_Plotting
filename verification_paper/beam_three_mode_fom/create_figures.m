@@ -7,11 +7,11 @@ centre_node = 20; %accounting for removed BCs
 
 
 %--------------------------------------------------
-data_directory = get_project_path + "\examples\JH_beam";
+data_directory = get_project_path + "\examples\verification\clamped_beam";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
 
-Static_Data = data_dir_execute(@load_static_data,"JH_beam_2d_135");
+Static_Data = data_dir_execute(@load_static_data,"clamped_beam_2d_135");
 Rom = data_dir_execute(@Reduced_System,Static_Data);
 
 %-----

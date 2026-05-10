@@ -1,10 +1,10 @@
 clear
 close all
 %--------------------------------------------------
-data_directory = get_project_path + "\examples\JH_beam";
+data_directory = get_project_path + "\examples\verification\clamped_beam";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
-Static_Data = data_dir_execute(@load_static_data,"JH_beam_2d_135");
+Static_Data = data_dir_execute(@load_static_data,"clamped_beam_2d_135");
 Rom = data_dir_execute(@Reduced_System,Static_Data);
 
 
@@ -37,7 +37,7 @@ applied_force = force_vec;
 
 Model = Static_Data.Model; 
 Model.Static_Options.num_loadcases = 50;
-Model.Static_Options.max_parallel_jobs = 4;
+Model.Static_Options.max_parallel_jobs = 2;
 Closest_Point = [];
 [reduced_disp,physical_disp,restoring_force] = data_dir_execute(@Model.add_point,applied_force,"none",Closest_Point);
 

@@ -26,6 +26,9 @@ if any(Plot_Settings.padding ~= 0)
     num_children = length(fig_children);
     for iChild = 1:num_children
         fig_child = fig_children(iChild);
+        % if class(fig_child) == "matlab.graphics.shape.internal.AnnotationPane"
+        %     continue
+        % end
         fig_child_position = fig_child.Position;
         set(fig_child,"Units","centimeters");
         fig_child.Position = fig_child_position.*fig.Position([3,4,3,4]);

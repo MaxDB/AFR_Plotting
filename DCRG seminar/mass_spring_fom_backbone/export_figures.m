@@ -11,8 +11,8 @@ Export_Settings.width = 40;
 Export_Settings.font_size = 32;
 % Export_Settings.file_type = "svg";
 
-Export_Settings.file_type = "png";
-Export_Settings.resolution = 500;
+Export_Settings.file_type = "svg";
+
 
 
 % Export_Settings.height = 16; 

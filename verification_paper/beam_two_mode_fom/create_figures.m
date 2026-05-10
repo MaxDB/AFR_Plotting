@@ -1,4 +1,4 @@
-clear
+% clear
 close all
 fig_name = "beam_two_mode_comp";
 
@@ -25,11 +25,12 @@ outline_style = {"Color",get_plot_colours(0),"LineWidth",0.5,"Visible","off"};
 border_style = {"Color",get_plot_colours(0),"LineWidth",0.5};
 rom_style = {"EdgeColor","none","FaceColor",get_plot_colours(3),"FaceAlpha",0.8,"LineWidth",0.01};
 %--------------------------------------------------
-data_directory = get_project_path + "\examples\JH_beam";
+data_directory = get_project_path + "\examples\verification\clamped_beam";
 data_dir_execute = @(fun,varargin) dir_execute(data_directory,fun,varargin{:});
 
 
-Static_Data = data_dir_execute(@load_static_data,"JH_beam_2d_13");
+Static_Data = data_dir_execute(@load_static_data,"clamped_beam_2d_13");
+% Static_Data.verified_degree = [3,3];
 Rom = data_dir_execute(@Reduced_System,Static_Data);
 
 %-----

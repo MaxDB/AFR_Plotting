@@ -4,9 +4,9 @@ close all
 fig_name = "beam_two_mode_comp";
 
 labels = {
-    "$R^2 = 1.000$","text";
-    "$R^2 = 1.000$","text";
-    "$R^2 = 1.000$","text";
+    "$1-R^2 = 5\times\!10^{-6}$","text";
+    "$1-R^2 = 1\times\!10^{-6}$","text";
+    "$1-R^2 = 1\times\!10^{-8}$","text";
     };
 
 

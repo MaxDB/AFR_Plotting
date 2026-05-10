@@ -7,7 +7,8 @@ fig_name = "arch_two_mode_bb";
 %           "$\mathcal \{1,6\}$-ROM"];
 
 labels = {"One mode ROM";
-          "Two mode ROM"};
+          "Two mode ROM";
+          "Validation"};
 
 
 %-----------------------------
