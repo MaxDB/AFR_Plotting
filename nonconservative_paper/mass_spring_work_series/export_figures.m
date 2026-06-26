@@ -1,14 +1,15 @@
 clear
 close all
+id = 3;
 
+fig_name = "work_series_" + id;
 
-fig_name = "energy_backbone";
+Export_Settings.height =  6; 
+Export_Settings.width = 8.4;
 
-Export_Settings.height = 12; 
-Export_Settings.width = 30;
-Export_Settings.font_size = 20;
 
 
 figs = open_local_figures(fig_name);
+
 %--------------------------
 export_fig(figs,fig_name,Export_Settings)

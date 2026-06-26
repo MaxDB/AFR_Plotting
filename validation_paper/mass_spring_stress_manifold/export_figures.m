@@ -31,6 +31,7 @@ for iLine = 1:num_lines
             % line.ZData = line.ZData - 1e-5;
         case "m-1"
             line.ZData = line.ZData + 1e-5;
+            
         case "grid_line"
             %copied_line = copyobj(line,ax);
             %copied_line.ZData = copied_line.ZData - 0e-5;
@@ -42,4 +43,26 @@ for iLine = 1:num_lines
     end
 end
 %--------------------------
+m2 = findobj(ax,"Tag","m-1,2");
+outline = findobj(ax,"Tag","outline");
+grid_line = findobj(ax,"Tag","grid_line");
+m2.FaceColor = get_plot_colours(5);
+
+% delete(m2)
+% delete(outline)
+% delete(grid_line)
+delete(ax.Children(2))
+delete(ax.Children(end))
+% ax.Children.LineWidth = 2;
+%--------------------------
+xlabel(ax,'')
+ylabel(ax,'')
+zlabel(ax,'')
+
+xticks(ax,[])
+yticks(ax,[])
+zticks(ax,[])
+
+
+
 export_fig(fig,fig_name,Export_Settings)
