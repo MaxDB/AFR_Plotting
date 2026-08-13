@@ -1,9 +1,19 @@
-function mass_group = draw_mass(ax,centre,radius,boundary,Plot_Style)
+function mass_group = draw_mass(ax,centre,radius,boundary,force_direction,Plot_Style)
 mass_style = {"LineWidth",Plot_Style.thickness};
 
 hold(ax,"on")
 mass_group = viscircles(ax,centre,radius,"EnhanceVisibility",0,mass_style{:});
 set(mass_group.Children,"Tag","mass");
+
+
+if ~isempty(force_direction)
+    force_group = draw_force(ax,force_direction,centre,radius);
+    force_transform = hgtransform(ax);
+    if ~isempty(force_group.Children)
+        set(force_group,"Parent",force_transform,"Tag","force group")
+        set(force_transform,"Parent",mass_group,"Tag","force transform")
+    end
+end
 
 switch boundary
     case "free"

@@ -1,16 +1,16 @@
 clear 
 close all
 
-fig_name = "mass_spring_frc_1";
-labels = {["ROM and FOM","are indistinguishable"],"text"};
+% fig_name = "mass_spring_frc_1";
+% labels = {["ROM and FOM","are indistinguishable"],"text"};
 
 % fig_name = "mass_spring_frc_2";
 % labels = ["$\{1,2\}$-ROM";
 %     "FOM"];
-% 
-% fig_name = "mass_spring_frc_3";
-% labels = ["$\{1,2\}$-ROM";
-%     "FOM"];
+
+fig_name = "mass_spring_frc_3";
+labels = ["$\{1,2\}$-ROM";
+    "FOM"];
 
 
 

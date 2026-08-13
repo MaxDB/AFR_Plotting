@@ -4,6 +4,7 @@ classdef Mass
         mass_centre
 
         boundary_conditions
+        applied_forces
 
         mass_id
         animation_axis
@@ -21,10 +22,13 @@ classdef Mass
             keyword_values = varargin(2:2:num_args);
 
             Plot_Style.thickness = 2;
+            force_direction = [];
             for arg_counter = 1:num_args/2
                 switch keyword_args{arg_counter}
                     case "thickness"
                         Plot_Style.thickness = keyword_values{arg_counter};
+                    case "force"
+                        force_direction = keyword_values{arg_counter};
                     otherwise
                         error("Invalid keyword: " + keyword_args{arg_counter})
                 end
@@ -36,10 +40,10 @@ classdef Mass
             obj.mass_centre = centre;
             obj.Plotting_Style = Plot_Style;
 
-    
             obj.boundary_conditions = bcs;
+            obj.applied_forces = force_direction;
 
-            mass_group = draw_mass(ax,centre,radius,bcs,Plot_Style);
+            mass_group = draw_mass(ax,centre,radius,bcs,force_direction,Plot_Style);
             mass_transform = hgtransform(ax);
             mass_group.Parent = mass_transform;
 

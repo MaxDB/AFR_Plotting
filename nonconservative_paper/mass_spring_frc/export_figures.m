@@ -2,9 +2,9 @@ clear
 close all
 
 
-fig_name = "mass_spring_frc_1";
+fig_name = "mass_spring_frc_3";
 
-Export_Settings.height = 6; 
+Export_Settings.height = 4.2; 
 Export_Settings.width = 8.4;
 
 

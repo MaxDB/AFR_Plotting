@@ -53,6 +53,7 @@ for iLine = 1:num_lines
     evecs = Rom.Model.reduced_eigenvectors;
     evecs = data_dir_execute(@load,evecs);
     evec_1_max = max(evecs(:,1));
+    evec_1_max = 0.08980;
 
     orbit_id_str = line_data{4}{1};    
     orbit_id = split(strip(strip(orbit_id_str,"left",'('),"right",')'),",");

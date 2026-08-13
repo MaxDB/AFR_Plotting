@@ -18,8 +18,10 @@ export_fig(figs,fig_name,Export_Settings)
 %--
 fig = figs{1};
 fig = fix_y_ticks(fig);
-%-
-Export_Settings.padding =  [0,0.05,0,0];
+%--
+tiles = findobj("type","TiledLayout");
+tiles.Position(3) = tiles.Position(3)*0.92;
+%--
 export_fig(figs,fig_name,Export_Settings)
 %--
 

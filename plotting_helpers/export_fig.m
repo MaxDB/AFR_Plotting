@@ -65,6 +65,7 @@ for iFig = 1:num_figs
             % print(fig,image_path,'-dpdf')
             switch fig.Renderer
                 case "painters"
+                    % exportgraphics(fig,image_path + ".pdf","ContentType","vector","Padding","figure");
                     exportgraphics(fig,image_path + ".pdf","ContentType","vector");
                 otherwise
                     exportgraphics(fig,image_path + ".pdf","ContentType","image","Resolution",Fig_Export_Settings.resolution);

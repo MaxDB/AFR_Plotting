@@ -1,6 +1,6 @@
 clear
 close all
-id = 3;
+id = 2;
 
 fig_name = "work_series_" + id;
 

@@ -1,5 +1,25 @@
-function System = draw_system(Model,ax)
+function System = draw_system(Model,ax,varargin)
 mass_radius = 0.2;
+
+%-------------------------------------------------------------------------%
+num_args = length(varargin);
+if mod(num_args,2) == 1
+    error("Invalid keyword/argument pairs")
+end
+keyword_args = varargin(1:2:num_args);
+keyword_values = varargin(2:2:num_args);
+
+applied_force = [];
+for arg_counter = 1:num_args/2
+    switch keyword_args{arg_counter}
+        case "force"
+            applied_force = keyword_values{arg_counter};
+        otherwise
+            error("Invalid keyword: " + keyword_args{arg_counter})
+    end
+end
+%-------------------------------------------------------------------------%
+
 
 % set up axes
 axes(ax);
@@ -19,7 +39,7 @@ springs{3} = Spring(3,ax,[2*Lr + mass_radius,2*Lr + mass_radius;0,L],["ground","
 springs{4} = Spring(4,ax,[Ld,Ld+L;Lr,Lr],["free","free"],"thickness",5);
 springs{5} = Spring(5,ax,[Lr,Lr;Ld,Ld+L],["free","ground"],"thickness",2);
 
-masses{1} = Mass(1,ax,[Lr,Lr],mass_radius,"free","thickness",5);
+masses{1} = Mass(1,ax,[Lr,Lr],mass_radius,"free","thickness",5,"force","north");
 masses{2} = Mass(2,ax,[Ld + Lr,Lr],mass_radius,"roller east","thickness",5);
 
 connections{1} = dictionary("west",1,"south",2,"east",-4,"north",-5);

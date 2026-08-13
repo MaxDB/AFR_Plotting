@@ -16,7 +16,7 @@ classdef Mass_Spring_System
     end
 
     methods
-        function obj = Mass_Spring_System(masses,springs,dofs_description,connections,ax)
+        function obj = Mass_Spring_System(masses,springs,dofs_description,connections,ax,varargin)
             obj.animated_masses = masses;
             num_masses = size(masses,2);
             obj.num_animated_masses = num_masses;
@@ -117,6 +117,43 @@ classdef Mass_Spring_System
             obj = obj.set_state(mass_change,spring_change);
         end
         %-----------------
+        function obj = set_force(obj,force)
+            %redo for general forces
+            mass_group = obj.animated_masses{1}.graphical_group;
+            force_transform = findobj(mass_group,"Tag","force transform");
+            if sign(force) == 0
+                    set(force_transform,"Visible","off")
+                return
+            end
+            set(force_transform,"Visible","on")
+            
+            force_tip = findobj(force_transform,"Tag","head_tip");
+            force_line = findobj(force_transform,"Tag","force_line");
+            force_origin = [force_line.XData(1);force_line.YData(1)];
+            transformation_matrix = makehgtform("scale",[1,abs(force),1])*makehgtform("translate",[-force_origin(1),-force_origin(2),0]); 
+            
+            
+            if sign(force) == -1
+                transformation_matrix = makehgtform("zrotate",pi)*transformation_matrix;
+                switch force_tip.Marker
+                    case "^"
+                        set(force_tip,"Marker","v")
+                    case ">"
+                        set(force_tip,"Marker","<")
+                end
+            else
+                switch force_tip.Marker
+                    case "v"
+                        set(force_tip,"Marker","^")
+                    case "<"
+                        set(force_tip,"Marker",">")
+                end
+            end
+            transformation_matrix = makehgtform("translate",[force_origin(1),force_origin(2),0])*transformation_matrix;
+
+            force_transform.Matrix = transformation_matrix;
+        end
+        %-----------------
         function obj = set_state(obj,mass_change,spring_change)
             masses = obj.animated_masses;
             num_masses = obj.num_animated_masses;
@@ -140,11 +177,28 @@ classdef Mass_Spring_System
 
         %--------------
         function obj = setup_animation_function(obj,Dyn_Data,data_dir_execute)
-            Rom = Dyn_Data.Dynamic_Model;
-            obj.animation_function = @(sol_num,orbit_id,validation) get_animation_data(sol_num,orbit_id,validation,Dyn_Data,Rom,data_dir_execute);
+            switch class(Dyn_Data)
+                case "Dynamic_Dataset"
+                    Rom = Dyn_Data.Dynamic_Model;
+                    obj.animation_function = @(sol_num,orbit_id,validation) get_animation_data(sol_num,orbit_id,validation,Dyn_Data,Rom,data_dir_execute);
+                case "struct"
+                    obj.animation_function = @(index) get_animation_data(Dyn_Data(index));
+                
+            end
 
-
-            function [t,x] = get_animation_data(sol_num,orbit_id,validation,Dyn_Data,Rom,data_dir_execute)
+            function [t,x,force] = get_animation_data(sol_num,orbit_id,validation,Dyn_Data,Rom,data_dir_execute)
+                force = [];
+                if nargin == 1
+                    t = sol_num.t';
+                    x = sol_num.z';
+                    num_dofs = size(x,1)/2;
+                    x = x(1:num_dofs,:);
+                    
+                    if isfield(sol_num,"frequency") && ~isempty(sol_num.frequency)
+                        force = sin(sol_num.frequency*t);
+                    end
+                    return
+                end
                 if nargin == 2
                     validation = 0;
                 end
@@ -180,12 +234,15 @@ classdef Mass_Spring_System
 
             animation_scale_factor = 1;
             validation = 0;
+            total_time = [];
             for arg_counter = 1:num_args/2
                 switch keyword_args{arg_counter}
                     case "scale_factor"
                         animation_scale_factor = keyword_values{arg_counter};
                     case "validation"
                         validation = keyword_values{arg_counter};
+                    case "total_time"
+                        total_time = keyword_values{arg_counter};
                     otherwise
                         error("Invalid keyword: " + keyword_args{arg_counter})
                 end
@@ -193,9 +250,15 @@ classdef Mass_Spring_System
             %-------------------------------------------------------------------------%
 
 
+            if sol_num == 0
+                [t,x,force] = obj.animation_function(orbit_id);
+            else
+                [t,x,force] = obj.animation_function(sol_num,orbit_id,validation);
+            end
 
-
-            [t,x] = obj.animation_function(sol_num,orbit_id,validation);
+            if ~isempty(total_time)
+                t = t*(total_time)/t(end);
+            end
             
             frame_t = t(1):1/frame_rate:t(end);
 
@@ -205,13 +268,19 @@ classdef Mass_Spring_System
             for iDof = 1:num_dof
                 frame_x(iDof,:) = interp1(t,x(iDof,:),frame_t);
             end
+
+            num_forces = size(force,1);
+            frame_force = zeros(num_forces,num_frames);
+            for iForce = 1:num_forces
+                frame_force(iForce,:) = interp1(t,force(iForce,:),frame_t);
+            end
             
-            animation = obj.animate_displacement(frame_t,frame_x,animation_scale_factor,frame_rate);
+            animation = obj.animate_displacement(frame_t,frame_x,frame_force,animation_scale_factor,frame_rate);
             
         end
         %--------------
-        function animation = animate_displacement(obj,frame_t,frame_x,animation_scale_factor,frame_rate)
-             num_frames = size(frame_t,2);
+        function animation = animate_displacement(obj,frame_t,frame_x,frame_force,animation_scale_factor,frame_rate)
+            num_frames = size(frame_t,2);
             if nargin == 3
                 animation_scale_factor = 1;
                 period = frame_t(end) - frame_t(1);
@@ -220,7 +289,7 @@ classdef Mass_Spring_System
             
             ax = obj.animation_ax;
             fig = ax.Parent;
-           
+            set(fig,"Color","white")
 
             fig_dims = fig.Position;
             fig_width = fig_dims(3);
@@ -230,9 +299,16 @@ classdef Mass_Spring_System
             fig.Position = [10,100,fig_width*max_scale_factor,fig_height*max_scale_factor];
 
             system_frames(num_frames) = struct('cdata',[],'colormap',[]);
+            pause(0.2)
             for iFrame = 1:num_frames
+                iForce = frame_force(:,iFrame);
+                obj.set_force(iForce);
+
+                
                 iDisp = frame_x(:,iFrame).*animation_scale_factor;
                 obj.set_displacement(iDisp);
+
+                
                 drawnow
                 system_frames(iFrame) = getframe(obj.animation_ax);
                 if iFrame == num_frames
