@@ -11,7 +11,7 @@ ax = findobj(fig,"type","axes");
 
 %--
 ax = scale_axis(ax,2,1000);
-xlim([0,3.53291])
+%xlim([0,3.53291])
 
 
 lines = ax.Children;
