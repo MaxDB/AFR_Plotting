@@ -1,7 +1,7 @@
 clear 
 close all
 
-fig_num = 3;
+fig_num = 2;
 fig_name = "frc_"+fig_num;
 
 
