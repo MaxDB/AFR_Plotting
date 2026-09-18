@@ -13,7 +13,7 @@ switch fig_num
     case 1
         data_dir_execute(@compare_solutions,"physical amplitude","clamped_beam_13",1,"clamped_beam_0",1);
     case 2
-        data_dir_execute(@compare_solutions,"physical amplitude","clamped_beam_0",1,"clamped_beam_121001",1,"clamped_beam_13",1)
+        data_dir_execute(@compare_solutions,"physical amplitude","clamped_beam_0",1,"clamped_beam_121001",1,"clamped_beam_13",1,"clamped_beam_13",2)
     case 3
         data_dir_execute(@compare_solutions,"physical amplitude","clamped_beam_0",1,"clamped_beam_1",2,"clamped_beam_121001",1,"clamped_beam_12",2,"clamped_beam_11001",1)
 

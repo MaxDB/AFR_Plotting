@@ -33,7 +33,7 @@ switch fig_num
         frc_markers.LineStyle = "--";
         uistack(frc_markers,"top")
 
-        swap_colours(lines,get_plot_colours(3),get_plot_colours(1))
+        swap_colours(lines,get_plot_colours(3),get_plot_colours(0))
          swap_colours(lines,get_plot_colours(2),get_plot_colours(3))
 
     case 3

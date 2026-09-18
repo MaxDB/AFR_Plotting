@@ -1,7 +1,7 @@
 clear
 close all
 fig_name = "validation";
-fig_num =4;
+fig_num =3;
 figs = open_local_figures(fig_name + "_" + fig_num + "_base");
 
 %--------------------------------------------------
@@ -88,12 +88,14 @@ switch fig_num
         set(line_2,"Color",get_plot_colours(3));
         set(line_3,"Color",get_plot_colours(4));
 
-end
-x_range = [404,410];
-y_range = [0.186,0.216];
-aspect_ratio = (diff(x_range)/diff(ax.XLim))/(diff(y_range)/diff(ax.YLim));
-width = 0.3;
+        x_range = [404,410];
+        y_range = [0.186,0.216];
+        aspect_ratio = (diff(x_range)/diff(ax.XLim))/(diff(y_range)/diff(ax.YLim));
+        width = 0.3;
 
-zoomed_ax = create_zoomed_insert(ax,[0.07,0.43,width,width/aspect_ratio],x_range,y_range);
+        zoomed_ax = create_zoomed_insert(ax,[0.07,0.43,width,width/aspect_ratio],x_range,y_range);
+
+end
+
 %--
 save_fig(fig,fig_name+"_" + fig_num);

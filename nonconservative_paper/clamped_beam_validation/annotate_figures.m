@@ -1,7 +1,7 @@
 clear 
 close all
 
-fig_num = 4;
+fig_num = 3;
 fig_name = "validation_"+fig_num;
 
 
