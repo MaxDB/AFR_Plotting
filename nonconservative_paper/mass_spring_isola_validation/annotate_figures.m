@@ -1,12 +1,11 @@
 clear 
 close all
 
-fig_name =  "arch_time_complexity_cost";
+fig_name = "validation";
 
-labels = {
-    ["software","crashes"],{"text","Rotation",30};
-    "","arrow"
-};
+labels = ["$\{1\}$-ROM";
+    "$\{1\}:\{1,2\}$"];
+
 
 
 %-----------------------------
