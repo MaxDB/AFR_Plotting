@@ -15,7 +15,7 @@ num_labels = {"1","text";
           "2","text"};
 
 labels = [{"","arrow";
-          "$\mathbf h(t_1)$",{"text","rotation",15};  
+          "$\mathbf h(t_1)$",{"text","rotation",10};  
           "$q_1$","text";
           "$\dot{q}_1$","text";
           "$\mathbf r_2^*(t)$","label";

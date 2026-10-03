@@ -5,7 +5,7 @@ fig_name = "validation_orbit";
 
 
 
-Export_Settings.height = 9;
+Export_Settings.height = 7;
 Export_Settings.width = 12.6;
 Export_Settings.font_size = 12;
 

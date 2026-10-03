@@ -4,7 +4,7 @@ close all
 fig_name = "validation_manifold";
 
 Export_Settings.height = 9;
-Export_Settings.width = 7.8;
+Export_Settings.width = 12.6;
 Export_Settings.font_size = 12;
 
 
