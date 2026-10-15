@@ -3,9 +3,9 @@ close all
 
 fig_name = "validated_backbone";
 
-Export_Settings.height = 8;
-Export_Settings.width = 8.4;
-
+Export_Settings.height = 7.8; 
+Export_Settings.width = 15.6;
+Export_Settings.font_size = 12;
 
 
 %--------------------------

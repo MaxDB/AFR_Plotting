@@ -5,9 +5,9 @@ fig_name = "validation_error";
 
 
 
-Export_Settings.height = 4;
-Export_Settings.width = 8.4;
-
+Export_Settings.height = 6;
+Export_Settings.width =  15.6;
+Export_Settings.font_size = 12;
 
 
 %--------------------------

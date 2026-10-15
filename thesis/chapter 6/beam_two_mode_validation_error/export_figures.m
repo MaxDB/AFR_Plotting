@@ -5,8 +5,9 @@ fig_name = "two_mode_validation_error";
 
 
 
-Export_Settings.height = 4;
-Export_Settings.width = 8.4;
+Export_Settings.height = 5.2;
+Export_Settings.width = 14.5;
+Export_Settings.font_size = 12;
 
 
 

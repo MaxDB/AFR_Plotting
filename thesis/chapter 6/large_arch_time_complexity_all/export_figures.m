@@ -1,16 +1,22 @@
 clear 
 close all
 
-
-fig_names = "arch_time_complexity_all";
 % 
-Export_Settings.height = 21;
-Export_Settings.width = 16.8;
-Export_Settings.padding = [0,0.1,0.1,0];
+% fig_names = "arch_time_complexity_cost"; 
+% Export_Settings.height = 12;
+
+
+fig_names = "arch_time_complexity_memory";
+Export_Settings.height = 12;
+
+Export_Settings.width = 15;
+Export_Settings.font_size = 12;
 
 %--------------------------
 figs = open_local_figures(fig_names);
 %--------------------------
-
+fig = figs{1};
+ax = findobj(fig,"type","axes");
+set(ax,"XTickLabelRotationMode","manual")
 %--------------------------
 export_fig(figs,fig_names,Export_Settings)

@@ -4,8 +4,8 @@ close all
 
 fig_name = "energy_backbone";
 
-Export_Settings.height = 4; 
-Export_Settings.width = 8.4;
+Export_Settings.height = 5; 
+Export_Settings.width = 15;
 Export_Settings.font_size = 12;
 
 figs = open_local_figures(fig_name);

@@ -5,8 +5,9 @@ fig_name = "two_mode_resonance_error";
 
 
 
-Export_Settings.height = 6;
-Export_Settings.width = 8.4;
+Export_Settings.height = 9.5;
+Export_Settings.width = 15.6;
+Export_Settings.font_size = 12;
 
 
 
